@@ -1,0 +1,185 @@
+\documentclass[a4paper,12pt]{scrartcl}
+
+% Title page
+\usepackage{authblk}
+
+% General style
+\usepackage{fontspec}
+\setmainfont[BoldFont = GenBasB.ttf]{Gentium Plus}
+\setsansfont{DejaVu Sans}
+\usepackage{newunicodechar}
+\newunicodechar{→}{\fontspec{Gentium Plus}→}
+
+% Formulas
+\usepackage{amsmath}
+
+% Internal references
+\usepackage[titletoc,title]{appendix}
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\Crefname{appsec}{Appendix}{Appendices}
+\crefname{appsec}{appendix}{appendices}
+
+% Draft style
+\usepackage{setspace}
+\setstretch{1.5}
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.2cm, right=3.5cm]{geometry}
+\usepackage{lineno} 
+
+% Figures
+\usepackage{subcaption}
+\usepackage[font=small,labelfont=it]{caption}
+\usepackage{graphicx}
+
+% Bibliography
+\usepackage[backend=biber,
+            bibstyle=biblatex-sp-unified,
+            citestyle=sp-authoryear-comp,
+            maxcitenames=2,url=false,
+            maxbibnames=99]{biblatex}
+\renewcommand*{\bibfont}{\small}
+\addbibresource{library.bib}
+
+\renewbibmacro*{doi+eprint+url}{%
+  \printfield{doi}%
+  \newunit\newblock%
+  \iftoggle{bbx:eprint}{%
+    \usebibmacro{eprint}%
+  }{}%
+  \newunit\newblock%
+  \iffieldundef{doi}{%
+    \usebibmacro{url+urldate}}%
+  {}%
+}
+
+
+% Code inclusion with syntax highlighting
+\usepackage{minted}
+\setminted{fontsize=\tiny,baselinestretch=0.9}
+
+\title{Burst Clock}
+\date{\today}
+\author[1]{Nico Neureiter}
+\author[1]{Gereon A. Kaiping}
+\affil[1]{Geographic Information Science Center, Universität Zürich, CH}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  Due to increased rates of evolution at cladogenenesis, potentially arising
+  from linguistic founder effects or the exaggeration of language differences to
+  mark social boundaries, lanugages tend to evolve in bursts.
+  \Textcite{atkinson2008languages} showed that a significant proportion of up to
+  a third of lexical disparity arises from such punctuated events at splitting
+  events. Similar bursts of evolution also at initial niche settlement in
+  biology. Given the prevalence with which phylogenetic models in linguistics
+  are used to date language families, it is surprising that this result has not
+  found its way back into the clock models used in phylogenetic inferences,
+  which tend to focus instead on per-branch variation \parencite{}. Here, we
+  develop a simple extension to the Strict Clock model \parencite{} in BEAST2
+  \parencite{} to account for bursts at language splits. We fit it to four major
+  language families of the world –~Austronesian, Bantu, Indo-European, and Sino-Tibetan~– and find that the Burst Clock fits the data better than either
+  a Strict Clock or an Uncorrelated Relaxed Clock, and on average a binary split
+  is associated with XXX lexical changes in the basic vocabulary.
+\end{abstract}
+
+\section{Introduction}
+Linguistic differences, in particular those apparent to speakers, are often
+exaggerated among different social groups to mark ethnic boundaries. This
+process, dubbed schismogenesis by Bateson (1935) and esoterogeny by Thurston
+(1987), is thought to drive language disparity in as wide a range of locations
+as Vanuatu \parencite{}, South America \parencite{} and …. Here, languages
+function to identify in-groups, and as such they mark social boundaries (Labov
+1963) and define potential marriage partners in exogamous societies
+\parencite{}. These processes presumably happen in particular at times where
+languages split, driving the schism and in turn being driven by the exaggerated
+observation of differences. Lineages with more language diversification will
+thus be more different from the ancestral languages than stable languages.
+Quantitative evidence for this effect was supplied by
+\textcite{atkinson2008languages}. Using lexical cognate data, they studied the
+signal of punctuation in the Austronesian, Bantu, and Indo-European tree. The
+lexicon is one of the domain of language most apparent to speakers and
+accessible to conscious manipulation \textcite{}.
+\Citeauthor{atkinson2008languages} found that between 9.5\% and 33\% of lexical
+differences are due to punctuated events.
+
+% If we want to talk about biological evolution: The relevant article cited in
+% atkinson2008languages is N. Eldredge, S. J. Gould, in Models in Paleobiology,
+% T. J. M. Schopf, Ed. (Freeman, San Francisco, 1972), pp. 82–115.
+
+\Textcite{gray2013three} raise the question whether this holds equally for
+different linguistic domains. They argue that “[t]o the extent that closely
+related speech communities differ more in accent than they do in vocabulary, and
+more in vocabulary than in language structure, it might be predicted that the
+schismogenesis effect would be most pronounced in phonetics and least in
+structural features of language.” In order to explicitly test this prediction,
+an explicit model of punctuated evolution would be necessary.
+
+The big driver of phylogenetic methods in linguistics has been their ability to
+date language histories based on a relatively small number of broad calibration
+points \parencite{}. Such models would also profit greatly from explicit
+modelling of the punctuated evolution.
+
+\paragraph{The structure of the paper} is as follows. In section
+\cref{sec:description}, we describe the Burst Clock model, a generalization of
+the Strict Clock. We provide and describe a BEAST2 \parencite{beast2} package
+implementing this clock. We then describe the Bayesian phylogenetic inference on
+lexical data of Austronesian, Bantu, Indo-European, and Sino-Tibetan data in
+\cref{s:lexical}. In \cref{s:domains} we expand the Indo-European model to
+incorporate phonological and grammatical features. We present our results in
+\cref{s:results}. In \cref{s:discussion}, we discuss the results. In
+\cref{s:conclusions} we formulate our conclusions.
+
+Data and methods used to produce the results and figures shown in this paper are
+available as online supplementary material and through
+\url{https://osf.io/??????????????????}.
+
+\section{Introducing the Burst Clock}
+\label{sec:description}
+In a strict clock \parencite{}, a constant rate $c$ maps branch lengths $l_i$,
+measured in time (years, millennia, megayears) to expected numbers of changes
+along a branch
+\begin{align}
+  e_i = c \cdot l_i
+  \label{eq:strict}
+\end{align}
+In the most mathematically simple case,
+every observed split (i.\,e. any split where descendants on both sides survived
+to the be observed later) contributes a constant amount of expected changes to
+the evolutionary history of the descendant languages, and there are no
+unobserved splits in the tree.
+That is, in addition the parameter $c$, this clock model has another
+non-negative parameter $b$ and the expected number of changes is 
+\begin{align}
+  e_i = c \cdot l_i + b
+  \label{eq:simple-burst}
+\end{align}
+For $b=0$, this models reduces to the strict clock.
+
+Like the strict can be relaxed, eg. by drawing per-branch clock rates $c_i$ from
+a lognormal distribution \parencite{}, so can the parameter $b$ be extended to
+per-node burst values $b_i$. For $c=0$, this gives rise to non-clock models, and
+with an appropriate model of the $b_i$ can represent various non-clock priors,
+such as the compound Dirichlet prior (Rannala et al. 2012).
+% https://academic.oup.com/sysbio/article/61/5/779/1735441
+
+In addition, the unobserved splits, where a language splits in two, but one of
+the two descendant branches goes extinct before being observed, can contribute
+to language change. In a birth-death tree model \parencite{}, the rate at which
+languages split (birth rate $\lambda$) is an explicit parameter of the model, so
+we can estimate the expected number of splits on a branch as $\lambda \cdot
+l_i$, giving rise to the expected number of changes
+\begin{align}
+  e_i = (c + \lambda b) \cdot l_i + b
+  \label{eq:reparam-burst}
+\end{align}
+This is formally the same model as in \cref{eq:simple-burst}, but parameterized
+in a way that takes the underlying tree prior into account.
+
+Most general case we can maybe construct:
+\begin{align}
+  e_i = c_i l_i + \left[Draw \left( [\text{draw number of split events on }b\text{ with rate } \lambda] + 1 \right) b\text{-values}\right]
+  \label{eq:reparam-burst}
+\end{align}
+($c_i$ drawn according to a non-strict clock, $b$s drawn according to a non-clock prior, eg. Dirichlet Gamma)
+\end{document}
