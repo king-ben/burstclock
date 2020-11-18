@@ -12,6 +12,7 @@
 
 % Formulas
 \usepackage{amsmath}
+\usepackage{amssymb}
 
 % Internal references
 \usepackage[titletoc,title]{appendix}
@@ -107,6 +108,8 @@ differences are due to punctuated events.
 % atkinson2008languages is N. Eldredge, S. J. Gould, in Models in Paleobiology,
 % T. J. M. Schopf, Ed. (Freeman, San Francisco, 1972), pp. 82–115.
 
+% There is also a paper by Søren Wichman and Taraka Rama on ‘Bayesian Dating’ or something, I think it basically does linear interpolation, so it's also case in point?
+
 \Textcite{gray2013three} raise the question whether this holds equally for
 different linguistic domains. They argue that “[t]o the extent that closely
 related speech communities differ more in accent than they do in vocabulary, and
@@ -156,7 +159,7 @@ non-negative parameter $b$ and the expected number of changes is
 \end{align}
 For $b=0$, this models reduces to the strict clock.
 
-Like the strict can be relaxed, eg. by drawing per-branch clock rates $c_i$ from
+Like the strict clock can be relaxed, eg. by drawing per-branch clock rates $c_i$ from
 a lognormal distribution \parencite{}, so can the parameter $b$ be extended to
 per-node burst values $b_i$. For $c=0$, this gives rise to non-clock models, and
 with an appropriate model of the $b_i$ can represent various non-clock priors,
@@ -165,21 +168,92 @@ such as the compound Dirichlet prior (Rannala et al. 2012).
 
 In addition, the unobserved splits, where a language splits in two, but one of
 the two descendant branches goes extinct before being observed, can contribute
-to language change. In a birth-death tree model \parencite{}, the rate at which
-languages split (birth rate $\lambda$) is an explicit parameter of the model, so
-we can estimate the expected number of splits on a branch as $\lambda \cdot
-l_i$, giving rise to the expected number of changes
+to language change in this manner. In a birth-death tree model \parencite{}, the rate at which
+languages split (birth rate $\lambda$) is a parameter of the model, either given explicitly or in terms of net diversification rate and turnover. Therefore
+we can estimate the expected number of splits along a branch as $\lambda \cdot
+l_i$. If turnover is low and many tips are sampled, this over-estimates the number of branches, because it does not take into account that the majority of branches are actually observed. For a sampling proportion $q$ and $l$ observed leaves, the number of net splits will be
+$\frac{l}{q} - 1$
+while the observed number of splits will be $l - 1$. This means that the proportion of unobserved splits is, on average,
 \begin{align}
-  e_i = (c + \lambda b) \cdot l_i + b
+    \rho_u &= \frac{(\frac{l}{q} - 1) - (l - 1)}{\frac{l}{q} -1} \\
+    & = \frac{l - q - ql + q}{l - q} \\
+    & = \frac{l - ql}{l - q} \\
+    & \approx 1 - q
+\end{align}
+giving rise to the expected number of changes
+\begin{align}
+  e_i = (c + \lambda (1-q) b) \cdot l_i + b
   \label{eq:reparam-burst}
 \end{align}
-This is formally the same model as in \cref{eq:simple-burst}, but parameterized
-in a way that takes the underlying tree prior into account.
+This is formally the same model as in \cref{eq:simple-burst}: The expected number of changes is linear (with a constant non-zero intercept) in the branch length. It is, however, parameterized
+in a way that takes the underlying tree prior into account,
+which should lead to better mixing and better interpretability.
 
-Most general case we can maybe construct:
-\begin{align}
-  e_i = c_i l_i + \left[Draw \left( [\text{draw number of split events on }b\text{ with rate } \lambda] + 1 \right) b\text{-values}\right]
-  \label{eq:reparam-burst}
-\end{align}
-($c_i$ drawn according to a non-strict clock, $b$s drawn according to a non-clock prior, eg. Dirichlet Gamma)
+\section{Bayesian phylogenetic inference}
+
+In order to assess whether the burst clock is a useful model for Bayesian phylogenetics, we reproduce four studies on
+Bayesian phylogenetics on well-studied language phylogenies: Austronesian \parencite{}, Bantu \parencite{}, Indo-European
+\parencite{} and Sino-Tibetan \parencite{}. We first use a state-of-the-art inference model with a non-burst clock, as a
+baseline comparable with published studies, before adding a burst clock to the inference procedure. We assess the posterior
+probability distribution of the added parameter $b$, and compare model fit using Stepping Stone analysis implemented in BEAST2's
+\texttt{modelselection} package \parencite{}.
+
+\subsection{Data}
+The data for the phylogenetic analysis is composed of lexical items in comparable concepts (“word list” or “concept list”) annotated
+for cognacy, i.\,e. presumed inheritance from a shared root. Dated trees with meaningful branch lengths and clock data also require calibration points.
+These are specific to the language families and will also be discussed in the following.
+
+\subsection{Austronesian}
+The Austronesian language family is …
+Due to the wide spread, these languages have been regularly studied using phylogenetics, eg. by
+\textcite{gray2009language,greenhill2017evolutionary,greenhill2018population}.
+\paragraph{Lexical Data}
+Of these articles using lexical data to infer Austronesian language phylogenies, only the second one
+% gray2009language: “The data used in this study were extracted from the Austronesian Basic Vocabulary Database (“ABVD”) project (Greenhill et al. 2008). We selected the 400 languages/dialects with the most available data, and excluded known creoles and languages with large amounts of admixture (Table S1). We included two non-Austronesian languages as outgroups to “root” the trees: an archaic variant of the Sino-Tibetan language Chinese that was spoken between 2,300 and 2,900 years ago, and theTai-Kadai language Buyang. We extracted the cognate set data for these 400 languages across all 210 wordlist items. These data were translated into a binary matrix representing the presence or absence of each cognate set in each language.”
+% greenhill20818population: “For the Austronesian languages we used the Austronesian Basic Vocabulary Database (ABVD, Greenhill et al., 2008) which contains wordlists for 210 semantic categories from 1,278 languages.”, not even mentioning data coding, no supplement
+% greenhill2017evolutionary: “We used the ABVD (17) to find lexical data for the languages in the PIMdb. We identified 81 languages in both the PIMdb and the ABVD. [...] All lexical and cognate information is available online at https://abvd.shh.mpg.de/austronesian, and the cognate file is available in SI Materials and Methods and Dataset S4. are published with the acutal data in supplement.
+\parencite{greenhill2018population} makes the associated lexical data available, instead of only describing the data gathering procedure.
+Hovever, in that case the dataset is reduced to the overlap with a grammatical dataset.
+All three papers use the Austronesian Basic Vocabulary Database for their lexical data, but the official version of that database
+(https://abvd.shh.mpg.de/austronesian/) is not published under an open license and in a re-usable format, so we instead make use of the ABVD
+data in the standardized CLDF format \parencite{cldf} curated on https://github.com/lexibank/abvd, which is published under a permissive Creative Commons (CC-BY-4.0) license.
+We filtered filtered to the Austronesian languages that have a coverage of
+at least 85\% of all concepts (189 or more concepts).
+
+\paragraph{Calibrations}
+% gray2009language: clades not explicitly tied to calibrations, only description needing interpretation in Table S3
+% greenhill2018population: No calibrations
+% greenhill2017: To calibrate these clocks, we incorporated historical evidence of language divergence times as described by Gray et al. (50). We implemented five calibrations on the tree using normally distributed priors on the node heights. These calibrations were the following: (i) Proto-Oceanic (mean of 3,300 y, SD = 100 y), (ii) Proto-Central Pacific (mean of 3,000 y, SD = 100), (iii) Proto-Malayo-Polynesian (mean of 4,000 y, SD = 250), (iv) Proto-Micronesian (mean of 2,000 y, SD = 100), and (v) Proto-Austronesian (mean of 5,200 y, SD = 300).
+Following 
+
+\paragraph{Bantu} The Bantu languages, part of the Atlantic-Congo languagage family, have been studied in lexical phylogenetics by \textcite{grollemund2015bantu,greenhill2018population,currie2013cultural}.
+% grollemund2015bantu: For each of then=100 lexical items (meanings), we have usedthe comparative method whereverpossible to identify cognate sets(words with the same meaning that derive from a common an-cestor). Where it was not possible to establish strict correspon-dences for every word, we based our cognacy judgment on theprinciple of resemblance. This work was conducted by R.G. as partof her PhD and postdoctoral work on the Bantu languages (66).We identified 3,859 cognate sets across then=100 meanings.These were coded as binary characters for purposes of phylo-genetic analysis. In practice, expert opinion on cognate classifi-cations can differ (this difference also occurs in the alignment ofgene sequence data where it is necessary to identify homologousgenes), so we have conducted a series of analyses to check thatour principal results are robust to variation in the data.We created subsampled datasets, with each one consisting of 50meanings randomly sampled without replacement from the data.These datasets were then converted to a binary matrix from whichwe inferred the tree. We repeated this procedure 100 times. Wefound that in 98% of these random samples based on just half thedata, the tree we inferred showed the ladderized or pectinatebackbone that we reported for the full-dataset tree in Fig. 1. Thisresult ensured that the signal for the tree we use to infer theBantu migration route was robust to variation in the data
+% greenhill2018population: “Basic vocabulary for 100 words from 409 Bantu languages were provided by Grollemund et al. (2015) in a phylogenetic dataset that records a single variant per semantic category for each language.
+% currie2013cultural: “Here, we use linguistic data from 542 spoken varieties of Bantu [16]. The names and alpha-numeric codes of all these languages are listed in the electronic supplementary material, table S1. Linguistic data in the form of different lexical items (‘words’) were taken from Bastin et al. [16]. These data code whether these basic vocabulary words from different languages can be considered cognate (i.e. they share a common origin). To facilitate phylogenetic analyses, these data were recoded into binary cognate sets reflecting the presence or the absence of each cognate in each language.
+The supplementary data from the 2015 paper is available from http://www.evolution.reading.ac.uk/DataSets.html. A CLDF version of this dataset can be found on https://github.com/lexibank/grollemundbantu.
+
+\paragraph{Indo-European} Due to obvious reasons, Indo-European has been extensively studied using lexical Bayesian phylogenetics since the beginning
+of that field \parencite{bouckaert2012mapping,chang-ie,gray2003language,holm2017steppe,rama2018three,willems2016using}, and datasets have been improved
+step by step, generally going back to \textcite{dyen1992comparative} and derivatives such as IELex \parencite{ielex}. The most recent study correcting
+the quality of cognate codes is by \textcite{chang-ie}. Their different datasets are explicitly compared by \textcite{rama2018three}, who finds that the
+‘\textsc{medium}’ dataset fits the expected node ages best given a uniform tree prior. \Citeauthor{rama2018three} also argues qualitatively in favour of
+that dataset over the alternatives considered, so we base our analysis on that dataset, available from
+\url{https://github.com/PhyloStar/ie-phylo-exps/blob/a63c0b52f7772adc2341572932a74b23d92570df/medium1.nex}.
+
+\paragraph {Sino-Tibetan} The Sino-Tibetan language family has been recently studied phylogenetically by two independent groups
+\parencite{sagart2019dated,zhang2019phylogenetic}. The lexical data for each of these two articles is available as supplementary material.
+\Citeauthor{sagart2019dated} are very explicit concerning their cognate coding method, while \Citeauthor{zhang2019phylogenetic} retain a larger
+language sample.
+
+\paragraph{Calibrations}
+% sagart2019dated: We specified calibrations as follows: Old Chinese, [2,800 to 2,300] yBP, in a uniform prior; Old Burmese, 800 yBP; Old Tibetan, 1,200 yBP; and Tangut, 900 yBP (the date range for Old Chinese corresponds to the period of the great Classical Chinese texts; the other dates correspond to the date of the earliest text rounded to the nearest century; see also SI Appendix, section 4).
+% zhang2019: Supplementary table 2 (https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-019-1153-z/MediaObjects/41586_2019_1153_MOESM1_ESM.pdf):
+% Chinese Normally distributed with mean 2700.0 and 150.0 standard deviation The earliest known written records of the Chinese language dates from about 1250 BC.
+% Old Chinese Normally distributed with mean 2500.0 and 100.0 standard deviation. Tips Only.
+% Tibetan dialects Normally distributed with mean 1150.0 and 50.0 standard deviation Tibetan dialects were formed in the mid-13th century. Tibetan dialects exclude the classical Tibetan.
+% Burmese Truncated between 400.0 and 1200.0 The language is not attested until early in the 12th century, when it begins to appear on tone inscriptions in the temples of Pagan.
+% Pumi Normally distributed with mean 750.0 and 50.0 standard deviation Pumi people migarated into the regions of Ninglang, Lijiang, Weixi and Lanpin from 13th century.
+% Yi Normally distributed with mean 1500.0 and 100.0 standard deviation The expansion of Yi people to northeast and south Yunnan, and northwest Guizhou dated to 3th century. About in the eighth and ninth century, a kindom called Nazhao was ruled by Yi (Lolo) speakers but the people also included Bai language.
+\printbibliography{}
+
 \end{document}
