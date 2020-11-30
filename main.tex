@@ -204,6 +204,7 @@ for cognacy, i.\,e. presumed inheritance from a shared root. Dated trees with me
 These are specific to the language families and will also be discussed in the following.
 
 \subsubsection{Austronesian}
+\input{supplement/austronesian/stats.tex}
 The Austronesian language family is …
 Due to the wide spread, these languages have been regularly studied using phylogenetics, eg. by
 \textcite{gray2009language,greenhill2017evolutionary,greenhill2018population}.
@@ -216,9 +217,12 @@ Of these articles using lexical data to infer Austronesian language phylogenies,
 Hovever, in that case the dataset is reduced to the overlap with a grammatical dataset.
 All three papers use the Austronesian Basic Vocabulary Database for their lexical data, but the official version of that database
 (https://abvd.shh.mpg.de/austronesian/) is not published under an open license and in a re-usable format, so we instead make use of the ABVD
-data in the standardized CLDF format \parencite{cldf} curated on https://github.com/lexibank/abvd, which is published under a permissive Creative Commons (CC-BY-4.0) license.
-We filtered filtered to the Austronesian languages that have a coverage of
-at least 85\% of all concepts (189 or more concepts).
+data in the standardized CLDF format \parencite{cldf} curated on https://github.com/lexibank/abvd, which is published under a
+permissive Creative Commons (CC-BY-4.0) license. We used the most recent version, commit 17a4b30922f9d1010667ae8974f814c624e3e9a4
+(2020-07-10). We filtered filtered to the Austronesian doculects\footnote{The database contains several instances where different
+sources for the same variety (judging by name and Glottocode) give rise to different ‘language’ objects in the dataset, so the term
+‘doculect’ appears more appropriate than ‘language’ or ‘dialect’ in discussing the composition of the dataset.} that have a coverage
+of at least 85\% of all concepts (189 or more concepts). This results in \countlects{} doculects, 
 
 \paragraph{Calibrations}
 % gray2009language: clades not explicitly tied to calibrations, only description needing interpretation in Table S3
@@ -309,7 +313,7 @@ split per generation” and “one split per 1000 years”,
 % 95\% interval == 2 σ interval, so
 % μ = (x1 + x2) / 2 = -4.951743776268064
 % σ = (x1 - x2) / 4 = 0.9780057513570365
-i.\e. with mean $-4.951743776268064$ and standard deviation $0.9780057513570365$ in log space.
+i.\,e. with mean $-4.951743776268064$ and standard deviation $0.9780057513570365$ in log space.
 
 \paragraph{Clock model}
 To account for rate variation between different parts of the phylogeny, we
