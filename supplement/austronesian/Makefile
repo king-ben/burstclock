@@ -13,5 +13,5 @@ raw_cldf/forms.csv raw_cldf/cognates.csv raw_cldf/cldf-metadata.json: abvd.zip c
 high_coverage_languages: raw_cldf/cldf-metadata.json raw_cldf/forms.csv
 	python -m lexedata.exporter.coverage -l --min-concepts 189 --dataset raw_cldf/cldf-metadata.json | python filter-austronesian.py > high_coverage_languages
 
-austronesian.xml: raw_cldf/cldf-metadata.json high_coverage_languages
-	python -m lexedata.exporter.phylogenetics --metadata raw_cldf/cldf-metadata.json --languages high_coverage_languages -b -o austronesian.xml
+austronesian.xml stats.tex: raw_cldf/cldf-metadata.json high_coverage_languages
+	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json --languages high_coverage_languages -b -o austronesian.xml
