@@ -8,7 +8,14 @@ austronesian = {
     if l["Family"] == "Austronesian"
 }
 
+countlects = 0
 for i in sys.stdin:
     i = i.strip()
     if i in austronesian:
         print(i)
+        countlects += 1
+
+with open("stats.tex", "w") as s:
+    print(f"""
+    \\newcommand{{countlects}}{{{countlects}}}
+        """, file=s)
