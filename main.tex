@@ -53,6 +53,7 @@
   {}%
 }
 
+\newcommand{\glot}[2]{#1 [\texttt{\hyperlink{https://glottolog.org/resource/languoid/id/#2}{#2}}]}
 
 % Code inclusion with syntax highlighting
 \usepackage{minted}
@@ -216,41 +217,61 @@ Of these articles using lexical data to infer Austronesian language phylogenies,
 \parencite{greenhill2018population} makes the associated lexical data available, instead of only describing the data gathering procedure.
 Hovever, in that case the dataset is reduced to the overlap with a grammatical dataset.
 All three papers use the Austronesian Basic Vocabulary Database for their lexical data, but the official version of that database
-(https://abvd.shh.mpg.de/austronesian/) is ublished without a persistent identifier, without open license and not in a re-usable
-format, so we instead make use of the ABVD
-data in the standardized CLDF format \parencite{cldf} curated on https://github.com/lexibank/abvd, which is published under a
-permissive Creative Commons (CC-BY-4.0) license. We used the most recent version, commit 17a4b30922f9d1010667ae8974f814c624e3e9a4
+(https://abvd.shh.mpg.de/austronesian/) is published without a persistent identifier, not freely usable, and not available in a re-usable format, so we instead make use of the ABVD
+data in the standardized CLDF format \parencite{cldf} curated on \url{https://github.com/lexibank/abvd}, which is published under a
+permissive Creative Commons (CC-BY-4.0) license. We used the most recent version, commit \texttt{17a4b30922f9d1010667ae8974f814c624e3e9a4}
 (2020-07-10). We filtered filtered to the Austronesian doculects\footnote{The database contains several instances where different
 sources for the same variety (judging by name and Glottocode) give rise to different ‘language’ objects in the dataset, so the term
-‘doculect’ appears more appropriate than ‘language’ or ‘dialect’ in discussing the composition of the dataset.} that have a coverage
+‘doculect’ appears more appropriate than ‘language’ or ‘dialect’ in discussing the composition of the dataset, even though some languages may be aggregated from more than one source.} that have a coverage
 of at least 85\% of all concepts (189 or more concepts). This results in \countlects{} doculects and \countconcepts{} concepts being included in the data.
 
 \paragraph{Calibrations}
+\newcommand{\abvd}[2]{#1 [\hyperlink{https://abvd.shh.mpg.de/austronesian/language.php?id=#2}{#2}]}
 % gray2009language: clades not explicitly tied to calibrations, only description needing interpretation in Table S3
 % greenhill2018population: No calibrations
 % greenhill2017: To calibrate these clocks, we incorporated historical evidence of language divergence times as described by Gray et al. (50). We implemented five calibrations on the tree using normally distributed priors on the node heights. These calibrations were the following: (i) Proto-Oceanic (mean of 3,300 y, SD = 100 y), (ii) Proto-Central Pacific (mean of 3,000 y, SD = 100), (iii) Proto-Malayo-Polynesian (mean of 4,000 y, SD = 250), (iv) Proto-Micronesian (mean of 2,000 y, SD = 100), and (v) Proto-Austronesian (mean of 5,200 y, SD = 300).
 Following \textcite{greenhill2017evolutionary}, we calibrate five nodes using normally
-distributed priors: ‘(i) Proto-Oceanic (mean of 3,300 y, SD = 100 y), (ii)
-Proto-Central Pacific (mean of 3,000 y, SD = 100), (iii) Proto-Malayo-Polynesian
-(mean of 4,000 y, SD = 250), (iv) Proto-Micronesian (mean of 2,000 y, SD = 100),
-and (v) Proto-Austronesian (mean of 5,200 y, SD = 300)’. We supplement this with
-age constraints taken from \textcite[Table S3]{gray2009language}.
+distributed priors. We supplement this with age constraints taken from \textcite[Table S3]{gray2009language}. There, we interpret the ranges given there as $2\sigma$ intervals of a normal distribution. This leads to the following node calibrations, sorted by their mean. We do not constrain the languages with these calibrations to be clades: a given calibrated MRCA node may be ancestral to more languages than explicitly listed.
+\begin{itemize}
+\item ‘Proto-Austronesian (mean of 5,200 y, SD = 300)’, i.\,e. on the root;
+\item ‘Proto-Malayo-Polynesian (mean of 4,000 y, SD = 250)’, i.\,e. on the most recent common ancestor (MRCA) of all languages inside the Glottolog family \glot{Malayo-Polynesian}{mala1545};
+\item ‘Proto-Oceanic (mean of 3,300 y, SD = 100 y)’, i.\,e. on the MRCA of \glot{Oceanic}{ocea1241};
+\item \glot{Central Pacific}{cent2060} $\mu=3000, \sigma=100$;
+\item \glot{Micronesian}{micr1243} $\mu=2000, \sigma=100$;
+\item \glot{Malayo-Chamic}{nort3170}: $\mu=1500, \sigma=250$.
+\item \glot{Tuvalu and Tokelau}{elli1239}: $\mu=1500, \sigma=250$;
+\item \glot{East Polynesian}{east2449}: $\mu=1475, \sigma=167.5$; 
+\item \glot{Malagasic}{mala1537}: $\mu=1200, \sigma=50$;
+\item \glot{Javanese}{java1253}: $\mu=1200, \sigma=50$;
+\item \glot{Chamic}{cham1330}: $\mu=1150, \sigma=175$;
+\end{itemize}
+The only \glot{Reefs-Santa Cruz language}{reef1242} in our Austronesian lexical dataset is \abvd{Äiwoo}{501}, so a calibration of the most recent ancestor of all Reefs-Santa Cruz languages is not possible.
+
+In terms of tip calibrations given by \textcite{gray2009language}, table row on \abvd{Old Javanese}{290} cites \textcite{zoetmulder1982old} for a date between 700 and 1200 BP ($\mu=950, \sigma=125$).
+All their other tip calibrations either do not apply to our filtered data set or are dubious:
+For \abvd{Favorlang}{831}, some of the derives from Dutch sources from the mid-1600s, others from wordlists collected around 1900. Such a mix of data makes it unsuitable for dating, so we excluded \abvd{Favorlang}{831} from the lexical data.
 
 \subsubsection{Bantu}
 The Bantu languages are a part of the Atlantic-Congo languagage family. They
 have been studied in lexical phylogenetics by
 \textcite{grollemund2015bantu,greenhill2018population,currie2013cultural}.
 \paragraph{Lexical Data}
-% grollemund2015bantu: For each of the n=100 lexical items (meanings), we have usedthe comparative method whereverpossible to identify cognate sets(words with the same meaning that derive from a common an-cestor). Where it was not possible to establish strict correspon-dences for every word, we based our cognacy judgment on theprinciple of resemblance. This work was conducted by R.G. as partof her PhD and postdoctoral work on the Bantu languages (66).We identified 3,859 cognate sets across then=100 meanings.These were coded as binary characters for purposes of phylo-genetic analysis. In practice, expert opinion on cognate classifi-cations can differ (this difference also occurs in the alignment ofgene sequence data where it is necessary to identify homologousgenes), so we have conducted a series of analyses to check thatour principal results are robust to variation in the data.We created subsampled datasets, with each one consisting of 50meanings randomly sampled without replacement from the data.These datasets were then converted to a binary matrix from whichwe inferred the tree. We repeated this procedure 100 times. Wefound that in 98% of these random samples based on just half thedata, the tree we inferred showed the ladderized or pectinatebackbone that we reported for the full-dataset tree in Fig. 1. Thisresult ensured that the signal for the tree we use to infer theBantu migration route was robust to variation in the data
+% grollemund2015bantu: For each of the n=100 lexical items (meanings), we have used the comparative method wherever possible to identify cognate sets(words with the same meaning that derive from a common ancestor). Where it was not possible to establish strict correspondences for every word, we based our cognacy judgment on the principle of resemblance. This work was conducted by R.G. as part of her PhD and postdoctoral work on the Bantu languages (66). We identified 3,859 cognate sets across then=100 meanings.These were coded as binary characters for purposes of phylogenetic analysis. In practice, expert opinion on cognate classifications can differ (this difference also occurs in the alignment of gene sequence data where it is necessary to identify homologous genes), so we have conducted a series of analyses to check that our principal results are robust to variation in the data. We created subsampled datasets, with each one consisting of 50meanings randomly sampled without replacement from the data. These datasets were then converted to a binary matrix from which we inferred the tree. We repeated this procedure 100 times. We found that in 98% of these random samples based on just half the data, the tree we inferred showed the ladderized or pectinate backbone that we reported for the full-dataset tree in Fig. 1. This result ensured that the signal for the tree we use to infer the Bantu migration route was robust to variation in the data
 % greenhill2018population: “Basic vocabulary for 100 words from 409 Bantu languages were provided by Grollemund et al. (2015) in a phylogenetic dataset that records a single variant per semantic category for each language.
 % currie2013cultural: “Here, we use linguistic data from 542 spoken varieties of Bantu [16]. The names and alpha-numeric codes of all these languages are listed in the electronic supplementary material, table S1. Linguistic data in the form of different lexical items (‘words’) were taken from Bastin et al. [16]. These data code whether these basic vocabulary words from different languages can be considered cognate (i.e. they share a common origin). To facilitate phylogenetic analyses, these data were recoded into binary cognate sets reflecting the presence or the absence of each cognate in each language.
 The supplementary data from the 2015 paper is available from
-http://www.evolution.reading.ac.uk/DataSets.html. A CLDF version of this dataset
-can be found on https://github.com/lexibank/grollemundbantu.
+\url{http://www.evolution.reading.ac.uk/DataSets.html}. A CLDF version of this dataset by Robert Forkel, Tiago Tresoldi, Mark Pagel, and Rebecca Grollemund, published under the CC-BY-NC 4.0 license, can be found on \url{https://github.com/lexibank/grollemundbantu}. We use version v1.0rc6 of the dataset.
+
 \paragraph{Calibrations}
 % greenhill2018population: No calibrations
 % grollemund2015bantu: We used archaeological data to propose date ranges, and in one case a fixed date, for four nodes of our tree (labeled a–d in Fig. 1). The four calibrations are as follows: (a) 5,000 B.P. or older for Bantoid, non-Bantu (58); (b) 4,000–5,000 B.P. for Narrow Bantu (13, 14, 16, 44, 59, 60); (c) 3,000–3,500 B.P. for the Mbam-Bubi ancestor (61); and (d) 2,500 B.P. for Eastern Bantu (62). We used a uniform prior in our Bayesian tree inference for all calibration ranges.
-We follow \textcite{grollemund2015bantu} in the choice of calibrations: ‘(a) 5,000 B.P. or older for Bantoid, non-Bantu […]; (b) 4,000–5,000 B.P. for Narrow Bantu […]; (c) 3,000–3,500 B.P. for the Mbam-Bubi ancestor […]; and (d) 2,500 B.P. for Eastern Bantu […]. We used a uniform prior in our Bayesian tree inference for all calibration ranges.’
+We take the calibration ranges from \textcite{grollemund2015bantu}, but generally use normal distributions instead of uniform distributions. Again we do not enforce monophyly, which is particularly important for this language family, where two of the calibrated language groups (Bantoid and Mbam-Bubi) are paraphyletic in Glottolog.
+\begin{itemize}
+\item A uniform prior above 5000~yBP (with upper limit 20000~yBP) the MRCA of the non-Bantu Bantoid languages ();
+\item For the languages in \glot{Narrow Bantu}{narr1281}, a normal distribution with $\mu=4500, \sigma=250$;
+\item For the MRCA of the \glot{Mbam languages}{mbam1252} and \glot{Bubi}{bubi1250}, $\mu=3250, \sigma=125$;
+\item For \glot{East Bantu}{east2731}, $\mu=2500, \sigma=50$.
+\end{itemize}
 
 \subsubsection{Indo-European}
 For obvious reasons, Indo-European has been extensively studied using lexical Bayesian phylogenetics since the beginning
