@@ -8,8 +8,3 @@ austronesian = {
     if l["Family"] == "Austronesian"
 }
 
-for i in sys.stdin:
-    i = i.strip()
-    if i in austronesian:
-        print(i)
-
