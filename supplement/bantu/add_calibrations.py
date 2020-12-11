@@ -3,7 +3,7 @@ from calibrations import main, normal, until
 r = main(
     [
         # (a) 5,000 B.P. or older for Bantoid, non-Bantu (58);
-        {"languages": {"aghemgrassfields", "njengrassfields", "mbulajarawan", "bamungrassfields", "fefegrassfields", "okugrassfields", "dugurijarawan", "moghamograssfields", "bwazzajarawan", "komgrassfields", "bilejarawan", "kulungjarawan", "mungakagrassfields", "zaambojarawan", "tivtivoid"}, "d": {'tag': 'Uniform', 'name': "distr", 'lower': '5000', 'upper': '20000'}},
+        {"glottolog_clade": "bant1294", "languages": {"aghemgrassfields", "njengrassfields", "mbulajarawan", "bamungrassfields", "fefegrassfields", "okugrassfields", "dugurijarawan", "moghamograssfields", "bwazzajarawan", "komgrassfields", "bilejarawan", "kulungjarawan", "mungakagrassfields", "zaambojarawan", "tivtivoid"}, "d": {'tag': 'Uniform', 'name': "distr", 'lower': '5000', 'upper': '20000'}},
         # (b) 4,000–5,000 B.P. for Narrow Bantu (13, 14, 16, 44, 59, 60);
         {"glottolog_clade": "narr1281", "d": until(4000, 5000)},
         # (c) 3,000–3,500 B.P. for the Mbam-Bubi ancestor (61);
