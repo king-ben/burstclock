@@ -68,7 +68,7 @@ else:
 taxa = ET.SubElement(root, "taxonset", id="taxa", spec="TaxonSet")
 for lang in languages:
     print(lang)
-    ET.SubElement(taxa, "taxon", id=lang)
+    ET.SubElement(taxa, "taxon", id=lang, spec="Taxon")
 
 def calibration(mean, std, languages=languages, glottolog_clade=None):
     if glottolog_clade is not None:
@@ -78,24 +78,25 @@ def calibration(mean, std, languages=languages, glottolog_clade=None):
     elif len(languages) == 1:
         language = list(languages)[0]
         if glottolog_clade:
-            mrcaprior = ET.SubElement(prior, "distribution", id=f"{language:}_originateMRCA", monophyletic="true", spec="beast.math.distributions.MRCAPrior", tree="@Tree.t:beastlingTree", useOriginate="true")
+            mrcaprior = ET.SubElement(prior, "distribution", id=f"{language:}_originateMRCA", monophyletic="true", spec="beast.math.distributions.MRCAPrior", tree="@Tree.t:tree", useOriginate="true")
             taxonset = ET.SubElement(mrcaprior, "taxonset", id=f"tx_{language:}", spec="TaxonSet")
             ET.SubElement(taxonset, "taxon", idref=f"{language:}")
             ET.SubElement(mrcaprior, "Normal", name="distr", offset="0.0", mean=f"{mean:}", sigma=f"{std:}")
         else:
-            if not trait.text:
-                trait.text = ''
-            trait.text += f"\n{language:} = {mean:}"
+            if not trait.text.strip():
+                trait.text = f"\n{language:} = {mean:}"
+            else:
+                trait.text += f",\n{language:} = {mean:}"
 
-            op = ET.SubElement(run, "operator", id=f"TipDatesandomWalker:{language:}", spec="TipDatesRandomWalker", windowSize="1", tree="@Tree.t:beastlingTree", weight="3.0")
+            op = ET.SubElement(run, "operator", id=f"TipDatesandomWalker:{language:}", spec="TipDatesRandomWalker", windowSize="1", tree="@Tree.t:tree", weight="3.0")
             ET.SubElement(op, "taxonset", idref=f"{language:}_tip")
 
-            mrcaprior = ET.SubElement(prior, "distribution", id=f"{language:}_tipMRCA", monophyletic="true", spec="beast.math.distributions.MRCAPrior", tree="@Tree.t:beastlingTree", tipsonly="true")
+            mrcaprior = ET.SubElement(prior, "distribution", id=f"{language:}_tipMRCA", monophyletic="true", spec="beast.math.distributions.MRCAPrior", tree="@Tree.t:tree", tipsonly="true")
             taxonset = ET.SubElement(mrcaprior, "taxonset", id=f"{language:}_tip", spec="TaxonSet")
             ET.SubElement(taxonset, "taxon", idref=f"{language:}")
             ET.SubElement(mrcaprior, "Normal", name="distr", offset="0.0", mean=f"{mean:}", sigma=f"{std:}")
     else:
-        mrcaprior = ET.SubElement(prior, "distribution", id=f"{glottolog_clade:}_tipMRCA", monophyletic="true", spec="beast.math.distributions.MRCAPrior", tree="@Tree.t:beastlingTree")
+        mrcaprior = ET.SubElement(prior, "distribution", id=f"{glottolog_clade:}_tipMRCA", monophyletic="true", spec="beast.math.distributions.MRCAPrior", tree="@Tree.t:tree")
         taxonset = ET.SubElement(mrcaprior, "taxonset", id=f"{glottolog_clade}", spec="TaxonSet")
         plate = ET.SubElement(taxonset, "plate", range=",".join(languages), var="language")
         ET.SubElement(plate, "taxon", idref="$(language)")
@@ -122,6 +123,7 @@ calibration(glottolog_clade="mala1545", mean=4000, std=250)
 
 # ‘(iv) Proto-Micronesian (mean of 2,000 y, SD = 100)’
 # Micronesian: https://glottolog.org/resource/languoid/id/micr1243
+# Settlement of Micronesia 1,900 – 2,200 Pawley (2002)
 calibration(glottolog_clade='micr1243', mean=2000, std=100)
 
 # ‘(v) Proto-Austronesian (mean of 5,200 y, SD = 300)’
@@ -131,11 +133,6 @@ calibration(glottolog_clade='aust1307', mean=5200, std=300)
 # Favorlang 346 – 384 [Age of Source Data]
 # https://abvd.shh.mpg.de/austronesian/language.php?id=831 “In Ogawa & Li (2003), Some data may have also been derived from Dutch sources (missionary tracts, etc.) dating from the mid-1600's.”
 calibration(*ms(346, 384), {'831'})
-
-# Siraya 346 – 384 [Age of Source Data]
-# https://abvd.shh.mpg.de/austronesian/language.php?id=1517: “This is one of the two oldest and best documented sources (originally compiled in 17th century). The other is the Gospel dialect ( Gravius 1661)” (i.e. https://abvd.shh.mpg.de/austronesian/language.php?id=1519, which does not cite its source)
-calibration(*ms(346, 384), {'1517'})
-calibration(2000-1661, (384-346)/4, {'1519'})
 
 # Old Javanese 700 – 1,200 [Zoetmulder (1982)]
 # https://abvd.shh.mpg.de/austronesian/language.php?id=290
@@ -160,10 +157,6 @@ calibration(*ms(1000, 2000), glottolog_clade='elli1239')
 # Historical Attestation of Chamic Subgroup 1,800 – 2,500 Thurgood (1999)
 # Chamic: https://glottolog.org/resource/languoid/id/cham1330
 calibration(*ms(1800, 2500), glottolog_clade='cham1330')
-
-# Settlement of Micronesia 1,900 – 2,200 Pawley (2002)
-# Micronesian: https://glottolog.org/resource/languoid/id/micr1243
-calibration(*ms(1900, 2200), glottolog_clade='micr1243')
 
 # Existence of Malayo-Chamic Subgroup 2,000 – 3,000 Thurgood (1999)
 # North and East Malayo-Sumbawan [clade with Malayic and Chamic]: https://glottolog.org/resource/languoid/id/nort3170

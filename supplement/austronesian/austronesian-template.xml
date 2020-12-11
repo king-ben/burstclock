@@ -25,7 +25,11 @@
       <parameter id="BDBirthRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="10000.0">0.0005</parameter>
       <parameter id="BDDeathRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.5</parameter>
     </state>
-    <init id="startingTree" spec="beast.evolution.tree.SimpleRandomTree" estimate="false" initial="@Tree.t:Tree" taxonset="@TaxonSet.vocabulary" trait="@datetrait" />
+    <init estimate="false" id="startingTree" initial="@Tree.t:tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTree">
+      <populationModel spec="ConstantPopulation">
+        <popSize spec="parameter.RealParameter" value="10000" />
+      </populationModel>
+    </init>
     <distribution id="posterior" spec="util.CompoundDistribution">
       <distribution id="prior" spec="util.CompoundDistribution">
         <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathGernhard08Model" birthDiffRate="@BDBirthRate.t:tree" relativeDeathRate="@BDDeathRate.t:tree" tree="@Tree.t:tree">
@@ -101,13 +105,10 @@
       <log id="TreeHeight.t:tree" spec="beast.evolution.tree.TreeHeightLogger" tree="@Tree.t:tree" />
       <log idref="gammaShape.s:vocabulary" />
       <log idref="freqParameter.s:vocabulary" />
-      <log idref="oirata.prior.u" />
       <log idref="clockRate.c:clock" />
       <log idref="BirthDeath.t:tree" />
       <log idref="BDBirthRate.t:tree" />
       <log idref="BDDeathRate.t:tree" />
-      <log idref="alor1249.prior" />
-      <log idref="timo1261.prior" />
     </logger>
     <logger id="screenlog" spec="Logger" logEvery="1000">
       <log idref="posterior" />
