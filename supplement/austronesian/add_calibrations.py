@@ -37,9 +37,6 @@ with Catalog.from_config('glottolog', tag='v4.3') as glottolog_repo:
         ancestors = languoid.ancestors
         languages[id] = [languoid.id] + [a.id for a in ancestors]
 
-for lang in languages:
-    print(lang)
-
 
 if args.output_file is None:
     root = ET.fromstring('''
@@ -68,6 +65,10 @@ else:
     trait = traits[0]
     assert trait.attrib["traitname"] == "date-backward"
 
+taxa = ET.SubElement(root, "taxonset", id="taxa", spec="TaxonSet")
+for lang in languages:
+    print(lang)
+    ET.SubElement(taxa, "taxon", id=lang)
 
 def calibration(mean, std, languages=languages, glottolog_clade=None):
     if glottolog_clade is not None:
@@ -79,7 +80,7 @@ def calibration(mean, std, languages=languages, glottolog_clade=None):
         if glottolog_clade:
             mrcaprior = ET.SubElement(prior, "distribution", id=f"{language:}_originateMRCA", monophyletic="true", spec="beast.math.distributions.MRCAPrior", tree="@Tree.t:beastlingTree", useOriginate="true")
             taxonset = ET.SubElement(mrcaprior, "taxonset", id=f"tx_{language:}", spec="TaxonSet")
-            ET.SubElement(taxonset, "taxon", id=f"{language:}", spec="Taxon")
+            ET.SubElement(taxonset, "taxon", idref=f"{language:}")
             ET.SubElement(mrcaprior, "Normal", name="distr", offset="0.0", mean=f"{mean:}", sigma=f"{std:}")
         else:
             if not trait.text:
@@ -91,13 +92,13 @@ def calibration(mean, std, languages=languages, glottolog_clade=None):
 
             mrcaprior = ET.SubElement(prior, "distribution", id=f"{language:}_tipMRCA", monophyletic="true", spec="beast.math.distributions.MRCAPrior", tree="@Tree.t:beastlingTree", tipsonly="true")
             taxonset = ET.SubElement(mrcaprior, "taxonset", id=f"{language:}_tip", spec="TaxonSet")
-            ET.SubElement(taxonset, "taxon", id=f"{language:}", spec="Taxon")
+            ET.SubElement(taxonset, "taxon", idref=f"{language:}")
             ET.SubElement(mrcaprior, "Normal", name="distr", offset="0.0", mean=f"{mean:}", sigma=f"{std:}")
     else:
         mrcaprior = ET.SubElement(prior, "distribution", id=f"{glottolog_clade:}_tipMRCA", monophyletic="true", spec="beast.math.distributions.MRCAPrior", tree="@Tree.t:beastlingTree")
         taxonset = ET.SubElement(mrcaprior, "taxonset", id=f"{glottolog_clade}", spec="TaxonSet")
         plate = ET.SubElement(taxonset, "plate", range=",".join(languages), var="language")
-        ET.SubElement(taxonset, "taxon", id="$(language)", spec="Taxon")
+        ET.SubElement(plate, "taxon", idref="$(language)")
         ET.SubElement(mrcaprior, "Normal", name="distr", offset="0.0", mean=f"{mean:}", sigma=f"{std:}")
     mrcaprior.tail="\n"
 
