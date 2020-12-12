@@ -22,12 +22,20 @@ def until(lower, upper):
 
 
 def calibration(
-        run, prior, trait, all_languages, d, languages=[], glottolog_clade=None, mean=0.0
+        run, prior, trait, all_languages, d, languages=[], glottolog_clade=None, mean=0.0, name=None
 ):
     if glottolog_clade is not None:
         languages = {
             l for l, lineage in all_languages.items() if glottolog_clade in lineage
         }
+    if name is None:
+        if glottolog_clade is None:
+            name = '_'.join(languages)
+        else:
+            name = glottolog_clade
+
+    if mean == 0.0:
+        mean = d.get("mean", mean)
 
     tag = d.pop('tag')
 
@@ -85,13 +93,13 @@ def calibration(
         mrcaprior = ET.SubElement(
             prior,
             "distribution",
-            id=f"{glottolog_clade:}_tipMRCA",
-            monophyletic="false", # Should these be true?
+            id=f"{name}_tipMRCA",
+            monophyletic="false",  # Should these be true?
             spec="beast.math.distributions.MRCAPrior",
             tree="@Tree.t:tree",
         )
         taxonset = ET.SubElement(
-            mrcaprior, "taxonset", id=f"{glottolog_clade}", spec="TaxonSet"
+            mrcaprior, "taxonset", id=f"{name}", spec="TaxonSet"
         )
         plate = ET.SubElement(
             taxonset, "plate", range=",".join(languages), var="language"
