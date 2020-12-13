@@ -37,7 +37,7 @@ r = main(
                 "Afrikaans",
             },
             "name": "Germanic",
-            "d": {"tag": "Uniform", "name": "distr", "lower": "2250", "upper": "12000"},
+            "d": {"tag": "Uniform", "name": "distr", "lower": "2250", "upper": "20000"},
         },
         {
             "languages": {
@@ -57,7 +57,7 @@ r = main(
                 "Italian",
             },
             "name": "Romance",
-            "d": {"tag": "Uniform", "name": "distr", "lower": "1750", "upper": "12000"},
+            "d": {"tag": "Uniform", "name": "distr", "lower": "1750", "upper": "20000"},
         },
         {
             "languages": {
@@ -69,7 +69,7 @@ r = main(
                 "Danish",
             },
             "name": "Scandinavian",
-            "d": {"tag": "Uniform", "name": "distr", "lower": "1500", "upper": "12000"},
+            "d": {"tag": "Uniform", "name": "distr", "lower": "1500", "upper": "20000"},
         },
         {
             "languages": {
@@ -87,7 +87,7 @@ r = main(
                 "Old_Church_Slavic",
             },
             "name": "Slavic",
-            "d": {"tag": "Uniform", "name": "distr", "lower": "1500", "upper": "12000"},
+            "d": {"tag": "Uniform", "name": "distr", "lower": "1500", "upper": "20000"},
         },
         {
             "languages": {
@@ -95,7 +95,7 @@ r = main(
                 "Latvian",
             },
             "name": "East_Baltic",
-            "d": {"tag": "Uniform", "name": "distr", "lower": "1300", "upper": "12000"},
+            "d": {"tag": "Uniform", "name": "distr", "lower": "1300", "upper": "20000"},
         },
         {
             "languages": {
@@ -104,7 +104,7 @@ r = main(
                 "Cornish",
             },
             "name": "British_Celtic",
-            "d": {"tag": "Uniform", "name": "distr", "lower": "1250", "upper": "12000"},
+            "d": {"tag": "Uniform", "name": "distr", "lower": "1250", "upper": "20000"},
         },
         {
             "languages": {
@@ -112,7 +112,7 @@ r = main(
                 "Scots_Gaelic",
             },
             "name": "Modern_Irish-Scots_Gaelic",
-            "d": {"tag": "Uniform", "name": "distr", "lower": "1050", "upper": "12000"},
+            "d": {"tag": "Uniform", "name": "distr", "lower": "1050", "upper": "20000"},
         },
         {
             "languages": {
@@ -120,7 +120,7 @@ r = main(
                 "Persian",
             },
             "name": "Persian-Tajik",
-            "d": {"tag": "Uniform", "name": "distr", "lower": "750", "upper": "12000"},
+            "d": {"tag": "Uniform", "name": "distr", "lower": "750", "upper": "20000"},
         },
     ]
 )
