@@ -233,7 +233,7 @@ of at least 85\% of all concepts (189 or more concepts). This results in \countl
 Following \textcite{greenhill2017evolutionary}, we calibrate five nodes using normally
 distributed priors. We supplement this with age constraints taken from \textcite[Table S3]{gray2009language}. There, we interpret the ranges given there as $2\sigma$ intervals of a normal distribution. This leads to the following node calibrations, sorted by their mean. We do not constrain the languages with these calibrations to be clades: a given calibrated MRCA node may be ancestral to more languages than explicitly listed.
 \begin{itemize}
-\item ‘Proto-Austronesian (mean of 5,200 y, SD = 300)’, i.\,e. on the root;
+\item ‘Proto-Austronesian (mean of 5,200 y, SD = 300)’, i.\,e. on the root of our tree;
 \item ‘Proto-Malayo-Polynesian (mean of 4,000 y, SD = 250)’, i.\,e. on the most recent common ancestor (MRCA) of all languages inside the Glottolog family \glot{Malayo-Polynesian}{mala1545};
 \item ‘Proto-Oceanic (mean of 3,300 y, SD = 100 y)’, i.\,e. on the MRCA of \glot{Oceanic}{ocea1241};
 \item \glot{Central Pacific}{cent2060} $\mu=3000, \sigma=100$;
@@ -267,7 +267,7 @@ The supplementary data from the 2015 paper is available from
 % grollemund2015bantu: We used archaeological data to propose date ranges, and in one case a fixed date, for four nodes of our tree (labeled a–d in Fig. 1). The four calibrations are as follows: (a) 5,000 B.P. or older for Bantoid, non-Bantu (58); (b) 4,000–5,000 B.P. for Narrow Bantu (13, 14, 16, 44, 59, 60); (c) 3,000–3,500 B.P. for the Mbam-Bubi ancestor (61); and (d) 2,500 B.P. for Eastern Bantu (62). We used a uniform prior in our Bayesian tree inference for all calibration ranges.
 We take the calibration ranges from \textcite{grollemund2015bantu}, but generally use normal distributions instead of uniform distributions. Again we do not enforce monophyly, which is particularly important for this language family, where two of the calibrated language groups (Bantoid and Mbam-Bubi) are paraphyletic in Glottolog.
 \begin{itemize}
-\item A uniform prior above 5000~yBP (with upper limit 20000~yBP) the MRCA of the non-Bantu Bantoid languages ();
+\item A uniform prior above 5000~yBP (with upper limit 20000~yBP) for the MRCA of the non-Bantu Bantoid languages (aghemgrassfields, njengrassfields, mbulajarawan, bamungrassfields, fefegrassfields, okugrassfields, dugurijarawan, moghamograssfields, bwazzajarawan, komgrassfields, bilejarawan, kulungjarawan, mungakagrassfields, zaambojarawan, tivtivoid);
 \item For the languages in \glot{Narrow Bantu}{narr1281}, a normal distribution with $\mu=4500, \sigma=250$;
 \item For the MRCA of the \glot{Mbam languages}{mbam1252} and \glot{Bubi}{bubi1250}, $\mu=3250, \sigma=125$;
 \item For \glot{East Bantu}{east2731}, $\mu=2500, \sigma=50$.
@@ -277,13 +277,21 @@ We take the calibration ranges from \textcite{grollemund2015bantu}, but generall
 For obvious reasons, Indo-European has been extensively studied using lexical Bayesian phylogenetics since the beginning
 of that field
 \parencite{bouckaert2012mapping,chang-ie,gray2003language,holm2017steppe,rama2018three,willems2016using}
+
 \paragraph{Lexical Data}
-Datasets have been improved
-step by step, generally going back to \textcite{dyen1992comparative} and its derivatives such as IELex \parencite{ielex}. The most recent study correcting
+Datasets generally go back to \textcite{dyen1992comparative} and its derivatives such as IELex \parencite{ielex},
+but have been improved
+step by step. The most recent study correcting
 the quality of cognate codes is by \textcite{chang-ie}. Their different datasets are explicitly compared by \textcite{rama2018three}, who finds that the
 ‘\textsc{medium}’ dataset fits the expected node ages best given a uniform tree prior. \Citeauthor{rama2018three} also argues qualitatively in favour of
 that dataset over the alternatives considered, so we base our analysis on that dataset, available from
 \url{https://github.com/PhyloStar/ie-phylo-exps/blob/a63c0b52f7772adc2341572932a74b23d92570df/medium1.nex}.
+
+\paragraph{Calibrations}
+Following the evidence presented by \textcite[Tables 7 and 12]{chang-ie}, we implement the following node and tip calibrations.
+\begin{itemize}
+    \item 
+\end{itemize}
 
 \subsubsection{Sino-Tibetan}
 The Sino-Tibetan language family has been recently studied phylogenetically by two independent groups
