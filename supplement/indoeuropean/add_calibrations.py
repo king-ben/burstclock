@@ -10,7 +10,7 @@ r = main(
         {"languages": {"Gothic"}, "d": normal(1650, 25)},
         {"languages": {"Old_High_German"}, "d": normal(1150, 50)},
         {"languages": {"Old_English"}, "d": normal(1000, 50)},
-        {"languages": {"Old_West_Norse"}, "d": normal(800, 50)},
+        {"languages": {"Old_Norse"}, "d": normal(800, 50)},
         {"languages": {"Classical_Armenian"}, "d": normal(1550, 50)},
         {"languages": {"Tocharian_B"}, "d": normal(1350, 150)},
         {"languages": {"Old_Irish"}, "d": normal(1200, 100)},
@@ -19,7 +19,7 @@ r = main(
         {
             "languages": {
                 "Gothic",
-                "Old_West_Norse",
+                "Old_Norse",
                 "Icelandic",
                 "Faroese",
                 "Norwegian",
@@ -61,7 +61,7 @@ r = main(
         },
         {
             "languages": {
-                "Old_West_Norse",
+                "Old_Norse",
                 "Icelandic",
                 "Faroese",
                 "Norwegian",

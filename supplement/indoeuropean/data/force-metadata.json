@@ -1,0 +1,60 @@
+{
+    "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#Wordlist",
+    "dialect": {
+        "commentPrefix": null,
+        "delimiter": "\t"
+    },
+    "tables": [
+        {
+            "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
+            "dc:extent": 37846,
+            "tableSchema": {
+                "columns": [
+                    {
+                        "datatype": "string",
+                        "name": "cc_alias"
+                    },
+                    {
+                        "datatype": "integer",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#cognatesetReference",
+                        "name": "cc_id"
+                    },
+                    {
+                        "datatype": "string",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#languageReference",
+                        "name": "language"
+                    },
+                    {
+                        "datatype": "string",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#form",
+                        "required": true,
+                        "name": "lexeme"
+                    },
+                    {
+                        "datatype": "integer",
+                        "name": "lexeme_id"
+                    },
+                    {
+                        "datatype": "string",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#comment",
+                        "name": "status"
+                    },
+                    {
+                        "datatype": "integer",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#id",
+                        "name": "id"
+                    },
+                    {
+                        "datatype": "string",
+                        "propertyUrl": "http://cldf.clld.org/v1.0/terms.rdf#parameterReference",
+                        "name": "concept"
+                    }
+                ],
+                "primaryKey": [
+                    "1"
+                ]
+            },
+            "url": "ielex-130421-ag-cc-with-concept.tsv"
+        }
+    ]
+}
