@@ -15,12 +15,12 @@ r = main(
         {"languages": {"Tocharian_B"}, "d": normal(1350, 150)},
         {"languages": {"Old_Irish"}, "d": normal(1200, 100)},
         {"languages": {"Cornish"}, "d": normal(300, 100)},
-        {"languages": {"Old_Church_Slavic"}, "d": normal(1000, 50)},
+        {"languages": {"Old_Church_Slavonic"}, "d": normal(1000, 50)},
         {
             "languages": {
                 "Gothic",
                 "Old_Norse",
-                "Icelandic",
+                "Icelandic_ST",
                 "Faroese",
                 "Norwegian",
                 "Swedish",
@@ -31,8 +31,8 @@ r = main(
                 "Old_High_German",
                 "German",
                 "Luxembourgish",
-                "Swiss_German",
-                "Dutch",
+                "Schwyzerdutsch",
+                "Dutch_List",
                 "Flemish",
                 "Afrikaans",
             },
@@ -42,11 +42,11 @@ r = main(
         {
             "languages": {
                 "Latin",
-                "Nuorese",
-                "Cagliari",
-                "Romanian",
+                "Sardinian_N",
+                "Sardinian_C",
+                "Rumanian_List",
                 "Catalan",
-                "Portuguese",
+                "Portuguese_ST",
                 "Spanish",
                 "French",
                 "Provencal",
@@ -62,7 +62,7 @@ r = main(
         {
             "languages": {
                 "Old_Norse",
-                "Icelandic",
+                "Icelandic_ST",
                 "Faroese",
                 "Norwegian",
                 "Swedish",
@@ -78,20 +78,20 @@ r = main(
                 "Polish",
                 "Upper_Sorbian",
                 "Ukrainian",
-                "Belarusian",
+                "Byelorussian",
                 "Russian",
                 "Slovenian",
                 "Macedonian",
                 "Bulgarian",
                 "Serbian",
-                "Old_Church_Slavic",
+                "Old_Church_Slavonic",
             },
             "name": "Slavic",
             "d": {"tag": "Uniform", "name": "distr", "lower": "1500", "upper": "20000"},
         },
         {
             "languages": {
-                "Lithuanian",
+                "Lithuanian_ST",
                 "Latvian",
             },
             "name": "East_Baltic",
@@ -99,8 +99,10 @@ r = main(
         },
         {
             "languages": {
-                "Welsh",
-                "Breton",
+                "Welsh_C",
+                "Welsh_N",
+                "Breton_Se",
+                "Breton_ST",
                 "Cornish",
             },
             "name": "British_Celtic",
@@ -108,7 +110,8 @@ r = main(
         },
         {
             "languages": {
-                "Irish",
+                "Irish_A",
+                "Irish_B",
                 "Scots_Gaelic",
             },
             "name": "Modern_Irish-Scots_Gaelic",
@@ -116,7 +119,7 @@ r = main(
         },
         {
             "languages": {
-                "Tajik",
+                "Tadzik",
                 "Persian",
             },
             "name": "Persian-Tajik",
