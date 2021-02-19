@@ -1,6 +1,4 @@
-<addon name="semistrictclock" version="0.1.0">
-            <depends on="BEAST" atleast="2.4.0"/>
-
-            <!-- Add other dependencies as necessary. -->
-            </addon>
-        
+<addon name="burstclock" version="0.1.0">
+  <depends on="BEAST" atleast="2.4.0"/>
+  <!-- Add other dependencies as necessary. -->
+</addon>
