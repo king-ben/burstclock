@@ -1,5 +1,6 @@
 <beast beautitemplate="BinaryCTMC" beautistatus="" namespace="beast.core:beast.evolution.alignment:beast.evolution.tree.coalescent:beast.core.util:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.likelihood" required="" version="2.6">
   <data>...</data>
+
   <map name="Uniform">beast.math.distributions.Uniform</map>
   <map name="Exponential">beast.math.distributions.Exponential</map>
   <map name="LogNormal">beast.math.distributions.LogNormalDistributionModel</map>
@@ -10,6 +11,7 @@
   <map name="prior">beast.math.distributions.Prior</map>
   <map name="InverseGamma">beast.math.distributions.InverseGamma</map>
   <map name="OneOnX">beast.math.distributions.OneOnX</map>
+
   <run id="mcmc" spec="MCMC" chainLength="10000000" numInitializationAttempts="1000" sampleFromPrior="false">
     <state id="state" spec="State" storeEvery="5000">
       <tree id="Tree.t:tree" spec="beast.evolution.tree.Tree" name="stateNode">
@@ -25,24 +27,28 @@
       <parameter id="BDBirthRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="10000.0">0.0005</parameter>
       <parameter id="BDDeathRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.5</parameter>
     </state>
+
     <init estimate="false" id="startingTree" initial="@Tree.t:tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTree">
       <populationModel spec="ConstantPopulation">
         <popSize spec="parameter.RealParameter" value="10000" />
       </populationModel>
     </init>
+
     <distribution id="posterior" spec="util.CompoundDistribution">
       <distribution id="prior" spec="util.CompoundDistribution">
-	<!-- <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathGernhard08Model" birthDiffRate="@BDBirthRate.t:tree" relativeDeathRate="@BDDeathRate.t:tree" tree="@Tree.t:tree">
-        </distribution> -->
+	      <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathGernhard08Model" birthDiffRate="@BDBirthRate.t:tree" relativeDeathRate="@BDDeathRate.t:tree" tree="@Tree.t:tree"/>
         <prior id="BirthRatePrior.t:tree" name="distribution" x="@BDBirthRate.t:tree">
-          <Uniform id="Uniform.3" name="distr" upper="0.05" />
+          <LogNormal id="LogNormal.BirthRate" name="distr">
+            <M id="LogNormalMean.BirthRate" spec="parameter.RealParameter" estimate="false">-7.316</M> <!-- Estimate based on 100 languages over 10000 years -->
+            <S id="LogNormalStd.BirthRate" spec="parameter.RealParameter" estimate="false">2.302585092994046</S> <!-- One order of magnitude standard deviation -->
+          </LogNormal>
         </prior>
         <prior id="DeathRatePrior.t:tree" name="distribution" x="@BDDeathRate.t:tree">
-          <Uniform id="Uniform.4" name="distr" />
+          <Beta id="Beta.DeathRate" name="distr" alpha="5" beta="2" />
         </prior>
         <prior id="ClockPrior.c:clock" name="distribution" x="@clockRate.c:clock">
           <LogNormal id="LogNormalDistributionModel.0" name="distr">
-            <parameter id="RealParameter.6" spec="parameter.RealParameter" estimate="false" name="M">-6.907755278982137</parameter>
+            <parameter id="RealParameter.6" spec="parameter.RealParameter" estimate="false" name="M">-10.41431317630212</parameter> <!-- Estimate based on one change in 3.3*10^4 years -->
             <parameter id="RealParameter.7" spec="parameter.RealParameter" estimate="false" lower="0.0" name="S" upper="5.0">2.302585092994046</parameter>
           </LogNormal>
         </prior>
@@ -68,6 +74,7 @@
         </distribution>
       </distribution>
     </distribution>
+
     <operator id="gammaShapeScaler.s:vocabulary" spec="ScaleOperator" parameter="@gammaShape.s:vocabulary" scaleFactor="0.5" weight="0.1" />
     <operator id="FrequenciesExchanger.s:vocabulary" spec="DeltaExchangeOperator" delta="0.003" weight="1.0">
       <parameter idref="freqParameter.s:vocabulary" />
@@ -98,6 +105,7 @@
       <up idref="BDDeathRate.t:tree" />
       <down idref="BDBirthRate.t:tree" />
     </operator>
+
     <logger id="tracelog" spec="Logger" fileName="vocabulary.log" logEvery="3000" model="@posterior" sort="smart">
       <log idref="posterior" />
       <log idref="likelihood" />
@@ -119,5 +127,6 @@
     <logger id="treelog.t:tree" spec="Logger" fileName="vocabulary.trees" logEvery="1000" mode="tree">
       <log id="TreeWithMetaDataLogger.t:tree" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:tree" />
     </logger>
+
   </run>
 </beast>
