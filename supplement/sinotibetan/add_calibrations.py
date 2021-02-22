@@ -6,5 +6,6 @@ r = main(
         {"languages": {"Burmish_Old_Burmese"}, "d": normal(800, 25)},
         {"languages": {"Tibetan_Old_Tibetan"}, "d": normal(1200, 25)},
         {"languages": {"Tangut"}, "d": normal(900, 25)},
+        {"glottolog-clade": "SiniticDialects", "languages": {"SiniticBeijing", "SiniticChaozou", "SiniticGuangzhou", "Jieyang", "SiniticLonggang", "SiniticXingning"}, "d": until(2000, 2200)}
     ]
 )

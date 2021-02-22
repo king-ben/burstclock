@@ -19,3 +19,6 @@ sinotibetan.xml stats.tex: raw_cldf/cldf-metadata.json add_calibrations.py sinot
 run/vocabulary.log: sinotibetan.xml
 	mkdir -p run
 	cd run && beast ../sinotibetan.xml
+
+sagart-sinotibetan.xml:
+	curl https://raw.githubusercontent.com/lingpy/sino-tibetan-paper/v1.0.3/BeastFiles/sinotibetan-beast-covarion-relaxed-fbd.xml -o sagart-sinotibetan.xml

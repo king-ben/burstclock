@@ -20,7 +20,7 @@ indoeuropean-template.xml: ../template.xml
 
 indoeuropean.xml: indoeuropean-template.xml add_calibrations.py raw_cldf/ielex-130421-ag-cc-with-concept.tsv raw_cldf/cldf-metadata.json
 	cp indoeuropean-template.xml indoeuropean.xml
-	PYTHONPATH=../ python add_calibrations.py -o indoeuropean.xml
+	grep indoeuropean.nex 01 | cut -d ' ' -f 1 | PYTHONPATH=../ python add_calibrations.py -o indoeuropean.xml --subset -
 	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json --use-ids -b -o indoeuropean.xml
 
 
