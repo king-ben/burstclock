@@ -22,8 +22,8 @@
         </trait>
       </tree>
       <parameter id="gammaShape.s:vocabulary" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
-      <parameter id="freqParameter.s:vocabulary" spec="parameter.RealParameter" dimension="2" lower="0.0" name="stateNode" upper="1.0">0.9 0.1</parameter>
-      <parameter id="clockRate.c:clock" spec="parameter.RealParameter" name="stateNode">0.001</parameter>
+      <parameter id="freqParameter" spec="parameter.RealParameter" dimension="2" lower="0.0" name="stateNode" upper="1.0">0.9 0.1</parameter>
+      <parameter id="lossRate" spec="parameter.RealParameter" name="stateNode">0.001</parameter>
       <parameter id="BDBirthRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="10000.0">0.0005</parameter>
       <parameter id="BDDeathRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.5</parameter>
     </state>
@@ -46,10 +46,10 @@
         <prior id="DeathRatePrior.t:tree" name="distribution" x="@BDDeathRate.t:tree">
           <Beta id="Beta.DeathRate" name="distr" alpha="5" beta="2" />
         </prior>
-        <prior id="ClockPrior.c:clock" name="distribution" x="@clockRate.c:clock">
+        <prior id="ClockPrior.c:clock" name="distribution" x="@lossRate">
           <LogNormal id="LogNormalDistributionModel.0" name="distr">
             <parameter id="RealParameter.6" spec="parameter.RealParameter" estimate="false" name="M">-8.724797332125648</parameter> <!-- 85% stability in 1000 years -->
-            <parameter id="RealParameter.7" spec="parameter.RealParameter" estimate="false" lower="0.0" name="S" upper="5.0">-1.151292546497023</parameter> <!-- Half an order of magnitude standard deviation – we could probably get actual estimates from the literature -->
+            <parameter id="RealParameter.7" spec="parameter.RealParameter" estimate="false" lower="0.0" name="S" upper="5.0">1.151292546497023</parameter> <!-- Half an order of magnitude standard deviation – we could probably get actual estimates from the literature -->
           </LogNormal>
         </prior>
         <prior id="GammaShapePrior.s:vocabulary" name="distribution" x="@gammaShape.s:vocabulary">
@@ -67,14 +67,14 @@
             <parameter id="proportionInvariant.s:vocabulary" spec="parameter.RealParameter" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
             <substModel id="CTMC.s:vocabulary" spec="GeneralSubstitutionModel">
               <parameter id="rates.s:vocabulary" spec="parameter.RealParameter" dimension="2" estimate="false" lower="0.0" name="rates">1.0 1.0</parameter>
-              <frequencies id="estimatedFreqs.s:vocabulary" spec="Frequencies" frequencies="@freqParameter.s:vocabulary" />
+              <frequencies id="estimatedFreqs.s:vocabulary" spec="Frequencies" frequencies="@freqParameter" />
             </substModel>
           </siteModel>
           <branchRateModel id="StrictClock.c:clock" spec="beast.evolution.branchratemodel.StrictClockModel">
-            <expression name="clock.rate" spec="feast.expressions.ExpCalculator">
-              <arg idref="clockRate.c:clock" />
-              <arg idref="freqParameter.s:vocabulary" />
-              clockRate.c:clock * freqParameter.s:vocabulary[1] / freqParameter.s:vocabulary[0]
+            <expression id="clockrate" name="clock.rate" spec="feast.expressions.ExpCalculator">
+              <arg idref="lossRate" />
+              <arg idref="freqParameter" />
+              lossRate * freqParameter[1] / freqParameter[0]
             </expression>
           </branchRateModel>
         </distribution>
@@ -83,11 +83,11 @@
 
     <operator id="gammaShapeScaler.s:vocabulary" spec="ScaleOperator" parameter="@gammaShape.s:vocabulary" scaleFactor="0.5" weight="0.1" />
     <operator id="FrequenciesExchanger.s:vocabulary" spec="DeltaExchangeOperator" delta="0.003" weight="1.0">
-      <parameter idref="freqParameter.s:vocabulary" />
+      <parameter idref="freqParameter" />
     </operator>
-    <operator id="StrictClockRateScaler.c:clock" spec="ScaleOperator" parameter="@clockRate.c:clock" scaleFactor="0.9" weight="4.0" />
+    <operator id="StrictClockRateScaler.c:clock" spec="ScaleOperator" parameter="@lossRate" scaleFactor="0.9" weight="4.0" />
     <operator id="strictClockUpDownOperator.c:clock" spec="UpDownOperator" scaleFactor="0.9" weight="3.0">
-      <up idref="clockRate.c:clock" />
+      <up idref="lossRate" />
       <down idref="Tree.t:tree" />
     </operator>
     <operator id="BirthDeathTreeScaler.t:tree" spec="ScaleOperator" scaleFactor="0.95" tree="@Tree.t:tree" weight="3.0" />
@@ -118,8 +118,9 @@
       <log idref="prior" />
       <log id="TreeHeight.t:tree" spec="beast.evolution.tree.TreeHeightLogger" tree="@Tree.t:tree" />
       <log idref="gammaShape.s:vocabulary" />
-      <log idref="freqParameter.s:vocabulary" />
-      <log idref="clockRate.c:clock" />
+      <log idref="freqParameter" />
+      <log idref="lossRate" />
+      <log idref="clockrate" />
       <!-- <log idref="BirthDeath.t:tree" /> -->
       <log idref="BDBirthRate.t:tree" />
       <log idref="BDDeathRate.t:tree" />

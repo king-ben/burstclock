@@ -48,7 +48,7 @@ included_languages: indoeuropean.nex
 
 indoeuropean-undated.xml: included_languages indoeuropean-template.xml raw_cldf/ielex-130421-ag-cc-with-concept.tsv raw_cldf/cldf-metadata.json
 	cp indoeuropean-template.xml indoeuropean-undated.xml
-	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json --use-ids -b -o indoeuropean-undated.xml
+	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json --use-ids -b -o indoeuropean-undated.xml --languages-list included_languages
 
 indoeuropean.xml: indoeuropean-undated.xml add_calibrations.py
 	cp indoeuropean-undated.xml indoeuropean.xml
