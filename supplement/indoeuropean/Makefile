@@ -18,10 +18,42 @@ raw_cldf/ielex-130421-ag-cc-with-concept.tsv: raw_cldf/ielex-130421-ag-cc.txt
 indoeuropean-template.xml: ../template.xml
 	cp ../template.xml indoeuropean-template.xml
 
-indoeuropean.xml: indoeuropean-template.xml add_calibrations.py raw_cldf/ielex-130421-ag-cc-with-concept.tsv raw_cldf/cldf-metadata.json
-	cp indoeuropean-template.xml indoeuropean.xml
-	grep indoeuropean.nex 01 | cut -d ' ' -f 1 | PYTHONPATH=../ python add_calibrations.py -o indoeuropean.xml --subset -
-	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json --use-ids -b -o indoeuropean.xml
+included_languages: indoeuropean.nex
+	echo "Mapping according to Chang et al. (2015), Table 8"
+	grep 01 indoeuropean.nex | cut -d ' ' -f 1 \
+	  | sed -e 's/^Adapazar$$/Armenian_List/' \
+	  | sed -e 's/^Arvanitika$$/Albanian_K/' \
+	  | sed -e 's/^Belarusian$$/Byelorussian/' \
+	  | sed -e 's/^Breton$$/Breton_ST/' \
+	  | sed -e 's/^Cagliari$$/Sardinian_C/' \
+	  | sed -e 's/^Dutch$$/Dutch_List/' \
+	  | sed -e 's/^Eastern_Armenian$$/Armenian_Mod/' \
+	  | sed -e 's/^Icelandic$$/Icelandic_ST/' \
+	  | sed -e 's/^Irish$$/Irish_B/' \
+	  | sed -e 's/^Lithuanian$$/Lithuanian_ST/' \
+	  | sed -e 's/^Modern_Greek$$/Greek_Mod/' \
+	  | sed -e 's/^Nuorese$$/Sardinian_N/' \
+	  | sed -e 's/^Old_Church_Slavic$$/Old_Church_Slavonic/' \
+	  | sed -e 's/^Old_Irish_B$$/Old_Irish/' \
+	  | sed -e 's/^Old_West_Norse$$/Old_Norse/' \
+	  | sed -e 's/^Panjabi$$/Panjabi_ST/' \
+	  | sed -e 's/^Portuguese$$/Portuguese_ST/' \
+	  | sed -e 's/^Romani$$/Gypsy_Gk/' \
+	  | sed -e 's/^Romanian$$/Rumanian_List/' \
+	  | sed -e 's/^Swiss_German$$/Schwyzerdutsch/' \
+	  | sed -e 's/^Tajik$$/Tadzik/' \
+	  | sed -e 's/^Tosk$$/Albanian_Top/' \
+	  | sed -e 's/^Welsh$$/Welsh_N/' \
+	| sort > included_languages
+
+indoeuropean-undated.xml: included_languages indoeuropean-template.xml raw_cldf/ielex-130421-ag-cc-with-concept.tsv raw_cldf/cldf-metadata.json
+	cp indoeuropean-template.xml indoeuropean-undated.xml
+	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json --use-ids -b -o indoeuropean-undated.xml
+
+indoeuropean.xml: indoeuropean-undated.xml add_calibrations.py
+	cp indoeuropean-undated.xml indoeuropean.xml
+	PYTHONPATH=../ python add_calibrations.py -o indoeuropean.xml --subset included_languages | sort > actually_included_languages
+	diff included_languages actually_included_languages
 
 
 run/vocabulary.log: indoeuropean.xml

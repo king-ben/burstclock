@@ -99,9 +99,7 @@ r = main(
         },
         {
             "languages": {
-                "Welsh_C",
                 "Welsh_N",
-                "Breton_Se",
                 "Breton_ST",
                 "Cornish",
             },
@@ -110,7 +108,6 @@ r = main(
         },
         {
             "languages": {
-                "Irish_A",
                 "Irish_B",
                 "Scots_Gaelic",
             },

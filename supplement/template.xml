@@ -48,8 +48,8 @@
         </prior>
         <prior id="ClockPrior.c:clock" name="distribution" x="@clockRate.c:clock">
           <LogNormal id="LogNormalDistributionModel.0" name="distr">
-            <parameter id="RealParameter.6" spec="parameter.RealParameter" estimate="false" name="M">-10.41431317630212</parameter> <!-- Estimate based on one change in 3.3*10^4 years -->
-            <parameter id="RealParameter.7" spec="parameter.RealParameter" estimate="false" lower="0.0" name="S" upper="5.0">2.302585092994046</parameter>
+            <parameter id="RealParameter.6" spec="parameter.RealParameter" estimate="false" name="M">-8.724797332125648</parameter> <!-- 85% stability in 1000 years -->
+            <parameter id="RealParameter.7" spec="parameter.RealParameter" estimate="false" lower="0.0" name="S" upper="5.0">-1.151292546497023</parameter> <!-- Half an order of magnitude standard deviation – we could probably get actual estimates from the literature -->
           </LogNormal>
         </prior>
         <prior id="GammaShapePrior.s:vocabulary" name="distribution" x="@gammaShape.s:vocabulary">
@@ -70,7 +70,13 @@
               <frequencies id="estimatedFreqs.s:vocabulary" spec="Frequencies" frequencies="@freqParameter.s:vocabulary" />
             </substModel>
           </siteModel>
-          <branchRateModel id="StrictClock.c:clock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockRate.c:clock" />
+          <branchRateModel id="StrictClock.c:clock" spec="beast.evolution.branchratemodel.StrictClockModel">
+            <expression name="clock.rate" spec="feast.expressions.ExpCalculator">
+              <arg idref="clockRate.c:clock" />
+              <arg idref="freqParameter.s:vocabulary" />
+              clockRate.c:clock * freqParameter.s:vocabulary[1] / freqParameter.s:vocabulary[0]
+            </expression>
+          </branchRateModel>
         </distribution>
       </distribution>
     </distribution>
