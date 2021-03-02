@@ -44,7 +44,7 @@
           </LogNormal>
         </prior>
         <prior id="DeathRatePrior.t:tree" name="distribution" x="@BDDeathRate.t:tree">
-          <Beta id="Beta.DeathRate" name="distr" alpha="5" beta="2" />
+          <Beta id="Beta.DeathRate" name="distr" alpha="5" beta="2" /> <!-- We do not know much, but we do know some lanugages are extinct and in the expanding lanugage families we look at it seems like the majority are not. And we vaguely see death rates around 0.2~0.5 inferred in other language phylogenies. -->
         </prior>
         <prior id="ClockPrior.c:clock" name="distribution" x="@lossRate">
           <LogNormal id="LogNormalDistributionModel.0" name="distr">
