@@ -224,5 +224,9 @@ def main(calibrations):
     for c in calibrations:
         calibration(run, prior, trait, languages, replacements=FBD_REPLACEMENTS if args.sampled_ancestors else {}, **c)
 
+    if args.first_writing is not None:
+        run = [tag for tag in root.iter() if tag.attrib.get("id") == "SamplingChangeTime"][0]
+        run.text = f"0. {args.first_writing:f}"
+
     et.write(args.output_file, encoding="unicode")
     return et, root, run, prior, trait, languages
