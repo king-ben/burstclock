@@ -74,7 +74,7 @@
             <expression id="clockrate" name="clock.rate" spec="feast.expressions.ExpCalculator">
               <arg idref="lossRate" />
               <arg idref="freqParameter" />
-              lossRate * freqParameter[1] / freqParameter[0]
+              2 * freqParameter[1] * lossRate <!-- Substitution is normalized by a factor N such that 2 * f[1] * f[0] * N = 1, so the loss rate and clock rate are related by l = f[0] * N * c = 1 / (2 * f[1]) * N * c so c = 2 * f[1] * l -->
             </expression>
           </branchRateModel>
         </distribution>
