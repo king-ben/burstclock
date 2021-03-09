@@ -26,8 +26,19 @@
       <parameter id="lossRate" spec="parameter.RealParameter" name="stateNode">0.001</parameter>
       <parameter id="BDBirthRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="10000.0">0.0005</parameter>
       <parameter id="BDDeathRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.5</parameter>
-      <parameter id="SamplingProportion" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.2 0.2</parameter>
-      <parameter id="removalProbability" name="stateNode"> 0.0 </parameter> <!-- No language is removed just from being sampled. Actually, we *could* assume that fieldwork some 50 years ago removes a language from the ones that are interesting to do fieldwork on right now, so there could be an effect which we could even access using the BDSKY. -->
+      <parameter id="SamplingProportion" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.2 0.2</parameter> <!--
+      I'm a bit confused which one is the older and which one the younger sampling proportion.
+
+      I would like to se the older sampling proportion to 0.0, but that breaks the
+      model, so maybe it should be about 1/10000, because there were presumably
+      thousands of languages that died out before Christians and linguists
+      started collecting languages, and only a dozen or so have left writing
+      that would give us enough data for word lists. -->
+      <parameter id="removalProbability" name="stateNode"> 0.0 </parameter> <!--
+      This assumes no language is removed just from being sampled. Actually, we *could* assume
+      that fieldwork some 50 years ago removes a language from the ones that are
+      interesting to do fieldwork on right now, so there could be an effect that
+      would be within the scope of the BDSKY. -->
     </state>
 
     <init estimate="false" id="startingTree" initial="@Tree.t:tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTree">
