@@ -26,6 +26,8 @@
       <parameter id="lossRate" spec="parameter.RealParameter" name="stateNode">0.001</parameter>
       <parameter id="BDBirthRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="10000.0">0.0005</parameter>
       <parameter id="BDDeathRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.5</parameter>
+      <parameter id="SamplingProportion" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.2 0.2</parameter>
+      <parameter id="removalProbability" name="stateNode"> 0.0 </parameter> <!-- No language is removed just from being sampled. Actually, we *could* assume that fieldwork some 50 years ago removes a language from the ones that are interesting to do fieldwork on right now, so there could be an effect which we could even access using the BDSKY. -->
     </state>
 
     <init estimate="false" id="startingTree" initial="@Tree.t:tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTree">
@@ -36,7 +38,13 @@
 
     <distribution id="posterior" spec="util.CompoundDistribution">
       <distribution id="prior" spec="util.CompoundDistribution">
-	      <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathGernhard08Model" birthDiffRate="@BDBirthRate.t:tree" relativeDeathRate="@BDDeathRate.t:tree" tree="@Tree.t:tree"/>
+        <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathSkylineModel" tree="@Tree.t:tree" rho="0.5131578947368421" conditionOnRhoSampling="true" conditionOnRoot="true" conditionOnSurvival="false">
+          <removalProbability idref="removalProbability" />
+          <netDiversification idref="BDBirthRate.t:tree" />
+          <turnOver idref="BDDeathRate.t:tree" />
+          <samplingProportion idref="SamplingProportion" />
+          <parameter name="samplingRateChangeTimes">0. 500.</parameter>
+        </distribution>
         <prior id="BirthRatePrior.t:tree" name="distribution" x="@BDBirthRate.t:tree">
           <LogNormal id="LogNormal.BirthRate" name="distr">
             <M id="LogNormalMean.BirthRate" spec="parameter.RealParameter" estimate="false">-7.316</M> <!-- Estimate based on 100 languages over 10000 years -->
@@ -74,7 +82,8 @@
             <expression id="clockrate" name="clock.rate" spec="feast.expressions.ExpCalculator">
               <arg idref="lossRate" />
               <arg idref="freqParameter" />
-              2 * freqParameter[1] * lossRate <!-- Substitution is normalized by a factor N such that 2 * f[1] * f[0] * N = 1, so the loss rate and clock rate are related by l = f[0] * N * c = 1 / (2 * f[1]) * N * c so c = 2 * f[1] * l -->
+              2 * freqParameter[1] * lossRate
+              <!-- Substitution is normalized by a factor N such that 2 * f[1] * f[0] * N = 1, so the loss rate and clock rate are related by l = f[0] * N * c = 1 / (2 * f[1]) * N * c so c = 2 * f[1] * l -->
             </expression>
           </branchRateModel>
         </distribution>
@@ -90,13 +99,14 @@
       <up idref="lossRate" />
       <down idref="Tree.t:tree" />
     </operator>
-    <operator id="BirthDeathTreeScaler.t:tree" spec="ScaleOperator" scaleFactor="0.95" tree="@Tree.t:tree" weight="3.0" />
-    <operator id="BirthDeathTreeRootScaler.t:tree" spec="ScaleOperator" rootOnly="true" scaleFactor="0.6" tree="@Tree.t:tree" weight="2.0" />
-    <operator id="BirthDeathUniformOperator.t:tree" spec="Uniform" tree="@Tree.t:tree" weight="30.0" />
-    <operator id="BirthDeathSubtreeSlide.t:tree" spec="SubtreeSlide" tree="@Tree.t:tree" size="4" weight="15.0" />
-    <operator id="BirthDeathNarrow.t:tree" spec="Exchange" tree="@Tree.t:tree" weight="15.0" />
-    <operator id="BirthDeathWide.t:tree" spec="Exchange" isNarrow="false" tree="@Tree.t:tree" weight="3.0" />
-    <operator id="BirthDeathWilsonBalding.t:tree" spec="WilsonBalding" tree="@Tree.t:tree" weight="1.0" />
+    <operator id="SampledAncestorJump" spec="LeafToSampledAncestorJump" removalProbability="@removalProbability" tree="@Tree.t:tree" weight="3.0" />
+    <operator id="BirthDeathTreeScaler.t:tree" spec="SAScaleOperator" scaleFactor="0.95" tree="@Tree.t:tree" weight="3.0" />
+    <operator id="BirthDeathTreeRootScaler.t:tree" spec="SAScaleOperator" rootOnly="true" scaleFactor="0.6" tree="@Tree.t:tree" weight="2.0" />
+    <operator id="BirthDeathUniformOperator.t:tree" spec="SAUniform" tree="@Tree.t:tree" weight="30.0" />
+    <!-- <operator id="BirthDeathSubtreeSlide.t:tree" spec="SubtreeSlide" tree="@Tree.t:tree" size="4" weight="15.0" /> -->
+    <operator id="BirthDeathNarrow.t:tree" spec="SAExchange" tree="@Tree.t:tree" weight="15.0" />
+    <operator id="BirthDeathWide.t:tree" spec="SAExchange" isNarrow="false" tree="@Tree.t:tree" weight="3.0" />
+    <operator id="BirthDeathWilsonBalding.t:tree" spec="SAWilsonBalding" tree="@Tree.t:tree" weight="1.0" />
     <operator id="BirthRateScaler.t:tree" spec="ScaleOperator" parameter="@BDBirthRate.t:tree" scaleFactor="0.9" weight="6.0" />
     <operator id="BirthRateUpDownOperator.c:clock" spec="UpDownOperator" scaleFactor="0.9" weight="3.0">
       <up idref="BDBirthRate.t:tree" />
@@ -121,9 +131,10 @@
       <log idref="freqParameter" />
       <log idref="lossRate" />
       <log idref="clockrate" />
-      <!-- <log idref="BirthDeath.t:tree" /> -->
+      
       <log idref="BDBirthRate.t:tree" />
       <log idref="BDDeathRate.t:tree" />
+      <log idref="SamplingProportion" />
     </logger>
     <logger id="screenlog" spec="Logger" logEvery="1000">
       <log idref="posterior" />
