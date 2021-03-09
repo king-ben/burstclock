@@ -102,7 +102,7 @@ def calibration(
             mrcaprior, "taxonset", id=f"{name}", spec="TaxonSet"
         )
         plate = ET.SubElement(
-            taxonset, "plate", range=",".join(languages), var="language"
+            taxonset, "plate", range=",".join(sorted(languages)), var="language"
         )
         ET.SubElement(plate, "taxon", idref="$(language)")
         ET.SubElement(mrcaprior, tag, **d)
