@@ -32,7 +32,7 @@
       I would like to se the older sampling proportion to 0.0, but that breaks the
       model, so maybe it should be about 1/10000, because there were presumably
       thousands of languages that died out before Christians and linguists
-      started collecting languages, and only a dozen or so have left writing
+      started collecting languages, and only a handful have left writing
       that would give us enough data for word lists. -->
       <parameter id="removalProbability" name="stateNode"> 0.0 </parameter> <!--
       This assumes no language is removed just from being sampled. Actually, we *could* assume
@@ -54,7 +54,7 @@
           <netDiversification idref="BDBirthRate.t:tree" />
           <turnOver idref="BDDeathRate.t:tree" />
           <samplingProportion idref="SamplingProportion" />
-          <parameter name="samplingRateChangeTimes">0. 500.</parameter>
+          <parameter name="samplingRateChangeTimes" id="SamplingChangeTime">0. 500.</parameter>
         </distribution>
         <prior id="BirthRatePrior.t:tree" name="distribution" x="@BDBirthRate.t:tree">
           <LogNormal id="LogNormal.BirthRate" name="distr">

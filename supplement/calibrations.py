@@ -21,8 +21,12 @@ def until(lower, upper):
     return normal(mean, std)
 
 
+FBD_REPLACEMENTS = {
+        "TipDatesRandomWalker": "beast.evolution.operators.SampledNodeDateRandomWalker",
+}
+
 def calibration(
-        run, prior, trait, all_languages, d, languages=[], glottolog_clade=None, mean=0.0, name=None
+        run, prior, trait, all_languages, d, languages=[], glottolog_clade=None, mean=0.0, name=None, replacements={}, monophyletic=False
 ):
     if glottolog_clade is not None:
         languages = {
@@ -48,7 +52,7 @@ def calibration(
                 prior,
                 "distribution",
                 id=f"{language:}_originateMRCA",
-                monophyletic="true",
+                monophyletic="true" if monophyletic else "false",
                 spec="beast.math.distributions.MRCAPrior",
                 tree="@Tree.t:tree",
                 useOriginate="true",
@@ -68,7 +72,7 @@ def calibration(
                 run,
                 "operator",
                 id=f"TipDatesandomWalker:{language:}",
-                spec="TipDatesRandomWalker",
+                spec=replacements.get("TipDatesRandomWalker", "beast.evolution.operators.TipDatesRandomWalker"),
                 windowSize="1",
                 tree="@Tree.t:tree",
                 weight="3.0",
@@ -79,7 +83,7 @@ def calibration(
                 prior,
                 "distribution",
                 id=f"{language:}_tipMRCA",
-                monophyletic="true",
+                monophyletic="true" if monophyletic else "false",
                 spec="beast.math.distributions.MRCAPrior",
                 tree="@Tree.t:tree",
                 tipsonly="true",
@@ -94,7 +98,7 @@ def calibration(
             prior,
             "distribution",
             id=f"{name}_tipMRCA",
-            monophyletic="false",  # Should these be true?
+            monophyletic="true" if monophyletic else "false",
             spec="beast.math.distributions.MRCAPrior",
             tree="@Tree.t:tree",
         )
@@ -119,6 +123,12 @@ def main(calibrations):
         help="""Only include languages within this Glottolog clade""",
     )
     parser.add_argument(
+        "--first-writing",
+        "-w",
+        type=float,
+        help="The date (BP) when writing started in the region, and thus a notable chance of lanugages of languages being sampled begins. (Default: Don't modify this parameter in the template.)"
+    )
+    parser.add_argument(
         "--subset",
         type=argparse.FileType('r'),
         help="A file (or '-' for stdin) containing one language to be included per line"
@@ -129,9 +139,23 @@ def main(calibrations):
         type=Path,
         help="""File to write output to. (If output file exists, add tags in there.) Default: Write to stdout""",
     )
+    parser.add_argument(
+        "--sampled-ancestors",
+        "-s",
+        action="store_true",
+        default=False,
+        help="Work for a sampled ancestor tree, which needs variant operators."
+    )
+    parser.add_argument(
+        "--metadata",
+        "-m",
+        type=Path,
+        default="raw_cldf/cldf-metadata.json",
+        help="""Metadata file, for language list""",
+    )
     args = parser.parse_args()
 
-    ds = pycldf.Wordlist.from_metadata("raw_cldf/cldf-metadata.json")
+    ds = pycldf.Wordlist.from_metadata(args.metadata)
 
     if args.subset:
         langs = {l.strip() for l in args.subset}
@@ -142,7 +166,7 @@ def main(calibrations):
         for language in tqdm(
             ds["LanguageTable"], total=ds["LanguageTable"].common_props["dc:extent"]
         ):
-            id = language["ID"]
+            id = language[ds.column_names.languages.id]
             if args.subset and id not in langs:
                 continue
             try:
@@ -198,7 +222,7 @@ def main(calibrations):
         ET.SubElement(taxa, "taxon", id=lang, spec="Taxon")
 
     for c in calibrations:
-        calibration(run, prior, trait, languages, **c)
+        calibration(run, prior, trait, languages, replacements=FBD_REPLACEMENTS if args.sampled_ancestors else {}, **c)
 
     et.write(args.output_file, encoding="unicode")
     return et, root, run, prior, trait, languages
