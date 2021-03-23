@@ -26,7 +26,7 @@
       <parameter id="lossRate" spec="parameter.RealParameter" name="stateNode">0.001</parameter>
       <parameter id="BDBirthRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="10000.0">0.0005</parameter>
       <parameter id="BDDeathRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.5</parameter>
-      <parameter id="SamplingProportion" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.2 0.2</parameter> <!--
+      <parameter id="SamplingProportion" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">1e-4 0.2</parameter> <!--
       I'm a bit confused which one is the older and which one the younger sampling proportion.
 
       I would like to se the older sampling proportion to 0.0, but that breaks the
@@ -34,11 +34,8 @@
       thousands of languages that died out before Christians and linguists
       started collecting languages, and only a handful have left writing
       that would give us enough data for word lists. -->
-      <parameter id="removalProbability" name="stateNode"> 0.0 </parameter> <!--
-      This assumes no language is removed just from being sampled. Actually, we *could* assume
-      that fieldwork some 50 years ago removes a language from the ones that are
-      interesting to do fieldwork on right now, so there could be an effect that
-      would be within the scope of the BDSKY. -->
+      <parameter id="removalProbability" name="stateNode"> 0.5 </parameter> <!--
+      This assumes a language is removed with probability 1/2 from being sampled. Of course, the actual causality is different: The language is not removed due to being sampled, but instead one of two things may happen: Eiter the later removal of the language makes the sample interesting enough to be included (eg. Gothic), or the sampling makes it more interesting to sample other languages afterwards, so it's the last sample of the language nonetheless. Of course, this logic only applies to non-ancestral languages, which is why we don't assume a higher removal probability.  -->
     </state>
 
     <init estimate="false" id="startingTree" initial="@Tree.t:tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTree">
@@ -49,13 +46,14 @@
 
     <distribution id="posterior" spec="util.CompoundDistribution">
       <distribution id="prior" spec="util.CompoundDistribution">
-        <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathSkylineModel" tree="@Tree.t:tree" rho="0.5131578947368421" conditionOnRhoSampling="true" conditionOnRoot="true" conditionOnSurvival="false">
+        <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathSkylineModel" tree="@Tree.t:tree" rho="0.5131578947368421" conditionOnRoot="true" conditionOnSurvival="false">
           <removalProbability idref="removalProbability" />
           <netDiversification idref="BDBirthRate.t:tree" />
           <turnOver idref="BDDeathRate.t:tree" />
           <samplingProportion idref="SamplingProportion" />
           <parameter name="samplingRateChangeTimes" id="SamplingChangeTime">0. 500.</parameter>
         </distribution>
+        
         <prior id="BirthRatePrior.t:tree" name="distribution" x="@BDBirthRate.t:tree">
           <LogNormal id="LogNormal.BirthRate" name="distr">
             <M id="LogNormalMean.BirthRate" spec="parameter.RealParameter" estimate="false">-7.316</M> <!-- Estimate based on 100 languages over 10000 years -->
@@ -124,6 +122,7 @@
       <down idref="Tree.t:tree" />
     </operator>
     <operator id="DeathRateScaler.t:tree" spec="ScaleOperator" parameter="@BDDeathRate.t:tree" scaleFactor="0.9" weight="3.0" />
+    <operator id="SamplingProportionScaler" spec="ScaleOperator" parameter="@SamplingProportion" scaleAllIndependently="true" scaleFactor="0.9" weight="4.0" />
     <operator id="DeathRateUpDownOperator.c:clock" spec="UpDownOperator" scaleFactor="0.9" weight="3.0">
       <up idref="BDDeathRate.t:tree" />
       <down idref="Tree.t:tree" />
