@@ -46,7 +46,7 @@
 
     <distribution id="posterior" spec="util.CompoundDistribution">
       <distribution id="prior" spec="util.CompoundDistribution">
-        <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathSkylineModel" tree="@Tree.t:tree" rho="0.5131578947368421" conditionOnRoot="true" conditionOnSurvival="false">
+        <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathSkylineModel" tree="@Tree.t:tree" rho="0.5131578947368421" conditionOnRoot="true" conditionOnSurvival="false" reverseTimeArrays="true true true true true">
           <removalProbability idref="removalProbability" />
           <netDiversification idref="BDBirthRate.t:tree" />
           <turnOver idref="BDDeathRate.t:tree" />
