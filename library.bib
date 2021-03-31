@@ -425,6 +425,21 @@
   pagetotal = {392}
 }
 
+@article{altekar2004parallel,
+  title = {Parallel {{Metropolis}} coupled {{Markov}} chain {{Monte Carlo}} for {{Bayesian}} phylogenetic inference},
+  author = {Altekar, Gautam and Dwarkadas, Sandhya and Huelsenbeck, John P. and Ronquist, Fredrik},
+  date = {2004-02-12},
+  journaltitle = {Bioinformatics},
+  shortjournal = {Bioinformatics},
+  volume = {20},
+  pages = {407--415},
+  issn = {1367-4803},
+  doi = {10.1093/bioinformatics/btg427},
+  abstract = {Motivation: Bayesian estimation of phylogeny is based on the posterior probability distribution of trees. Currently, the only numerical method that can effectively approximate posterior probabilities of trees is Markov chain Monte Carlo (MCMC). Standard implementations of MCMC can be prone to entrapment in local optima. Metropolis coupled MCMC [(MC)3], a variant of MCMC, allows multiple peaks in the landscape of trees to be more readily explored, but at the cost of increased execution time.Results: This paper presents a parallel algorithm for (MC)3. The proposed parallel algorithm retains the ability to explore multiple peaks in the posterior distribution of trees while maintaining a fast execution time. The algorithm has been implemented using two popular parallel programming models: message passing and shared memory. Performance results indicate nearly linear speed improvement in both programming models for small and large data sets.Availability: MrBayes v3.0 is available at http://morphbank.ebc.uu.se/mrbayes/},
+  file = {/home/gereon/Zotero/storage/XQV26X4Z/Altekar et al. - 2004 - Parallel Metropolis coupled Markov chain Monte Car.pdf;/home/gereon/Zotero/storage/4TYERBBW/186341.html;/home/gereon/Zotero/storage/DQ4AVTAB/186341.html},
+  number = {3}
+}
+
 @article{amano2014global,
   title = {Global distribution and drivers of language extinction risk},
   author = {Amano, Tatsuya and Sandel, Brody and Eager, Heidi and Bulteau, Edouard and Svenning, Jens-Christian and Dalsgaard, Bo and Rahbek, Carsten and Davies, Richard G. and Sutherland, William J.},
@@ -2044,6 +2059,21 @@
   number = {4}
 }
 
+@article{brown2018behavior,
+  title = {The {{Behavior}} of {{Metropolis}}-{{Coupled Markov Chains When Sampling Rugged Phylogenetic Distributions}}},
+  author = {Brown, Jeremy M and Thomson, Robert C},
+  date = {2018-07-01},
+  journaltitle = {Systematic Biology},
+  shortjournal = {Systematic Biology},
+  volume = {67},
+  pages = {729--734},
+  issn = {1063-5157},
+  doi = {10.1093/sysbio/syy008},
+  abstract = {Bayesian phylogenetic inference relies on the use of Markov chain Monte Carlo (MCMC) to provide numerical approximations of high-dimensional integrals and estimate posterior probabilities. However, MCMC performs poorly when posteriors are very rugged (i.e., regions of high posterior density are separated by regions of low posterior density). One technique that has become popular for improving numerical estimates from MCMC when distributions are rugged is Metropolis coupling (MC\$\^3\$). In MC\$\^3\$, additional chains are employed to sample flattened transformations of the posterior and improve mixing. Here, we highlight several underappreciated behaviors of MC3. Notably, estimated posterior probabilities may be incorrect but appear to converge, when individual chains do not mix well, despite different chains sampling trees from all relevant areas in tree space. Counterintuitively, such behavior can be more difficult to diagnose with increased numbers of chains. We illustrate these surprising behaviors of MC\$\^3\$ using a simple, non-phylogenetic example and phylogenetic examples involving both constrained and unconstrained analyses. To detect and mitigate the effects of these behaviors, we recommend increasing the number of independent analyses and varying the temperature of the hottest chain in current versions of Bayesian phylogenetic software. Convergence diagnostics based on the behavior of the hottest chain may also help detect these behaviors and could form a useful addition to future software releases.},
+  file = {/home/gereon/Zotero/storage/TIY65ILH/Brown and Thomson - 2018 - The Behavior of Metropolis-Coupled Markov Chains W.pdf;/home/gereon/Zotero/storage/XR6NGFTP/4866058.html},
+  number = {4}
+}
+
 @article{bryant2004neighbor-net:,
   title = {Neighbor-{{Net}}: {{An Agglomerative Method}} for the {{Construction}} of {{Phylogenetic Networks}}},
   shorttitle = {Neighbor-{{Net}}},
@@ -2429,7 +2459,7 @@
   pagetotal = {822}
 }
 
-@article{chang-ie,
+@article{chang2015ancestryconstrained,
   title = {Ancestry-constrained phylogenetic analysis supports the {{Indo}}-{{European}} steppe hypothesis},
   author = {Chang, Will and Cathcart, Chundra and Hall, David and Garrett, Andrew},
   date = {2015-03},
@@ -2993,16 +3023,16 @@
   url = {http://arxiv.org/abs/0907.0785},
   urldate = {2018-06-27},
   abstract = {A standard form of analysis for linguistic typology is the universal implication. These implications state facts about the range of extant languages, such as ``if objects come after verbs, then adjectives come after nouns.'' Such implications are typically discovered by painstaking hand analysis over a small sample of languages. We propose a computational model for assisting at this process. Our model is able to discover both well-known implications as well as some novel implications that deserve further study. Moreover, through a careful application of hierarchical analysis, we are able to cope with the well-known sampling problem: languages are not independent.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {0907.0785},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/2KLCIPAR/Daumé III and Campbell - 2009 - A Bayesian Model for Discovering Typological Impli.pdf;/home/gereon/Zotero/storage/LSR8L84H/Daumé III and Campbell - 2009 - A Bayesian Model for Discovering Typological Impli.pdf;/home/gereon/Zotero/storage/V6Z8EQD7/Daumé III and Campbell - 2009 - A Bayesian Model for Discovering Typological Impli.pdf;/home/gereon/Zotero/storage/VR8KSQQK/Daumé III and Campbell - 2009 - A Bayesian Model for Discovering Typological Impli.pdf;/home/gereon/Zotero/storage/DQ5DBZK7/0907.html;/home/gereon/Zotero/storage/SRPNR799/0907.html;/home/gereon/Zotero/storage/WLZPZSWJ/0907.html;/home/gereon/Zotero/storage/XVI4DUR5/0907.html},
   keywords = {computation and language,Computer Science - Computation and Language},
-  primaryClass = {cs}
+  primaryclass = {cs}
 }
 % == BibLateX quality report for daumeiii2009bayesian:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @inproceedings{daumeiii2009nonparametric,
   ids = {daumeiii2009nonparametrica},
@@ -3400,6 +3430,21 @@
 % == BibLateX quality report for dinerstein2017ecoregionbased:
 % Unexpected field 'publisher'
 
+@article{dingemanse2015arbitrariness,
+  title = {Arbitrariness, {{Iconicity}}, and {{Systematicity}} in {{Language}}},
+  author = {Dingemanse, Mark and Blasi, Damián E. and Lupyan, Gary and Christiansen, Morten H. and Monaghan, Padraic},
+  date = {2015-10},
+  journaltitle = {Trends in Cognitive Sciences},
+  shortjournal = {Trends in Cognitive Sciences},
+  volume = {19},
+  pages = {603--615},
+  issn = {13646613},
+  doi = {10.1016/j.tics.2015.07.013},
+  file = {/home/gereon/Zotero/storage/CXQUEAHS/Dingemanse et al. - 2015 - Arbitrariness, Iconicity, and Systematicity in Lan.pdf},
+  langid = {english},
+  number = {10}
+}
+
 @article{dockery2010culture,
   title = {Culture and {{Wellbeing}}: {{The Case}} of {{Indigenous Australians}}},
   shorttitle = {Culture and {{Wellbeing}}},
@@ -3475,6 +3520,27 @@
   file = {/home/gereon/Zotero/storage/RG5ADIVX/Dortch - 2002 - Modelling past Aboriginal hunter-gatherer socio-ec.pdf;/home/gereon/Zotero/storage/SWYEDWSC/j.1834-4453.2002.tb00497.html},
   number = {1}
 }
+
+@article{douglas2021adaptive,
+  title = {Adaptive dating and fast proposals: {{Revisiting}} the phylogenetic relaxed clock model},
+  shorttitle = {Adaptive dating and fast proposals},
+  author = {Douglas, Jordan and Zhang, Rong and Bouckaert, Remco},
+  date = {2021-02-02},
+  journaltitle = {PLOS Computational Biology},
+  shortjournal = {PLOS Computational Biology},
+  volume = {17},
+  pages = {e1008322},
+  publisher = {{Public Library of Science}},
+  issn = {1553-7358},
+  doi = {10.1371/journal.pcbi.1008322},
+  abstract = {Relaxed clock models enable estimation of molecular substitution rates across lineages and are widely used in phylogenetics for dating evolutionary divergence times. Under the (uncorrelated) relaxed clock model, tree branches are associated with molecular substitution rates which are independently and identically distributed. In this article we delved into the internal complexities of the relaxed clock model in order to develop efficient MCMC operators for Bayesian phylogenetic inference. We compared three substitution rate parameterisations, introduced an adaptive operator which learns the weights of other operators during MCMC, and we explored how relaxed clock model estimation can benefit from two cutting-edge proposal kernels: the AVMVN and Bactrian kernels. This work has produced an operator scheme that is up to 65 times more efficient at exploring continuous relaxed clock parameters compared with previous setups, depending on the dataset. Finally, we explored variants of the standard narrow exchange operator which are specifically designed for the relaxed clock model. In the most extreme case, this new operator traversed tree space 40\% more efficiently than narrow exchange. The methodologies introduced are adaptive and highly effective on short as well as long alignments. The results are available via the open source optimised relaxed clock (ORC) package for BEAST 2 under a GNU licence (https://github.com/jordandouglas/ORC).},
+  file = {/home/gereon/Zotero/storage/Z7D8XXM6/Douglas et al. - 2021 - Adaptive dating and fast proposals Revisiting the.pdf;/home/gereon/Zotero/storage/YT9WAHHJ/article.html},
+  keywords = {Genetics,Leaves,Phylogenetic analysis,Phylogenetics,Probability distribution,Random walk,Sequence alignment,Simulation and modeling},
+  langid = {english},
+  number = {2}
+}
+% == BibLateX quality report for douglas2021adaptive:
+% Unexpected field 'publisher'
 
 @book{doumont2009trees,
   title = {Trees, {{Maps}}, and {{Theorems Effective Communication}} for {{Rational Minds}}},
@@ -3874,17 +3940,17 @@
   url = {http://arxiv.org/abs/1907.02813},
   urldate = {2021-01-09},
   abstract = {The framework of the seventeen sustainable development goals is a challenge for developers and researchers applying artificial intelligence (AI). AI and earth observations (EO) can provide reliable and disaggregated data for better monitoring of the sustainable development goals (SDGs). In this paper, we present an overview of SDG targets, which can be effectively measured with AI tools. We identify indicators with the most significant contribution from the AI and EO and describe an application of state-of-the-art machine learning models to one of the indicators. We describe an application of U-net with SE blocks for efficient segmentation of satellite imagery for crop detection. Finally, we demonstrate how AI can be more effectively applied in solutions directly contributing towards specific SDGs and propose further research on an AI-based evaluative infrastructure for SDGs.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1907.02813},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/P27HBNMY/Efremova et al. - 2019 - AI-based evaluation of the SDGs The case of crop .pdf},
   keywords = {Computer Science - Computer Vision and Pattern Recognition,Electrical Engineering and Systems Science - Image and Video Processing},
   langid = {english},
-  primaryClass = {cs, eess}
+  primaryclass = {cs, eess}
 }
 % == BibLateX quality report for efremova2019aibased:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @book{egt,
   title = {Evolutionary {{Game Theory}}},
@@ -3953,16 +4019,16 @@
   url = {http://arxiv.org/abs/1206.3251},
   urldate = {2015-12-06},
   abstract = {A central task in many applications is reasoning about processes that change over continuous time. Continuous-Time Bayesian Networks is a general compact representation language for multi-component continuous-time processes. However, exact inference in such processes is exponential in the number of components, and thus infeasible for most models of interest. Here we develop a novel Gibbs sampling procedure for multi-component processes. This procedure iteratively samples a trajectory for one of the components given the remaining ones. We show how to perform exact sampling that adapts to the natural time scale of the sampled process. Moreover, we show that this sampling procedure naturally exploits the structure of the network to reduce the computational cost of each step. This procedure is the first that can provide asymptotically unbiased approximation in such processes.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1206.3251},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/S5EBN34I/El-Hay et al. - 2012 - Gibbs Sampling in Factorized Continuous-Time Marko.pdf;/home/gereon/Zotero/storage/MTJ2Q5AX/1206.html},
   keywords = {AI,Statistics - Computation},
-  primaryClass = {cs, stat}
+  primaryclass = {cs, stat}
 }
 % == BibLateX quality report for el-hay2012gibbs:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @unpublished{elias2017internal,
   title = {The {{Internal Diversity}} of {{Lamaholot}}},
@@ -4457,7 +4523,7 @@
   issn = {03701573},
   doi = {10.1016/j.physrep.2016.09.002},
   abstract = {Community detection in networks is one of the most popular topics of modern network science. Communities, or clusters, are usually groups of vertices having higher probability of being connected to each other than to members of other groups, though other patterns are possible. Identifying communities is an ill-defined problem. There are no universal protocols on the fundamental ingredients, like the definition of community itself, nor on other crucial issues, like the validation of algorithms and the comparison of their performances. This has generated a number of confusions and misconceptions, which undermine the progress in the field. We offer a guided tour through the main aspects of the problem. We also point out strengths and weaknesses of popular methods, and give directions to their use.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1608.00163},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/6772MD9N/Fortunato and Hric - 2016 - Community detection in networks A user guide.pdf},
@@ -4465,7 +4531,7 @@
   langid = {english}
 }
 % == BibLateX quality report for fortunato2016community:
-% Unexpected field 'archivePrefix'
+% Unexpected field 'archiveprefix'
 
 @article{fourment2019evaluating,
   title = {Evaluating probabilistic programming and fast variational {{Bayesian}} inference in phylogenetics},
@@ -4640,7 +4706,7 @@
   issn = {0003-3804, 1521-3889},
   doi = {10.1002/andp.200410132},
   abstract = {This is a pedagogical introduction to Brownian motion on the occasion of the 100th anniversary of Einstein's 1905 paper on the subject. After briefly reviewing Einstein's work in its contemporary context, we pursue some lines of further developments and applications in soft condensed matter and biology. Over the last century Brownian motion became promoted from an odd curiosity of marginal scientific interest to a guiding theme pervading all of the modern (live) sciences.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {cond-mat/0502602},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/CBFFH9IP/Frey and Kroy - 2005 - Brownian motion a paradigm of soft matter and bio.pdf;/home/gereon/Zotero/storage/CSGBBBUQ/Frey and Kroy - 2005 - Brownian motion a paradigm of soft matter and bio.pdf;/home/gereon/Zotero/storage/BA8ZJIVH/0502602.html;/home/gereon/Zotero/storage/FFFAC6SA/0502602.html},
@@ -4648,7 +4714,7 @@
   number = {1-3}
 }
 % == BibLateX quality report for frey2005brownian:
-% Unexpected field 'archivePrefix'
+% Unexpected field 'archiveprefix'
 % 'issn': not a valid ISSN
 
 @article{fricke2018reconstructing,
@@ -4678,6 +4744,20 @@
 }
 % == BibLateX quality report for friedman2003being:
 % 'issn': not a valid ISSN
+
+@book{friedman2021facilitator,
+  title = {The {{Facilitator}}'s {{Catechism Playbook}}},
+  author = {Friedman, Daniel Ari and Cordes, Richard J.},
+  date = {2021-03-04},
+  publisher = {{Zenodo}},
+  doi = {10.5281/zenodo.4579414},
+  abstract = {The Facilitator’s Catechism (FC) is an operations order formatted as a project-management document. The FC is intended to be used \& refined by remote teams in order to greatly increase organizational alignment, project comparability, reliability, and productivity in the pursuit of timely deliverables while reducing work-about-work. It is built from the battle-tested, project management techniques used by the National Militaries and by the Defense Advanced Research Projects Agency. This playbook is meant to be a document that assists with that adoption, ensuring clarity and providing a Single Source of Truth (SSoT) for the intents of its application and its usage. It offers context on the background of catechisms (Part I), a step-by-step guide on how to deploy it for the first time (Part II), and examples, templates, further reading, and resources for making it a part of your regular individual or team work-flow (Supplemental Resources).},
+  file = {/home/gereon/Zotero/storage/A5AHDDJG/Daniel Ari Friedman and Richard J. Cordes - 2021 - The Facilitator's Catechism Playbook.pdf},
+  keywords = {Operations Orders,Project Management,Remote Work,Small Teams},
+  version = {1.0}
+}
+% == BibLateX quality report for friedman2021facilitator:
+% Unexpected field 'version'
 
 @article{fudenberg2006evolutionary,
   title = {Evolutionary game dynamics in finite populations with strong selection and weak mutation},
@@ -4838,6 +4918,19 @@
   file = {/home/gereon/Zotero/storage/5ZRC8MHU/Gell-Mann and Ruhlen - 2011 - The origin and evolution of word order.pdf},
   keywords = {word order},
   number = {42}
+}
+
+@book{gelman2021bayesian,
+  title = {Bayesian {{Data Analysis}}},
+  author = {Gelman, Andrew and Carlin, John B and Stern, Hal S and Dunson, David B and Vehtari, Aki and Rubin, Donald B},
+  date = {2021-02-15},
+  edition = {third edition},
+  publisher = {{CRC Press}},
+  url = {http://www.stat.columbia.edu/~gelman/book/},
+  file = {/home/gereon/Zotero/storage/LT68W93W/Gelman et al. - Bayesian Data Analysis Third edition (with errors .pdf},
+  langid = {english},
+  pagetotal = {667},
+  series = {Texts in {{Statistical Science}}}
 }
 
 @online{geo4dev,
@@ -5882,7 +5975,7 @@
   issn = {10601538},
   doi = {10.1002/evan.21485},
   abstract = {Residential mobility is deeply entangled with all aspects of hunter-gatherer life ways, and is therefore an issue of central importance in hunter-gatherer studies. Hunter-gatherers vary widely in annual rates of residential mobility, and understanding the sources of this variation has long been of interest to anthropologists and archaeologists. Since mobility is, to a large extent, driven by the need for a continuous supply of food, a natural framework for addressing this question is provided by the metabolic theory of ecology. This provides a powerful framework for formulating formal testable hypotheses concerning evolutionary and ecological constraints on the scale and variation of hunter-gatherer residential mobility. We evaluate these predictions using extant data and show strong support for the hypotheses. We show that the overall scale of hunter-gatherer residential mobility is predicted by average human body size, and the limited capacity of mobile hunter-gatherers to store energy internally. We then show that the majority of variation in residential mobility observed across cultures is predicted by energy availability in local ecosystems. Our results demonstrate that large-scale evolutionary and ecological processes, common to all plants and animals, constrain hunter-gatherers in predictable ways as they move through territories to effectively exploit resources over the course of a year. Moreover, our results extend the scope of the metabolic theory of ecology by showing how it successfully predicts variation in the behavioral ecology of populations within a species.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1602.00631},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/YJR7HEW9/Hamilton et al. - 2016 - The ecological and evolutionary energetics of hunt.pdf;/home/gereon/Zotero/storage/6P8VUQWH/1602.html},
@@ -5890,7 +5983,7 @@
   number = {3}
 }
 % == BibLateX quality report for hamilton2016ecological:
-% Unexpected field 'archivePrefix'
+% Unexpected field 'archiveprefix'
 
 @article{hamilton2016ecologicala,
   title = {The ecological and evolutionary energetics of hunter-gatherer residential mobility},
@@ -5964,16 +6057,16 @@
   url = {http://arxiv.org/abs/0809.4202},
   urldate = {2017-09-01},
   abstract = {Traditionally evolution is seen as a process where from a pool of possible variations of a population (e.g. biological species or industrial goods) a few variations get selected which survive and proliferate, whereas the others vanish. Survival probability is typically associated with the 'fitness' of a particular variation. In this paper we argue that the notion of fitness is an a posteriori concept, in the sense that one can assign higher fitness to species that survive but one can generally not derive or even measure fitness - or fitness landscapes - per se. For this reason we think that in a 'physical' theory of evolution such notions should be avoided. In this spirit, here we propose a random matrix model of evolution where selection mechanisms are encoded in the interaction matrices of species. We are able to recover some key facts of evolution dynamics, such as punctuated equilibrium, i.e. the existence of intrinsic large extinctions events, and, at the same time, periods of dramatic diversification, as known e.g. from fossil records. Further, we comment on two fundamental technical problems of a 'physics of evolution', the non-closedness of its phase space and the problem of co-evolving boundary conditions, apparent in all systems subject to evolution.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {0809.4202},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/C57HGV9E/Hanel and Thurner - 2008 - Physics of Evolution Selection without Fitness.pdf;/home/gereon/Zotero/storage/T4CVIDTV/0809.html},
   keywords = {Quantitative Biology - Populations and Evolution},
-  primaryClass = {q-bio}
+  primaryclass = {q-bio}
 }
 % == BibLateX quality report for hanel2008physics:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @incollection{hansen2011negative,
   title = {Negative cycles and grammaticalization},
@@ -7129,16 +7222,16 @@
   shortjournal = {ArXiv180508099 Cs},
   url = {http://arxiv.org/abs/1805.08099},
   abstract = {Computational approaches to historical linguistics have been proposed since half a century. Within the last decade, this line of research has received a major boost, owing both to the transfer of ideas and software from computational biology and to the release of several large electronic data resources suitable for systematic comparative work. In this article, some of the central research topic of this new wave of computational historical linguistics are introduced and discussed. These are automatic assessment of genetic relatedness, automatic cognate detection, phylogenetic inference and ancestral state reconstruction. They will be demonstrated by means of a case study of automatically reconstructing a Proto-Romance word list from lexical data of 50 modern Romance languages and dialects.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1805.08099},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/5KVBWI5S/Jäger - 2018 - Computational historical linguistics.pdf;/home/gereon/Zotero/storage/5UB9TURF/Jäger - 2018 - Computational historical linguistics.pdf;/home/gereon/Zotero/storage/55V8BEAF/1805.html;/home/gereon/Zotero/storage/U5PG6KBZ/1805.html},
   keywords = {computation and language,Introduction},
-  primaryClass = {cs}
+  primaryclass = {cs}
 }
 % == BibLateX quality report for jager2018computational:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @article{jager2018globalscale,
   title = {Global-scale phylogenetic linguistic inference from lexical resources},
@@ -7285,7 +7378,7 @@
   issn = {0129-1831},
   doi = {10.1142/S012918311450048X},
   abstract = {We study the introduction of lexical innovations into a community of language users. Lexical innovations, i.e. new term added to people's vocabulary, plays an important role in the process of language evolution. Nowadays, information is spread through a variety of networks, including, among others, online and offline social networks and the World Wide Web. The entire system, comprising networks of different nature, can be represented as a multi-layer network. In this context, lexical innovations diffusion occurs in a peculiar fashion. In particular, a lexical innovation can undergo three different processes: its original meaning is accepted; its meaning can be changed or misunderstood (e.g. when not properly explained), hence more than one meaning can emerge in the population. Lastly, in the case of a loan word, it can be translated into the population language (i.e. defining a new lexical innovation or using a synonym) or into a dialect spoken by part of the population. Therefore, lexical innovations cannot be considered simply as information. We develop a model for analyzing this scenario using a multi-layer network comprising a social network and a media network. The latter represents the set of all information systems of a society, e.g. television, the World Wide Web and radio. Furthermore, we identify temporal directed edges between the nodes of these two networks. In particular, at each time-step, nodes of the media network can be connected to randomly chosen nodes of the social network and vice versa. In doing so, information spreads through the whole system and people can share a lexical innovation with their neighbors or, in the event they work as reporters, by using media nodes. Lastly, we use the concept of "linguistic sign" to model lexical innovations, showing its fundamental role in the study of these dynamics. Many numerical simulations have been performed to analyze the proposed model and its outcomes.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1310.4975},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/EW6J67FC/Javarone - 2014 - Competitive dynamics of lexical innovations in mul.pdf;/home/gereon/Zotero/storage/26E82UHX/S012918311450048X.html;/home/gereon/Zotero/storage/7QMBRVGF/1310.html;/home/gereon/Zotero/storage/93WKXMDG/S012918311450048X.html;/home/gereon/Zotero/storage/EEQISBCF/S012918311450048X.html},
@@ -7293,7 +7386,7 @@
   number = {10}
 }
 % == BibLateX quality report for javarone2014competitive:
-% Unexpected field 'archivePrefix'
+% Unexpected field 'archiveprefix'
 
 @book{jespersen,
   title = {Negation in {{English}} and other languages},
@@ -7434,16 +7527,16 @@
   url = {http://arxiv.org/abs/1503.04180},
   urldate = {2015-06-10},
   abstract = {Societies consisting of cooperative individuals seem to require for their continuing success that defectors be policed. The precise connection between punishers and benefits, population structure, and division of labour, however, remains ill-understood. Many models assume costly "peer punishment" to enforce cooperation, but results in the economics literature suggest that this assumption may not be generally valid. In many human and animal societies, there is a division of labour between a purely supportive majority and a dedicated minority of police-like enforcers. Here we present several extensions to the Public Goods Game with punishment which allow for this possibility, and evaluate their influence on the level of cooperative behaviour. We find that a structure of separate subpopulations, which only interact through migration of individuals, can have a strong effect on the evolutionary dynamics of a system and significantly facilitate cooperation. Forcing defectors to contribute and enabling fitness transfers to punishers both have a weak positive effect on cooperation levels. In the presence of group competition, however, evolutionary effects can paradoxically hinder cooperation.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1503.04180},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/CZ8G2ZGN/Kaiping et al. - 2015 - Structured populations facilitate cooperation in p.pdf;/home/gereon/Zotero/storage/UVHQJUCB/1503.html},
   keywords = {group selection,physics and society,Populations and Evolution,public goods game},
-  primaryClass = {physics, q-bio}
+  primaryclass = {physics, q-bio}
 }
 % == BibLateX quality report for kaiping2015structured:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @software{kaiping2016quickdict,
   title = {Generating an {{Abui}}-{{Indonesian}} bilingual dictionary: abui-quickdict},
@@ -7530,6 +7623,21 @@
 }
 % == BibLateX quality report for kaiping2019subgrouping:
 % Missing required field 'journaltitle'
+
+@software{kaiping2021lexedata,
+  title = {Lexedata},
+  author = {Kaiping, Gereon A. and Steiger, Melvin},
+  date = {2021-02-24},
+  location = {{Zürich}},
+  url = {https://github.com/Anaphory/lexedata/releases/tag/v1.0.0-alpha1},
+  editora = {Chousou-Polydouri, Natalia},
+  editoratype = {collaborator},
+  organization = {{Universität Zürich}},
+  version = {v1.0.0-alpha1}
+}
+% == BibLateX quality report for kaiping2021lexedata:
+% Unexpected field 'editora'
+% Unexpected field 'editoratype'
 
 @article{kandler2013non,
   title = {A non-equilibrium neutral model for analysing cultural change},
@@ -7778,14 +7886,14 @@
   author = {Kelly, Luke J. and Nicholls, Geoff K.},
   date = {2016-01-28},
   url = {http://arxiv.org/abs/1601.07931},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1601.07931},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/JVHXDHJR/Kelly and Nicholls - 2016 - Lateral transfer in Stochastic Dollo models.pdf;/home/gereon/Zotero/storage/3AHFVUTM/Kelly and Nicholls - 2016 - Lateral transfer in Stochastic Dollo models.html},
   keywords = {TAP-Paper,tap-phylo}
 }
 % == BibLateX quality report for kelly2016lateral:
-% Unexpected field 'archivePrefix'
+% Unexpected field 'archiveprefix'
 
 @article{kemenade2012rethinking,
   ids = {kemenade2012rethinkinga},
@@ -9557,16 +9665,16 @@
   url = {http://arxiv.org/abs/1707.09569},
   urldate = {2018-06-18},
   abstract = {One central mystery of neural NLP is what neural models "know" about their subject matter. When a neural machine translation system learns to translate from one language to another, does it learn the syntax or semantics of the languages? Can this knowledge be extracted from the system to fill holes in human scientific knowledge? Existing typological databases contain relatively full feature specifications for only a few hundred languages. Exploiting the existence of parallel texts in more than a thousand languages, we build a massive many-to-one neural machine translation (NMT) system from 1017 languages into English, and use this to predict information missing from typological databases. Experiments show that the proposed method is able to infer not only syntactic, but also phonological and phonetic inventory features, and improves over a baseline that has access to information about the languages' geographic and phylogenetic neighbors.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1707.09569},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/6NKCG9DR/Malaviya et al. - 2017 - Learning Language Representations for Typology Pre.pdf;/home/gereon/Zotero/storage/Z3IPQKUD/1707.html},
   keywords = {computation and language},
-  primaryClass = {cs}
+  primaryclass = {cs}
 }
 % == BibLateX quality report for malaviya2017learning:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @article{maleki2014proposal,
   title = {A {{Proposal}} for {{Clustering}} the {{Dimensions}} of {{National Culture}}},
@@ -10323,7 +10431,7 @@
   issn = {1862-4804},
   url = {https://trid.trb.org/view/1349662},
   urldate = {2019-03-28},
-  number = {2013, 96}
+  issue = {2013, 96}
 }
 
 @thesis{moy2005word,
@@ -10362,6 +10470,21 @@
   langid = {english},
   number = {2}
 }
+
+@article{muller2019coupled,
+  title = {Coupled {{MCMC}} in {{BEAST}} 2},
+  author = {Müller, Nicola F. and Bouckaert, Remco},
+  date = {2019-04-09},
+  journaltitle = {bioRxiv},
+  pages = {603514},
+  publisher = {{Cold Spring Harbor Laboratory}},
+  doi = {10.1101/603514},
+  abstract = {{$<$}h3{$>$}Abstract{$<$}/h3{$>$} {$<$}p{$>$}Coupled MCMC has long been used to speed up phylogenetic analyses and to make use of multi-core CPUs. Coupled MCMC uses a number of heated chains with increased acceptance probabilities that are able to traverse unfavourable intermediate states more easily than non heated chains and can be used to propose new states. While more and more complex models are used to study evolution, one of the main software platforms to do so, BEAST 2, was lacking this functionality. Here, we describe an implementation of the coupled MCMC algorithm for the Bayesian phylogenetics platform BEAST 2. This implementation is able to exploit multiple-core CPUs while working with all models and packages in BEAST 2 that affect the likelihood or the priors and not directly the MCMC machinery. We show that the implemented coupled MCMC approach is exploring the same posterior probability space as regular MCMC when MCMC behaves well. We also show our implementation is able to retrieve more consistent estimates of tree distributions on a dataset where convergence with MCMC is problematic.{$<$}/p{$>$}},
+  file = {/home/gereon/Zotero/storage/HF5FTPU7/Müller and Bouckaert - 2019 - Coupled MCMC in BEAST 2.pdf;/home/gereon/Zotero/storage/QUQII2RH/603514v1.html},
+  langid = {english}
+}
+% == BibLateX quality report for muller2019coupled:
+% Unexpected field 'publisher'
 
 @article{mundinger1980animal,
   title = {Animal cultures and a general theory of cultural evolution},
@@ -10765,16 +10888,16 @@
   url = {http://arxiv.org/abs/1207.1401},
   urldate = {2015-12-07},
   abstract = {Continuous time Bayesian networks (CTBNs) describe structured stochastic processes with finitely many states that evolve over continuous time. A CTBN is a directed (possibly cyclic) dependency graph over a set of variables, each of which represents a finite state continuous time Markov process whose transition model is a function of its parents. As shown previously, exact inference in CTBNs is intractable. We address the problem of approximate inference, allowing for general queries conditioned on evidence over continuous time intervals and at discrete time points. We show how CTBNs can be parameterized within the exponential family, and use that insight to develop a message passing scheme in cluster graphs and allows us to apply expectation propagation to CTBNs. The clusters in our cluster graph do not contain distributions over the cluster variables at individual time points, but distributions over trajectories of the variables throughout a duration. Thus, unlike discrete time temporal models such as dynamic Bayesian networks, we can adapt the time granularity at which we reason for different variables and in different conditions.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1207.1401},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/PI2HCUU5/Nodelman et al. - 2012 - Expectation Propagation for Continuous Time Bayesi.pdf;/home/gereon/Zotero/storage/TUUVRFZ2/1207.html},
   keywords = {AI},
-  primaryClass = {cs}
+  primaryclass = {cs}
 }
 % == BibLateX quality report for nodelman2012expectation:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @online{nodelman2012expectationa,
   title = {Expectation {{Maximization}} and {{Complex Duration Distributions}} for {{Continuous Time Bayesian Networks}}},
@@ -10784,16 +10907,16 @@
   url = {http://arxiv.org/abs/1207.1402},
   urldate = {2015-10-30},
   abstract = {Continuous time Bayesian networks (CTBNs) describe structured stochastic processes with finitely many states that evolve over continuous time. A CTBN is a directed (possibly cyclic) dependency graph over a set of variables, each of which represents a finite state continuous time Markov process whose transition model is a function of its parents. We address the problem of learning the parameters and structure of a CTBN from partially observed data. We show how to apply expectation maximization (EM) and structural expectation maximization (SEM) to CTBNs. The availability of the EM algorithm allows us to extend the representation of CTBNs to allow a much richer class of transition durations distributions, known as phase distributions. This class is a highly expressive semi-parametric representation, which can approximate any duration distribution arbitrarily closely. This extension to the CTBN framework addresses one of the main limitations of both CTBNs and DBNs - the restriction to exponentially / geometrically distributed duration. We present experimental results on a real data set of people's life spans, showing that our algorithm learns reasonable models - structure and parameters - from partially observed data, and, with the use of phase distributions, achieves better performance than DBNs.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1207.1402},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/27VWNKCF/Nodelman et al. - 2012 - Expectation Maximization and Complex Duration Dist.pdf;/home/gereon/Zotero/storage/I7QXI2PZ/Nodelman et al. - 2012 - Expectation Maximization and Complex Duration Dist.pdf;/home/gereon/Zotero/storage/NK9FV59R/1207.html;/home/gereon/Zotero/storage/Q89EXP3J/1207.html},
   keywords = {AI},
-  primaryClass = {cs}
+  primaryclass = {cs}
 }
 % == BibLateX quality report for nodelman2012expectationa:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @online{nodelman2012learning,
   title = {Learning {{Continuous Time Bayesian Networks}}},
@@ -10803,16 +10926,16 @@
   url = {http://arxiv.org/abs/1212.2498},
   urldate = {2015-12-06},
   abstract = {Continuous time Bayesian networks (CTBNs) describe structured stochastic processes with finitely many states that evolve over continuous time. A CTBN is a directed (possibly cyclic) dependency graph over a set of variables, each of which represents a finite state continuous time Markov process whose transition model is a function of its parents. We address the problem of learning parameters and structure of a CTBN from fully observed data. We define a conjugate prior for CTBNs, and show how it can be used both for Bayesian parameter estimation and as the basis of a Bayesian score for structure learning. Because acyclicity is not a constraint in CTBNs, we can show that the structure learning problem is significantly easier, both in theory and in practice, than structure learning for dynamic Bayesian networks (DBNs). Furthermore, as CTBNs can tailor the parameters and dependency structure to the different time granularities of the evolution of different variables, they can provide a better fit to continuous-time processes than DBNs with a fixed time granularity.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1212.2498},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/4BA3R8EQ/Nodelman et al. - 2012 - Learning Continuous Time Bayesian Networks.pdf;/home/gereon/Zotero/storage/57QRRKKR/Nodelman et al. - 2012 - Learning Continuous Time Bayesian Networks.pdf;/home/gereon/Zotero/storage/ZC5ZM2UB/Nodelman et al. - 2012 - Learning Continuous Time Bayesian Networks.pdf;/home/gereon/Zotero/storage/5ZENDZ4D/1212.html;/home/gereon/Zotero/storage/RCM5CXX4/1212.html;/home/gereon/Zotero/storage/S2V5ICRK/1212.html},
   keywords = {Computer Science - Learning,machine learning},
-  primaryClass = {cs, stat}
+  primaryclass = {cs, stat}
 }
 % == BibLateX quality report for nodelman2012learning:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @article{noviello2018investigating,
   title = {Investigating the distribution of archaeological sites: {{Multiparametric}} vs probability models and potentials for remote sensing data},
@@ -11904,16 +12027,16 @@
   url = {http://arxiv.org/abs/1401.0708},
   urldate = {2017-10-20},
   abstract = {In this paper we examine the usefulness of two classes of algorithms Distance Methods, Discrete Character Methods (Felsenstein and Felsenstein 2003) widely used in genetics, for predicting the family relationships among a set of related languages and therefore, diachronic language change. Applying these algorithms to the data on the numbers of shared cognates- with-change and changed as well as unchanged cognates for a group of six languages belonging to a Dravidian language sub-family given in Krishnamurti et al. (1983), we observed that the resultant phylogenetic trees are largely in agreement with the linguistic family tree constructed using the comparative method of reconstruction with only a few minor differences. Furthermore, we studied these minor differences and found that they were cases of genuine ambiguity even for a well-trained historical linguist. We evaluated the trees obtained through our experiments using a well-defined criterion and report the results here. We finally conclude that quantitative methods like the ones we examined are quite useful in predicting family relationships among languages. In addition, we conclude that a modest degree of confidence attached to the intuition that there could indeed exist a parallelism between the processes of linguistic and genetic change is not totally misplaced.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1401.0708},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/HJL2BCXK/Rama et al. - 2014 - Quantitative methods for Phylogenetic Inference in.pdf;/home/gereon/Zotero/storage/SKRX52YU/1401.html},
   keywords = {AI,Bayesian phylogenetic inference,computation and language},
-  primaryClass = {cs}
+  primaryclass = {cs}
 }
 % == BibLateX quality report for rama2014quantitative:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @article{rama2016ancestry,
   title = {Ancestry sampling for {{Indo}}-{{European}} phylogeny and dates},
@@ -11936,16 +12059,16 @@
   url = {http://arxiv.org/abs/1702.04938},
   urldate = {2018-07-13},
   abstract = {In this paper we explore the use of unsupervised methods for detecting cognates in multilingual word lists. We use online EM to train sound segment similarity weights for computing similarity between two words. We tested our online systems on geographically spread sixteen different language groups of the world and show that the Online PMI system (Pointwise Mutual Information) outperforms a HMM based system and two linguistically motivated systems: LexStat and ALINE. Our results suggest that a PMI system trained in an online fashion can be used by historical linguists for fast and accurate identification of cognates in not so well-studied language families.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1702.04938},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/TGWQRBG4/Rama et al. - 2017 - Fast and unsupervised methods for multilingual cog.pdf;/home/gereon/Zotero/storage/MBGIG95M/1702.html},
   keywords = {computation and language,TAP-Paper,tap-phylo},
-  primaryClass = {cs}
+  primaryclass = {cs}
 }
 % == BibLateX quality report for rama2017fast:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @online{rama2018are,
   title = {Are {{Automatic Methods}} for {{Cognate Detection Good Enough}} for {{Phylogenetic Reconstruction}} in {{Historical Linguistics}}?},
@@ -11955,16 +12078,16 @@
   url = {http://arxiv.org/abs/1804.05416},
   urldate = {2018-07-13},
   abstract = {We evaluate the performance of state-of-the-art algorithms for automatic cognate detection by comparing how useful automatically inferred cognates are for the task of phylogenetic inference compared to classical manually annotated cognate sets. Our findings suggest that phylogenies inferred from automated cognate sets come close to phylogenies inferred from expert-annotated ones, although on average, the latter are still superior. We conclude that future work on phylogenetic reconstruction can profit much from automatic cognate detection. Especially where scholars are merely interested in exploring the bigger picture of a language family's phylogeny, algorithms for automatic cognate detection are a useful complement for current research on language phylogenies.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1804.05416},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/DHDZQGCY/Rama et al. - 2018 - Are Automatic Methods for Cognate Detection Good E.pdf;/home/gereon/Zotero/storage/PVKIMVBC/1804.html},
   keywords = {computation and language,phylogenetics,TAP-Paper,tap-phylo},
-  primaryClass = {cs}
+  primaryclass = {cs}
 }
 % == BibLateX quality report for rama2018are:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @software{rama2018repository,
   title = {Repository for testing how good {{Bayesian}} phylogenetic algorithms fare with automated vs gold cognate judgments: {{PhyloStar}}/{{AutoCogPhylo}}},
@@ -11989,7 +12112,7 @@
   issn = {2210-5832, 2210-5824},
   doi = {10.1163/22105832-00802005},
   abstract = {{$<$}section class="abstract"{$><$}h2 class="abstractTitle text-title my-1" id="d14e2"{$>$}Abstract{$<$}/h2{$><$}p{$>$}The age of the root of the Indo-European language family has received much attention since the application of Bayesian phylogenetic methods by Gray and Atkinson (2003). With the application of new models, the root age of the Indo-European family has tended to decrease from an age that supported the Anatolian origin hypothesis to an age that supports the Steppe origin hypothesis (Chang et al., 2015). However, none of the published work in Indo-European phylogenetics has studied the effect of tree priors on phylogenetic analyses of the Indo-European family. In this paper, I intend to fill this gap by exploring the effect of tree priors on different aspects of the Indo-European family’s phylogenetic inference. I apply three tree priors—Uniform, Fossilized Birth-Death (\textsc{FBD}), and Coalescent—to five publicly available datasets of the Indo-European language family. I evaluate the posterior distribution of the trees from the Bayesian analysis using Bayes Factor, and find that there is support for the Steppe origin hypothesis in the case of two tree priors. I report the median and 95 \% highest posterior density (\textsc{HPD}) interval of the root ages for all three tree priors. A model comparison suggests that either the Uniform prior or the \textsc{FBD} prior is more suitable than the Coalescent prior to the datasets belonging to the Indo-European language family.{$<$}/p{$><$}/section{$>$}},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1805.03645},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/7ETURSZ5/Rama - 2018 - Three tree priors and five datasets A study of th.pdf;/home/gereon/Zotero/storage/MXGZEEP7/Rama - 2018 - Three tree priors and five datasets A study of In.pdf;/home/gereon/Zotero/storage/L3YSDS4P/1805.html;/home/gereon/Zotero/storage/QMP829KF/article-p182_2.html},
@@ -11999,7 +12122,7 @@
 }
 % == BibLateX quality report for rama2018three:
 % Unexpected field 'publisher'
-% Unexpected field 'archivePrefix'
+% Unexpected field 'archiveprefix'
 % 'issn': not a valid ISSN
 
 @book{ramat1980linguistic,
@@ -12086,16 +12209,16 @@
   url = {http://arxiv.org/abs/1512.03843},
   urldate = {2018-07-10},
   abstract = {A method was developed for Bayesian inference of species phylogeny using the multi-species coalescent model. To improve the mixing properties of the Markov chain Monte Carlo (MCMC) algorithm that traverses the space of species trees, we implement two efficient MCMC proposals: the first is based on the Subtree Pruning and Regrafting (SPR) algorithm and the second is based on a novel node-slider algorithm. Like the Nearest-Neighbor Interchange (NNI) algorithm we implemented previously, both algorithms propose changes to the species tree, while simultaneously altering the gene trees at multiple genetic loci to automatically avoid conflicts with the newly-proposed species tree. The method integrates over gene trees, naturally taking account of the uncertainty of gene tree topology and branch lengths given the sequence data. A simulation study was performed to examine the statistical properties of the new method. We found that it has excellent statistical performance, inferring the correct species tree with near certainty when analyzing 10 loci. The prior on species trees has some impact, particularly for small numbers of loci. An empirical dataset (for rattlesnakes) was reanalyzed. While the 18 nuclear loci and one mitochondrial locus support largely consistent species trees under the multi-species coalescent model estimates of parameters suggest drastically different evolutionary dynamics between the nuclear and mitochondrial loci.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1512.03843},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/8JX8CI9L/Rannala and Yang - 2015 - Efficient Bayesian species tree inference under th.pdf;/home/gereon/Zotero/storage/ZATFGND4/1512.html},
   keywords = {phylogenetics,Quantitative Biology - Populations and Evolution},
-  primaryClass = {q-bio}
+  primaryclass = {q-bio}
 }
 % == BibLateX quality report for rannala2015efficient:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @online{rao2012fast,
   title = {Fast {{MCMC}} sampling for {{Markov}} jump processes and continuous time {{Bayesian}} networks},
@@ -12105,16 +12228,16 @@
   url = {http://arxiv.org/abs/1202.3760},
   urldate = {2015-12-06},
   abstract = {Markov jump processes and continuous time Bayesian networks are important classes of continuous time dynamical systems. In this paper, we tackle the problem of inferring unobserved paths in these models by introducing a fast auxiliary variable Gibbs sampler. Our approach is based on the idea of uniformization, and sets up a Markov chain over paths by sampling a finite set of virtual jump times and then running a standard hidden Markov model forward filtering-backward sampling algorithm over states at the set of extant and virtual jump times. We demonstrate significant computational benefits over a state-of-the-art Gibbs sampler on a number of continuous time Bayesian networks.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1202.3760},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/8H6XUGPN/Rao and Teh - 2012 - Fast MCMC sampling for Markov jump processes and c.pdf;/home/gereon/Zotero/storage/I6MDZ94I/1202.html},
   keywords = {Computer Science - Learning,machine learning,Statistics - Methodology},
-  primaryClass = {cs, stat}
+  primaryclass = {cs, stat}
 }
 % == BibLateX quality report for rao2012fast:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @article{rao2012mcmc,
   title = {{{MCMC}} for continuous-time discrete-state systems},
@@ -12273,6 +12396,20 @@
 }
 % == BibLateX quality report for rfc:
 % Exactly one of 'date' / 'year' must be present
+
+@report{richardj.cordes2021collaborative,
+  title = {Collaborative {{Writing}} for {{Catechism}}-{{Based Teams}}},
+  author = {Richard J. Cordes and Daniel Ari Friedman},
+  date = {2021-03-04},
+  institution = {{Zenodo}},
+  doi = {10.5281/zenodo.4633921},
+  abstract = {Asynchronous and remote collaborative written projects (research, field guides, code, etc.) in emergent, interdisciplinary teams can be an incredibly productive and enjoyable pursuit. The convergence of diverse perspectives, personalities, and expertise in the rapid production of written deliverables can provide immense value and insight, not just to the situation, problem, or opportunity space the team was formed to address, but also to the disciplines each author brought to the table. Yet, asynchronous and remote collaborative writing can also be rather perilous. Managing deadlines, handling disputes, communicating, staying on mission, managing resources, collective editing (and over-editing), and avoiding contradiction are only some of the challenges. While the presence of a catechism-styled operations order~and the use of a team “Facilitator” can greatly improve the likelihood of success, making sure all of the authors have an alignment on protocol and etiquette while writing as a catechism-based team prevents unnecessary misunderstandings and keeps things on schedule. This "3-Paragraph Order" for Collaborative Writing, or C-3PO,~is meant to rapidly onboard authors to collaborative writing procedures and etiquette.},
+  file = {/home/gereon/Zotero/storage/U5NLIZBH/Richard J. Cordes and Daniel Ari Friedman - 2021 - Collaborative Writing for Catechism-Based Teams.pdf},
+  keywords = {Catechisms,Collaborative Writing,OPORDs,Remote Teams},
+  langid = {english}
+}
+% == BibLateX quality report for richardj.cordes2021collaborative:
+% Missing required field 'type'
 
 @article{ricotta2005jungle,
   title = {Through the {{Jungle}} of {{Biological Diversity}}},
@@ -12586,7 +12723,7 @@
   issn = {1951-6355, 1951-6401},
   doi = {10.1140/epjst/e2010-01179-1},
   abstract = {Many real-world networks are so large that we must simplify their structure before we can extract useful information about the systems they represent. As the tools for doing these simplifications proliferate within the network literature, researchers would benefit from some guidelines about which of the so-called community detection algorithms are most appropriate for the structures they are studying and the questions they are asking. Here we show that different methods highlight different aspects of a network's structure and that the the sort of information that we seek to extract about the system must guide us in our decision. For example, many community detection algorithms, including the popular modularity maximization approach, infer module assignments from an underlying model of the network formation process. However, we are not always as interested in how a system's network structure was formed, as we are in how a network's extant structure influences the system's behavior. To see how structure influences current behavior, we will recognize that links in a network induce movement across the network and result in system-wide interdependence. In doing so, we explicitly acknowledge that most networks carry flow. To highlight and simplify the network structure with respect to this flow, we use the map equation. We present an intuitive derivation of this flow-based and information-theoretic method and provide an interactive on-line application that anyone can use to explore the mechanics of the map equation. We also describe an algorithm and provide source code to efficiently decompose large weighted and directed networks based on the map equation.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {0906.1405},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/TR43C5US/Rosvall et al. - 2009 - The map equation.pdf;/home/gereon/Zotero/storage/LKJA2Q43/0906.html},
@@ -12594,7 +12731,7 @@
   number = {1}
 }
 % == BibLateX quality report for rosvall2009map:
-% Unexpected field 'archivePrefix'
+% Unexpected field 'archiveprefix'
 % 'issn': not a valid ISSN
 
 @article{rowley-conwy2016huntergatherer,
@@ -12861,16 +12998,16 @@
   url = {http://arxiv.org/abs/1206.5260},
   urldate = {2015-12-06},
   abstract = {Most real-world dynamic systems are composed of different components that often evolve at very different rates. In traditional temporal graphical models, such as dynamic Bayesian networks, time is modeled at a fixed granularity, generally selected based on the rate at which the fastest component evolves. Inference must then be performed at this fastest granularity, potentially at significant computational cost. Continuous Time Bayesian Networks (CTBNs) avoid time-slicing in the representation by modeling the system as evolving continuously over time. The expectation-propagation (EP) inference algorithm of Nodelman et al. (2005) can then vary the inference granularity over time, but the granularity is uniform across all parts of the system, and must be selected in advance. In this paper, we provide a new EP algorithm that utilizes a general cluster graph architecture where clusters contain distributions that can overlap in both space (set of variables) and time. This architecture allows different parts of the system to be modeled at very different time granularities, according to their current rate of evolution. We also provide an information-theoretic criterion for dynamically re-partitioning the clusters during inference to tune the level of approximation to the current rate of evolution. This avoids the need to hand-select the appropriate granularity, and allows the granularity to adapt as information is transmitted across the network. We present experiments demonstrating that this approach can result in significant computational savings.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1206.5260},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/T6KAX4A9/Saria et al. - 2012 - Reasoning at the Right Time Granularity.pdf;/home/gereon/Zotero/storage/AA8VIGE7/1206.html},
   keywords = {AI},
-  primaryClass = {cs}
+  primaryclass = {cs}
 }
 % == BibLateX quality report for saria2012reasoning:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @thesis{saunders2005linguistic,
   title = {Linguistic {{Phylogenetics}} of the {{Austronesian Family}}: {{A Performance Review}} of {{Methods Adapted}} from {{Biology}}},
@@ -13029,16 +13166,16 @@
   url = {http://arxiv.org/abs/0704.0691},
   urldate = {2018-08-09},
   abstract = {Simulations of physicists for the competition between adult languages since 2003 are reviewed. How many languages are spoken by how many people? How many languages are contained in various language families? How do language similarities decay with geographical distance, and what effects do natural boundaries have? New simulations of bilinguality are given in an appendix.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {0704.0691},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/678A2RTH/Schulze et al. - 2007 - Birth, survival and death of languages by Monte Ca.pdf;/home/gereon/Zotero/storage/N9CC4M4W/0704.html},
   keywords = {physics and society},
-  primaryClass = {physics}
+  primaryclass = {physics}
 }
 % == BibLateX quality report for schulze2007birth:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @incollection{scott-phillips2011evolutionarily,
   ids = {scott-phillips2011evolutionarilya},
@@ -13128,16 +13265,16 @@
   url = {http://arxiv.org/abs/1411.6150},
   urldate = {2017-04-04},
   abstract = {Traditionally, phylogeny and sequence alignment are estimated separately: first estimate a multiple sequence alignment and then infer a phylogeny based on the sequence alignment estimated in the previous step. However, uncertainty in the alignment estimation is ignored, resulting, possibly, in overstated certainty in phylogeny estimates. We develop a joint model for co-estimating phylogeny and sequence alignment which improves estimates from the traditional approach by accounting for uncertainty in the alignment in phylogenetic inferences. Our insertion and deletion (indel) model allows arbitrary-length overlapping indel events and a general distribution for indel fragment size. We employ a Bayesian approach using MCMC to estimate the joint posterior distribution of a phylogenetic tree and a multiple sequence alignment. Our approach has a tree and a complete history of indel events mapped onto the tree as the state space of the Markov Chain while alternative previous approaches have a tree and an alignment. A large state space containing a complete history of indel events makes our MCMC approach more challenging, but it enables us to infer more information about the indel process. The performances of this joint method and traditional sequential methods are compared using simulated data as well as real data. Software named BayesCAT (Bayesian Co-estimation of Alignment and Tree) is available at https://github.com/heejungshim/BayesCAT.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1411.6150},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/W4UAPMMH/Shim and Larget - 2014 - BayesCAT Bayesian Co-estimation of Alignment and .pdf;/home/gereon/Zotero/storage/FT93AFHD/1411.html},
   keywords = {phylogenetics,Quantitative Biology - Populations and Evolution,Statistics - Applications},
-  primaryClass = {q-bio, stat}
+  primaryclass = {q-bio, stat}
 }
 % == BibLateX quality report for shim2014bayescat:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @article{sicoli2014linguistic,
   title = {Linguistic {{Phylogenies Support Back}}-{{Migration}} from {{Beringia}} to {{Asia}}},
@@ -15326,16 +15463,16 @@
   url = {http://arxiv.org/abs/1405.2120},
   urldate = {2015-08-10},
   abstract = {In order to gain an understanding of the effectiveness of phylogenetic Markov chain Monte Carlo (MCMC), it is important to understand how quickly the empirical distribution of the MCMC converges to the posterior distribution. In this paper we investigate this problem on phylogenetic tree topologies with a metric that is especially well suited to the task: the subtree prune-and-regraft (SPR) metric. This metric directly corresponds to the minimum number of MCMC rearrangements required to move between trees in common phylogenetic MCMC implementations. We develop a novel graph-based approach to analyze tree posteriors and find that the SPR metric is much more informative than simpler metrics that are unrelated to MCMC moves. In doing so we show conclusively that topological peaks do occur in Bayesian phylogenetic posteriors from real data sets as sampled with standard MCMC approaches, investigate the efficiency of Metropolis-coupled MCMC (MCMCMC) in traversing the valleys between peaks, and show that conditional clade distribution (CCD) can have systematic problems when there are multiple peaks.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1405.2120},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/BN6S2RNJ/Whidden and Matsen IV - 2014 - Quantifying MCMC Exploration of Phylogenetic Tree .pdf;/home/gereon/Zotero/storage/QXPFHF2D/1405.html},
   keywords = {Populations and Evolution,Quantitative Biology - Populations and Evolution},
-  primaryClass = {q-bio}
+  primaryclass = {q-bio}
 }
 % == BibLateX quality report for whidden2014quantifying:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @article{white2012geospatial,
   title = {Geospatial modeling of pedestrian transportation networks: a case study from precolumbian {{Oaxaca}}, {{Mexico}}},
@@ -15904,16 +16041,16 @@
   url = {http://arxiv.org/abs/1912.09185},
   urldate = {2020-08-10},
   abstract = {Inferring concerted changes among biological traits along an evolutionary history remains an important yet challenging problem. Besides adjusting for spurious correlation induced from the shared history, the task also requires sufficient flexibility and computational efficiency to incorporate multiple continuous and discrete traits as data size increases. To accomplish this, we jointly model mixed-type traits by assuming latent parameters for binary outcome dimensions at the tips of an unknown tree informed by molecular sequences. This gives rise to a phylogenetic multivariate probit model. With large sample sizes, posterior computation under this model is problematic, as it requires repeated sampling from a high-dimensional truncated normal distribution. Current best practices employ multiple-try rejection sampling that suffers from slow-mixing and a computational cost that scales quadratically in sample size. We develop a new inference approach that exploits 1) the bouncy particle sampler based on piecewise deterministic Markov processes and 2) novel dynamic programming that reduces the cost of likelihood and gradient evaluations to linear in sample size. In an application with 535 HIV viruses and 24 traits that necessitates sampling from a 12,840-dimensional truncated normal, our method makes it possible to estimate the across-trait correlation and detect factors that affect the pathogen's capacity to cause disease. This inference framework is also applicable to a broader class of covariance structures beyond comparative biology.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1912.09185},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/6DJCDNA6/Zhang et al. - 2019 - Large-scale inference of correlation among mixed-t.pdf;/home/gereon/Zotero/storage/EUCNTYSX/1912.html},
   keywords = {Quantitative Biology - Populations and Evolution,Statistics - Computation,Statistics - Methodology},
-  primaryClass = {q-bio, stat}
+  primaryclass = {q-bio, stat}
 }
 % == BibLateX quality report for zhang2019largescale:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @article{zhang2019phylogenetic,
   ids = {zhang2019phylogenetica},
@@ -15976,17 +16113,17 @@
   url = {http://arxiv.org/abs/2012.06907},
   urldate = {2021-01-09},
   abstract = {An automated machine learning framework for geospatial data named PAIRS AutoGeo is introduced on IBM PAIRS Geoscope big data and analytics platform. The framework simplifies the development of industrial machine learning solutions leveraging geospatial data to the extent that the user inputs are minimized to merely a text file containing labeled GPS coordinates. PAIRS AutoGeo automatically gathers required data at the location coordinates, assembles the training data, performs quality check, and trains multiple machine learning models for subsequent deployment. The framework is validated using a realistic industrial use case of tree species classification. Open-source tree species data are used as the input to train a random forest classifier and a modified ResNet model for 10way tree species classification based on aerial imagery, which leads to an accuracy of 59.8\% and 81.4\%, respectively. This use case exemplifies how PAIRS AutoGeo enables users to leverage machine learning without extensive geospatial expertise.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {2012.06907},
   eprinttype = {arxiv},
   file = {/home/gereon/Zotero/storage/GDALPKCU/Zhou et al. - 2020 - PAIRS AutoGeo an Automated Machine Learning Frame.pdf},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Computer Vision and Pattern Recognition,Computer Science - Machine Learning},
   langid = {english},
-  primaryClass = {cs}
+  primaryclass = {cs}
 }
 % == BibLateX quality report for zhou2020pairs:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 @article{zinke2018comparing,
   title = {Comparing {{Three Approaches}} to {{Estimating Optimum White Water Kayak Flows}} in {{Western Norway}}},
