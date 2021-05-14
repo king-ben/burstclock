@@ -93,7 +93,7 @@
   <map name="InverseGamma">beast.math.distributions.InverseGamma</map>
   <map name="OneOnX">beast.math.distributions.OneOnX</map>
 
-  <run id="mcmc" spec="MCMC" chainLength="50000000" numInitializationAttempts="1000" sampleFromPrior="false">
+  <run id="mcmc" spec="beast.gss.NS" chainLength="50000000" particleCount="1" subChainLength="5000" epsilon="1e-12" numInitializationAttempts="1000" sampleFromPrior="false">
     <state id="state" spec="State" storeEvery="5000">
       <tree id="Tree.t:tree" spec="beast.evolution.tree.Tree" name="stateNode">
         <trait id="dateTrait.t:tree" spec="beast.evolution.tree.TraitSet" traitname="date-backward" value="">
@@ -120,8 +120,8 @@ Old_Church_Slavonic = 1000<taxa id="TaxonSet.vocabulary" spec="TaxonSet">
       <parameter id="lossRate" spec="parameter.RealParameter" name="stateNode">0.001</parameter>
       <parameter id="BDBirthRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="10000.0">0.0005</parameter>
       <parameter id="BDDeathRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.5</parameter>
-      <parameter id="SamplingProportion" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.2 0.2</parameter> 
-      <parameter id="removalProbability" name="stateNode"> 0.0 </parameter> 
+      <parameter id="SamplingProportion" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">1e-4 0.2</parameter> 
+      <parameter id="removalProbability" name="stateNode"> 0.5 </parameter> 
     </state>
 
     <init estimate="false" id="startingTree" initial="@Tree.t:tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTree">
@@ -132,13 +132,14 @@ Old_Church_Slavonic = 1000<taxa id="TaxonSet.vocabulary" spec="TaxonSet">
 
     <distribution id="posterior" spec="util.CompoundDistribution">
       <distribution id="prior" spec="util.CompoundDistribution">
-        <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathSkylineModel" tree="@Tree.t:tree" rho="0.5131578947368421" conditionOnRhoSampling="true" conditionOnRoot="true" conditionOnSurvival="false">
+        <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathSkylineModel" tree="@Tree.t:tree" rho="0.5131578947368421" conditionOnRoot="true" conditionOnSurvival="false" reverseTimeArrays="true true true true true">
           <removalProbability idref="removalProbability" />
           <netDiversification idref="BDBirthRate.t:tree" />
           <turnOver idref="BDDeathRate.t:tree" />
           <samplingProportion idref="SamplingProportion" />
-          <parameter name="samplingRateChangeTimes" id="SamplingChangeTime">0. 2000.000000</parameter>
+          <parameter name="samplingRateChangeTimes" id="SamplingChangeTime">0. 4000.000000</parameter>
         </distribution>
+        
         <prior id="BirthRatePrior.t:tree" name="distribution" x="@BDBirthRate.t:tree">
           <LogNormal id="LogNormal.BirthRate" name="distr">
             <M id="LogNormalMean.BirthRate" spec="parameter.RealParameter" estimate="false">-7.316</M> 
@@ -229,6 +230,7 @@ Old_Church_Slavonic = 1000<taxa id="TaxonSet.vocabulary" spec="TaxonSet">
       <down idref="Tree.t:tree" />
     </operator>
     <operator id="DeathRateScaler.t:tree" spec="ScaleOperator" parameter="@BDDeathRate.t:tree" scaleFactor="0.9" weight="3.0" />
+    <operator id="SamplingProportionScaler" spec="ScaleOperator" parameter="@SamplingProportion" scaleAllIndependently="true" scaleFactor="0.9" weight="4.0" />
     <operator id="DeathRateUpDownOperator.c:clock" spec="UpDownOperator" scaleFactor="0.9" weight="3.0">
       <up idref="BDDeathRate.t:tree" />
       <down idref="Tree.t:tree" />
@@ -238,7 +240,7 @@ Old_Church_Slavonic = 1000<taxa id="TaxonSet.vocabulary" spec="TaxonSet">
       <down idref="BDBirthRate.t:tree" />
     </operator>
 
-    <logger id="tracelog" spec="Logger" fileName="vocabulary.log" logEvery="5000" model="@posterior" sort="smart">
+    <logger id="tracelog" spec="NSLogger" fileName="vocabulary.log" logEvery="5000" model="@posterior" sort="smart">
       <log idref="posterior" />
       <log idref="likelihood" />
       <log idref="prior" />
@@ -258,7 +260,7 @@ Old_Church_Slavonic = 1000<taxa id="TaxonSet.vocabulary" spec="TaxonSet">
       <log idref="likelihood" />
       <log idref="prior" />
     </logger>
-    <logger id="treelog.t:tree" spec="Logger" fileName="vocabulary.trees" logEvery="5000" mode="tree">
+    <logger id="treelog.t:tree" spec="NSLogger" fileName="vocabulary.trees" logEvery="5000" mode="tree">
       <log id="TreeWithMetaDataLogger.t:tree" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:tree" />
     </logger>
 
