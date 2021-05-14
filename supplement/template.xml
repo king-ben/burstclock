@@ -12,7 +12,7 @@
   <map name="InverseGamma">beast.math.distributions.InverseGamma</map>
   <map name="OneOnX">beast.math.distributions.OneOnX</map>
 
-  <run id="mcmc" spec="MCMC" chainLength="50000000" numInitializationAttempts="1000" sampleFromPrior="false">
+  <run id="mcmc" spec="beast.gss.NS" chainLength="50000000" particleCount="1" subChainLength="5000" epsilon="1e-12" numInitializationAttempts="1000" sampleFromPrior="false">
     <state id="state" spec="State" storeEvery="5000">
       <tree id="Tree.t:tree" spec="beast.evolution.tree.Tree" name="stateNode">
         <trait id="dateTrait.t:tree" spec="beast.evolution.tree.TraitSet" traitname="date-backward" value="">
@@ -132,7 +132,7 @@
       <down idref="BDBirthRate.t:tree" />
     </operator>
 
-    <logger id="tracelog" spec="Logger" fileName="vocabulary.log" logEvery="5000" model="@posterior" sort="smart">
+    <logger id="tracelog" spec="NSLogger" fileName="vocabulary.log" logEvery="5000" model="@posterior" sort="smart">
       <log idref="posterior" />
       <log idref="likelihood" />
       <log idref="prior" />
@@ -152,7 +152,7 @@
       <log idref="likelihood" />
       <log idref="prior" />
     </logger>
-    <logger id="treelog.t:tree" spec="Logger" fileName="vocabulary.trees" logEvery="5000" mode="tree">
+    <logger id="treelog.t:tree" spec="NSLogger" fileName="vocabulary.trees" logEvery="5000" mode="tree">
       <log id="TreeWithMetaDataLogger.t:tree" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:tree" />
     </logger>
 
