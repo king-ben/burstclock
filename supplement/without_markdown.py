@@ -6,7 +6,7 @@ parser = etree.XMLParser()
 
 chunk = ""
 before_start = True
-for line in open(Path(__file__) / "template.md"):
+for line in open(Path(__file__).parent / "template.md"):
     if "```xml" in line:
         if before_start:
             chunk = ""

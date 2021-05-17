@@ -319,14 +319,6 @@ marginal likelihood estimates. In order to estimate the model likelihood,
 collect nested samples until we achieve a precision of 10^{-12}, or at most
 50'000'000 samples in total.
 
-```xml
-<run id="mcmc" spec="beast.gss.NS" chainLength="50000000" particleCount="3" epsilon="1e-12" numInitializationAttempts="1000" sampleFromPrior="false" init="@startingTree">
-  <distribution id="posterior" spec="util.CompoundDistribution">
-    <distribution idref="prior" />
-    <distribution idref="likelihood" />
-  </distribution>
-```
-
 As required by the NS procedure [@ns: section 4, p. 16 of the preprint], we
 discard a particle in favour of a new one every 10000 steps: This is much more
 than a factor of 10 higher than our number of parameters, and commensurate with
@@ -334,7 +326,11 @@ the rate at which a normal MCMC of comparable datasets gains additional
 effective samples.
 
 ```xml
-<subChainLength spec="IntegerParameter">10000</subChainLength>
+<run id="mcmc" spec="beast.gss.NS" chainLength="50000000" particleCount="3" epsilon="1e-12" numInitializationAttempts="1000" sampleFromPrior="false" init="@startingTree" subChainLength="10000">
+  <distribution id="posterior" spec="util.CompoundDistribution">
+    <distribution idref="prior" />
+    <distribution idref="likelihood" />
+  </distribution>
 ```
 
 We track the weight and parameter values at the discarded points. This enables
@@ -427,7 +423,12 @@ and don't need a SA variant when scaling trees.)
 
 ```xml
 </run>
+```
+## ‘Glossary’
+
+Beast allows us to define abbreviations for some frequent objects, such as re-curring probability distributions.
+```xml
+<map name="Normal">beast.math.distributions.Normal</map>
+<map name="Uniform">beast.math.distributions.Uniform</map>
 </beast>
 ```
-
-

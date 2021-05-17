@@ -54,7 +54,7 @@ def calibration(
                 id=f"{language:}_originateMRCA",
                 monophyletic="true" if monophyletic else "false",
                 spec="beast.math.distributions.MRCAPrior",
-                tree="@Tree.t:tree",
+                tree="@tree",
                 useOriginate="true",
             )
             taxonset = ET.SubElement(
@@ -74,7 +74,7 @@ def calibration(
                 id=f"TipDatesandomWalker:{language:}",
                 spec=replacements.get("TipDatesRandomWalker", "beast.evolution.operators.TipDatesRandomWalker"),
                 windowSize="1",
-                tree="@Tree.t:tree",
+                tree="@tree",
                 weight="3.0",
             )
             ET.SubElement(op, "taxonset", idref=f"{language:}_tip")
@@ -85,7 +85,7 @@ def calibration(
                 id=f"{language:}_tipMRCA",
                 monophyletic="true" if monophyletic else "false",
                 spec="beast.math.distributions.MRCAPrior",
-                tree="@Tree.t:tree",
+                tree="@tree",
                 tipsonly="true",
             )
             taxonset = ET.SubElement(
@@ -100,7 +100,7 @@ def calibration(
             id=f"{name}_tipMRCA",
             monophyletic="true" if monophyletic else "false",
             spec="beast.math.distributions.MRCAPrior",
-            tree="@Tree.t:tree",
+            tree="@tree",
         )
         taxonset = ET.SubElement(
             mrcaprior, "taxonset", id=f"{name}", spec="TaxonSet"
@@ -216,10 +216,8 @@ def main(calibrations):
         trait = traits[0]
         assert trait.attrib["traitname"] == "date-backward"
 
-    taxa = ET.SubElement(root, "taxonset", id="taxa", spec="TaxonSet")
     for lang in languages:
         print(lang)
-        ET.SubElement(taxa, "taxon", id=lang, spec="Taxon")
 
     for c in calibrations:
         calibration(run, prior, trait, languages, replacements=FBD_REPLACEMENTS if args.sampled_ancestors else {}, **c)

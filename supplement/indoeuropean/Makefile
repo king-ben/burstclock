@@ -15,8 +15,8 @@ raw_cldf/ielex-130421-ag-cc.txt: indoeuropean.zip check-zip
 raw_cldf/ielex-130421-ag-cc-with-concept.tsv: raw_cldf/ielex-130421-ag-cc.txt
 	 python add_singleton_cognate_sets.py raw_cldf/ielex-130421-ag-cc.txt | grep -v 22842 > raw_cldf/ielex-130421-ag-cc-with-concept.tsv
 
-indoeuropean-template.xml: ../template.xml
-	python ../without-markdown.py > indoeuropean-template.xml
+indoeuropean-template.xml: ../template.md
+	python ../without_markdown.py > indoeuropean-template.xml
 
 included_languages: indoeuropean.nex
 	echo "Mapping according to Chang et al. (2015), Table 8"
@@ -48,7 +48,7 @@ included_languages: indoeuropean.nex
 
 indoeuropean-undated.xml: included_languages indoeuropean-template.xml raw_cldf/ielex-130421-ag-cc-with-concept.tsv raw_cldf/cldf-metadata.json
 	cp indoeuropean-template.xml indoeuropean-undated.xml
-	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json --use-ids -b -o indoeuropean-undated.xml --languages-list included_languages
+	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json -b -o indoeuropean-undated.xml --languages-list included_languages
 
 indoeuropean.xml: indoeuropean-undated.xml add_calibrations.py
 	cp indoeuropean-undated.xml indoeuropean.xml
