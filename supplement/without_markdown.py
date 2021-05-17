@@ -1,10 +1,12 @@
+from pathlib import Path
+
 import lxml.etree as etree
 
 parser = etree.XMLParser()
 
 chunk = ""
 before_start = True
-for line in open("templates/template.xml"):
+for line in open(Path(__file__) / "template.md"):
     if "```xml" in line:
         if before_start:
             chunk = ""
