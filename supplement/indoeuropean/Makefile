@@ -16,7 +16,7 @@ raw_cldf/ielex-130421-ag-cc-with-concept.tsv: raw_cldf/ielex-130421-ag-cc.txt
 	 python add_singleton_cognate_sets.py raw_cldf/ielex-130421-ag-cc.txt | grep -v 22842 > raw_cldf/ielex-130421-ag-cc-with-concept.tsv
 
 indoeuropean-template.xml: ../template.md
-	python ../without_markdown.py > indoeuropean-template.xml
+	python ../without_markdown.py indoeuropean-template.xml
 
 included_languages: indoeuropean.nex
 	echo "Mapping according to Chang et al. (2015), Table 8"

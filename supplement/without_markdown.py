@@ -1,26 +1,26 @@
+import sys
 from pathlib import Path
-
 import lxml.etree as etree
 
-parser = etree.XMLParser()
+parser = etree.XMLParser(remove_blank_text=True, resolve_entities=False)
 
-chunk = ""
+chunk = b""
 before_start = True
-for line in open(Path(__file__).parent / "template.md"):
-    if "```xml" in line:
+for line in (Path(__file__).parent / "template.md").open("rb"):
+    if b"```xml" in line:
         if before_start:
-            chunk = ""
-            line = line[line.index("```xml") + 6 :]
-            before_start = False
+            chunk = b""
+            line = line[line.index(b"```xml") + 6 :]
+            continue
         else:
-            line = line.replace("```xml", "-->")
-    if "```" in line:
+            line = line.replace(b"```xml", b"-->")
+    elif b"```" in line:
         parser.feed(chunk)
-        chunk = ""
-        line = line.replace("```", "<!--")
+        chunk = b""
+        line = line.replace(b"```", b"<!--")
     chunk = chunk + line
 
 
-root = parser.close()
+et = parser.close().getroottree()
 
-print(etree.tostring(root, pretty_print=True).decode("utf-8"))
+et.write(open(sys.argv[1], "wb"), pretty_print=True, xml_declaration=True, encoding=et.docinfo.encoding)

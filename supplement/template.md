@@ -1,8 +1,9 @@
 # Model description
 
 The inference model is implemented for a patched version of BEAST v2.6.4-prerelease.
+
 ```xml
-<beast namespace="beast.math.distributions:beast.core:beast.evolution.operators:beast.evolution.alignment:beast.evolution.substitutionmodel" required="" version="2.6">
+<beast namespace="beast.math.distributions:beast.core:beast.evolution.operators:beast.evolution.alignment:beast.evolution.substitutionmodel" version="2.6">
 ```
 
 The data is extracted from the Arawak dataset [@arawak-data] using Lexedata
