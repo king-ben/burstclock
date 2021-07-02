@@ -6,7 +6,7 @@ The inference model is implemented for a patched version of BEAST v2.6.4-prerele
 <beast namespace="beast.math.distributions:beast.core:beast.evolution.operators:beast.evolution.alignment:beast.evolution.substitutionmodel" version="2.6">
 ```
 
-The data is extracted from the Arawak dataset [@arawak-data] using Lexedata
+The data is extracted from the corresponding datasets using Lexedata
 v1.0.0. For each core concept, we encode the presence or absence of each cognate
 class connected to that concept in the language as a binary character. Because
 we cannot observe cognate classes that don't appear in our data at all, we
@@ -14,22 +14,30 @@ correct the model for this ascertainment bias.
 
 ```xml
 <data>...</data>
-<data id="bin.vocabulary" spec="FilteredAlignment" ascertained="true" data="@vocabulary" excludeto="1" filter="::">
-  <userDataType spec="beast.evolution.datatype.Binary" />
-</data>
+<userDataType id="binary" spec="beast.evolution.datatype.Binary" />
+<plate var="concept" range="{partitions}">
+  <data id="data:$(concept)" userDataType="@binary" spec="FilteredAlignment" ascertained="true" data="@concept:$(concept)" excludeto="1" filter="::" />
+</plate>
 ```
 
 ## Likelihood
 
-The likelihood of the MCMC uses a generalized binary substitution model with a strict clock
-on a tree where node height represents time depth.
+The likelihood of the MCMC uses a generalized binary substitution model on a
+tree where node height represents time depth. We use one partition per concept.
 
 ```xml
-<distribution id="likelihood" spec="beast.evolution.likelihood.TreeLikelihood" tree="@tree" siteModel="@SiteModel" data="@bin.vocabulary">
-  <branchRateModel id="StrictClock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockrate" />
+<distribution id="likelihood" spec="util.CompoundDistribution">
+  <plate var="concept" range="{partitions}">
+    <distribution id="likelihood:$(concept)" spec="beast.evolution.likelihood.TreeLikelihood" tree="@tree" siteModel="@SiteModel:$(concept)" data="@data:$(concept)" branchRateModel="@StrictClock" />
+  </plate>
 </distribution>
 ```
 
+The baseline for our clock model is a strict clock.
+
+```xml
+<branchRateModel id="StrictClock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockrate" />
+```
 
 We assume a simple generalized binary continuous-time Markov chain substitution
 model for each separate character. The substitution rates from presence to
@@ -47,12 +55,14 @@ and absent states.
 It is well-known that rates of lexical replacement differ greatly between
 different concepts. We therefore include a model of rate variation in our model.
 For computational efficiency, it is vastly more efficient to integrate out
-per-site rate variation than to sample rate variation explicitly, so we estimate
-per-site (not per-concept) rate variation using 4 Gamma rate categories with a
-single shape parameter (and a mean of 1.0).
+per-site rate variation than to sample rate variation explicitly, but this is
+not doable per-partition. Instead, we define a separate speed of change for
+every concept explicitly.
 
 ```xml
-<siteModel id="SiteModel" spec="beast.evolution.sitemodel.SiteModel" gammaCategoryCount="4" mutationRate="1.0" shape="@rateVariationGammaShape" proportionInvariant="0.0" substModel="@CTMC" />
+<plate var="concept" range="{partitions}">
+  <siteModel id="SiteModel:$(concept)" spec="beast.evolution.sitemodel.SiteModel" mutationRate="@speed:$(concept)" proportionInvariant="0.0" substModel="@CTMC" />
+</plate>
 ```
 
 ## Priors
@@ -61,8 +71,10 @@ single shape parameter (and a mean of 1.0).
 <distribution id="prior" spec="util.CompoundDistribution">
 ```
 
+
 For the tree prior, we take a variant of the fossilized birth death (FBD) tree
-prior with sampled ancestors (SA). The basic FBD prior has the following parameters:
+prior with sampled ancestors (SA). The basic FBD prior has the following
+parameters:
 
  - a birth rate `λ` that describes how frequently a taxon splits into two descendants
  - a death rate `μ` which measures how quickly taxa go extinct
@@ -256,9 +268,21 @@ factor of 3.1 of each other – commensurate with the observations in
 </prior>
 ```
 
-The last prior to specify concerns the rate variation. It is unclear what shape
-the Gamma distribution for the per-cognateset rates should have, so we draw that
-shape from an exponential hyperprior with mean 1.
+The last priors to specify concern the rate variation.
+The rate for each concept follows a Gamma distribution, with a mean of 1.0 (so
+the clock rate reflects the mean over all concepts and branches).
+
+```xml
+<plate var="concept" range="{partitions}">
+  <prior spec="Prior" id="RateVariation:$(concept)" name="distribution" x="@speed:$(concept)">
+    <distr spec="Gamma" id="Gamma:$(concept)" mode="OneParameter" alpha="@rateVariationGammaShape" />
+  </prior>
+</plate>
+
+```
+It is unclear what shape the Gamma distribution for the per-cognateset rates
+should have, so we draw that shape from an exponential hyperprior with mean 1.
+
 
 ```xml
 <prior spec="Prior" id="GammaShapePrior" name="distribution" x="@rateVariationGammaShape">
@@ -301,8 +325,11 @@ In summary, the model parameters and (their starting values) are as follows:
    ```xml
    <parameter id="clockrate" spec="parameter.RealParameter" name="stateNode">0.0001</parameter>
    ```
- - The rate variation is parameterized using a hyper-prior which constrains the shape of the Gamma distribution.
+ - The rate variation is parameterized using one parameter per concept, plus a hyper-prior which constrains the shape of the Gamma distribution.
    ```xml
+   <plate var="concept" range="{partitions}">
+     <parameter id="speed:$(concept)" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
+   </plate>
    <parameter id="rateVariationGammaShape" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
    </state>
    ```

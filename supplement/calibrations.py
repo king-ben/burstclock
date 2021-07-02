@@ -196,8 +196,7 @@ def main(calibrations):
         )
         et = ET.ElementTree(root)
 
-    prior = list(root.iter("distribution"))[1]
-    assert prior.attrib["id"] == "prior"
+    prior, = [tag for tag in root.iter("distribution") if tag.attrib.get("id") == "prior"]
 
     run = list(root.iter("run"))[0]
 
