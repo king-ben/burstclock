@@ -56,6 +56,10 @@ indoeuropean.xml: indoeuropean-undated.xml add_calibrations.py
 	diff included_languages actually_included_languages
 
 
+indoeuropean-burstclock.xml: indoeuropean.xml ../add_burstclock.py
+	python ../add_burstclock.py indoeuropean.xml -o indoeuropean-burstclock.xml
+
 run/vocabulary.log: indoeuropean.xml
 	mkdir -p run
 	cd run && beast ../indoeuropean.xml
+

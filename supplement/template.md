@@ -28,7 +28,7 @@ tree where node height represents time depth. We use one partition per concept.
 ```xml
 <distribution id="likelihood" spec="util.CompoundDistribution">
   <plate var="concept" range="{partitions}">
-    <distribution id="likelihood:$(concept)" spec="beast.evolution.likelihood.TreeLikelihood" tree="@tree" siteModel="@SiteModel:$(concept)" data="@data:$(concept)" branchRateModel="@StrictClock" />
+    <distribution id="likelihood:$(concept)" spec="beast.evolution.likelihood.TreeLikelihood" tree="@tree" siteModel="@SiteModel:$(concept)" data="@data:$(concept)" branchRateModel="@Clock" />
   </plate>
 </distribution>
 ```
@@ -36,7 +36,7 @@ tree where node height represents time depth. We use one partition per concept.
 The baseline for our clock model is a strict clock.
 
 ```xml
-<branchRateModel id="StrictClock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockrate" />
+<branchRateModel id="Clock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockrate" />
 ```
 
 We assume a simple generalized binary continuous-time Markov chain substitution
@@ -310,7 +310,6 @@ In summary, the model parameters and (their starting values) are as follows:
        <trait id="dateTrait" spec="beast.evolution.tree.TraitSet" traitname="date-backward" taxa="@taxa" />
      </tree>
    ```
-
  - The substitution model is parameterized by the equilibrium frequencies of present vs. absent cognate classes
    ```xml
    <parameter id="freqParameter" spec="parameter.RealParameter" dimension="2" lower="0.0" name="stateNode" upper="1.0">0.9 0.1</parameter>
@@ -428,7 +427,7 @@ Each of the parameters must be modified for sampling, using at least one operato
  - The clock rate and gamma shape also individually adjusted by a scale operator.
 
    ```xml
-   <operator id="StrictClockRateScaler" spec="ScaleOperator" parameter="@clockrate" scaleFactor="0.9" weight="4.0" />
+   <operator id="ClockRateScaler" spec="ScaleOperator" parameter="@clockrate" scaleFactor="0.9" weight="4.0" />
    <operator id="gammaShapeScaler" spec="ScaleOperator" parameter="@rateVariationGammaShape" scaleFactor="0.5" weight="0.1" />
    ``` 
 

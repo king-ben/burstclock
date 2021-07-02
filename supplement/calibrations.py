@@ -22,7 +22,7 @@ def until(lower, upper):
 
 
 FBD_REPLACEMENTS = {
-        "TipDatesRandomWalker": "beast.evolution.operators.SampledNodeDateRandomWalker",
+    "TipDatesRandomWalker": "beast.evolution.operators.SampledNodeDateRandomWalker",
 }
 
 def calibration(
