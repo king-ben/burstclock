@@ -1,7 +1,7 @@
 import sys
 import argparse
 from pathlib import Path
-import xml.etree.ElementTree as ET
+import lxml.etree as ET
 
 from tqdm import tqdm
 import pycldf
@@ -186,7 +186,7 @@ def main(calibrations):
         )
         et = ET.ElementTree(root)
     elif args.output_file.exists():
-        et = ET.parse(args.output_file)
+        et = ET.parse(args.output_file.open("r"))
         root = et.getroot()
     else:
         root = ET.fromstring(
@@ -221,9 +221,14 @@ def main(calibrations):
     for c in calibrations:
         calibration(run, prior, trait, languages, replacements=FBD_REPLACEMENTS if args.sampled_ancestors else {}, **c)
 
+    if not trait.text or not trait.text.strip():
+        trait.text = "\n{language:} = {mean:}".format(language=next(iter(languages)), mean=0)
+        sa_jump = root.find(".//operator[@spec='LeafToSampledAncestorJump']")
+        sa_jump.getparent().remove(sa_jump)
+
     if args.first_writing is not None:
         run = [tag for tag in root.iter() if tag.attrib.get("id") == "SamplingChangeTime"][0]
         run.text = f"0. {args.first_writing:f}"
 
-    et.write(args.output_file, encoding="unicode")
+    et.write(args.output_file.open("wb"))
     return et, root, run, prior, trait, languages
