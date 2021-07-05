@@ -18,6 +18,7 @@ bantu-undated.xml stats.tex: raw_cldf/cldf-metadata.json add_calibrations.py ban
 bantu.xml: bantu-undated.xml add_calibrations.py
 	cp bantu-undated.xml bantu.xml
 	PYTHONPATH=../ python add_calibrations.py -o bantu.xml
+	python ../set_rho.py bantu.xml bant1294 -o bantu.xml
 
 bantu-burstclock.xml: bantu.xml ../add_burstclock.py
 	python ../add_burstclock.py bantu.xml -o bantu-burstclock.xml

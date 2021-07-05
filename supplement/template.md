@@ -26,7 +26,7 @@ The likelihood of the MCMC uses a generalized binary substitution model on a
 tree where node height represents time depth. We use one partition per concept.
 
 ```xml
-<distribution id="likelihood" spec="util.CompoundDistribution">
+<distribution id="likelihood" spec="util.CompoundDistribution" useThreads="true">
   <plate var="concept" range="{partitions}">
     <distribution id="likelihood:$(concept)" spec="beast.evolution.likelihood.TreeLikelihood" tree="@tree" siteModel="@SiteModel:$(concept)" data="@data:$(concept)" branchRateModel="@Clock" />
   </plate>
@@ -128,12 +128,13 @@ language communities, so we pin the removal probability to $0.0$.
 ```
 
 Our data does not contain all extant languages, so we need to also specify the
-sampling probabilty $\rho$ of extant languages. There are XXX extant Arawak
-languages listed in Glottolog, and our sample contains 39 tips of which XXX are
-extant, so $\rho = 0.51$.
+sampling probabilty $\rho$ of extant languages. The following number is a
+placeholder. To generate the actual value, we take the number of languages in
+our sample divided by the number of extant languages of the familiy listed in
+Glottolog.
 
 ```xml
-<parameter name="rho">0.5131578947368421</parameter>
+<parameter name="rho">0.5</parameter>
 ```
 
 The variant of the FBD we use, the FBD-Skyline model, assumes that those tree

@@ -24,6 +24,7 @@ good_austronesian austronesian-undated.xml stats.tex: raw_cldf/cldf-metadata.jso
 austronesian.xml: austronesian-undated.xml add_calibrations.py
 	cp austronesian-undated.xml austronesian.xml
 	PYTHONPATH=../ python add_calibrations.py --subset high_coverage_languages -f aust1307 -o austronesian.xml
+	python ../set_rho.py austronesian.xml aust1307 -o austronesian.xml
 
 austronesian-burstclock.xml: austronesian.xml ../add_burstclock.py
 	python ../add_burstclock.py austronesian.xml -o austronesian-burstclock.xml

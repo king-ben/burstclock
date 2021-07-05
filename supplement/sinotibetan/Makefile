@@ -18,6 +18,7 @@ sinotibetan-undated.xml stats.tex: raw_cldf/cldf-metadata.json add_calibrations.
 sinotibetan.xml: sinotibetan-undated.xml add_calibrations.py
 	cp sinotibetan-undated.xml sinotibetan.xml
 	PYTHONPATH=../ python add_calibrations.py -o sinotibetan.xml
+	python ../set_rho.py sinotibetan.xml sino1245 -o sinotibetan.xml
 
 sinotibetan-burstclock.xml: sinotibetan.xml ../add_burstclock.py
 	python ../add_burstclock.py sinotibetan.xml -o sinotibetan-burstclock.xml

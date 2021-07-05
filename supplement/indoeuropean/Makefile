@@ -53,6 +53,7 @@ indoeuropean-undated.xml: included_languages indoeuropean-template.xml raw_cldf/
 indoeuropean.xml: indoeuropean-undated.xml add_calibrations.py
 	cp indoeuropean-undated.xml indoeuropean.xml
 	PYTHONPATH=../ python add_calibrations.py -w 4000. -s -o indoeuropean.xml --subset included_languages | sort > actually_included_languages
+	python ../set_rho.py indoeuropean.xml indo1319 -o indoeuropean.xml
 	diff included_languages actually_included_languages
 
 
