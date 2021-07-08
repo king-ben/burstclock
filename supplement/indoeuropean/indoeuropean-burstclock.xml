@@ -305,7 +305,9 @@
       <distribution id="likelihood:$(concept)" spec="beast.evolution.likelihood.TreeLikelihood" tree="@tree" siteModel="@SiteModel:$(concept)" data="@data:$(concept)" branchRateModel="@Clock"/>
     </plate>
   </distribution>
-  <branchRateModel id="Clock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockrate"/>
+  <branchRateModel id="Clock" spec="ch.uzh.beast.evolution.branchratemodel.BurstClock" perSplit="@perSplit">
+    <branchRateModel id="innerClock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockrate" name="branchonlyClock"/>
+  </branchRateModel>
   <substModel id="CTMC" spec="GeneralSubstitutionModel">
     <parameter id="rates" spec="parameter.RealParameter" dimension="2" estimate="false" lower="0.0" name="rates">1.0 1.0</parameter>
     <frequencies id="estimatedFreqs" spec="Frequencies" frequencies="@freqParameter"/>
@@ -499,6 +501,9 @@
       </taxonset>
       <Uniform name="distr" lower="750" upper="20000"/>
     </distribution>
+    <prior spec="Prior" id="PerSplitPrior" name="distribution" x="@perSplit">
+      <distr id="Normal.PerSplit" spec="beast.math.distributions.Normal" mean="0.0" sigma="3.6e-3"/>
+    </prior>
   </distribution>
   <init id="startingTree" initial="@tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTree">
     <populationModel spec="beast.evolution.tree.coalescent.ConstantPopulation">
@@ -532,6 +537,7 @@ Old_Church_Slavonic = 1000</trait>
       <parameter id="speed:$(concept)" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
     </plate>
     <parameter id="rateVariationGammaShape" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
+    <parameter id="perSplit" spec="parameter.RealParameter" name="stateNode">2e-4</parameter>
   </state>
   <run id="mcmc" spec="MCMC" chainLength="50000000" numInitializationAttempts="1000" sampleFromPrior="false" init="@startingTree" storeEvery="10000">
     <distribution id="posterior" spec="util.CompoundDistribution">
@@ -550,6 +556,7 @@ Old_Church_Slavonic = 1000</trait>
       <log idref="clockrate"/>
       <log idref="lossrate"/>
       <log idref="rateVariationGammaShape"/>
+      <log idref="perSplit"/>
     </logger>
     <logger id="screenlog" spec="Logger" logEvery="10000">
       <log idref="posterior"/>
@@ -617,6 +624,7 @@ Old_Church_Slavonic = 1000</trait>
     <operator id="TipDatesandomWalker:Old_Church_Slavonic" spec="beast.evolution.operators.SampledNodeDateRandomWalker" windowSize="1" tree="@tree" weight="3.0">
       <taxonset idref="Old_Church_Slavonic_tip"/>
     </operator>
+    <operator spec="beast.evolution.operators.RealRandomWalkOperator" id="BurstClockShift" windowSize="1e-4" parameter="@perSplit" useGaussian="true" weight="3."/>
   </run>
   <map name="Normal">beast.math.distributions.Normal</map>
   <map name="Uniform">beast.math.distributions.Uniform</map>

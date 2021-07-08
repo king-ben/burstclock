@@ -305,7 +305,9 @@
       <distribution id="likelihood:$(concept)" spec="beast.evolution.likelihood.TreeLikelihood" tree="@tree" siteModel="@SiteModel:$(concept)" data="@data:$(concept)" branchRateModel="@Clock"/>
     </plate>
   </distribution>
-  <branchRateModel id="Clock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockrate"/>
+  <branchRateModel id="Clock" spec="beast.evolution.branchratemodel.UCRelaxedClockModel" clock.rate="@clockrate" rates="@RelaxedClockBranchRates" tree="@tree">
+    <distr id="ClockRatesPrior" spec="beast.math.distributions.LogNormalDistributionModel" S="@RelaxedClockSigma" M="0.0" meanInRealSpace="false"/>
+  </branchRateModel>
   <substModel id="CTMC" spec="GeneralSubstitutionModel">
     <parameter id="rates" spec="parameter.RealParameter" dimension="2" estimate="false" lower="0.0" name="rates">1.0 1.0</parameter>
     <frequencies id="estimatedFreqs" spec="Frequencies" frequencies="@freqParameter"/>
@@ -499,6 +501,12 @@
       </taxonset>
       <Uniform name="distr" lower="750" upper="20000"/>
     </distribution>
+    <prior spec="Prior" id="RelaxedClockBranchRatesPrior" name="distribution" x="@RelaxedClockBranchRates">
+      <distr id="LogNormal.RelaxedClockBranchRates" spec="beast.math.distributions.LogNormalDistributionModel" M="0.0" S="@RelaxedClockSigma" meanInRealSpace="false"/>
+    </prior>
+    <prior spec="Prior" id="RelaxedClockSigmaPrior" name="distribution" x="@RelaxedClockSigma">
+      <distr id="Gamma.RelaxedClockSigma" spec="beast.math.distributions.Gamma" alpha="0.5396" beta="0.3819"/>
+    </prior>
   </distribution>
   <init id="startingTree" initial="@tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTree">
     <populationModel spec="beast.evolution.tree.coalescent.ConstantPopulation">
@@ -532,6 +540,8 @@ Old_Church_Slavonic = 1000</trait>
       <parameter id="speed:$(concept)" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
     </plate>
     <parameter id="rateVariationGammaShape" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
+    <parameter id="RelaxedClockSigma" spec="parameter.RealParameter" lower="0.0" name="stateNode">0.2</parameter>
+    <parameter id="RelaxedClockBranchRates" spec="parameter.RealParameter" lower="0.0" name="stateNode"> 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0</parameter>
   </state>
   <run id="mcmc" spec="MCMC" chainLength="50000000" numInitializationAttempts="1000" sampleFromPrior="false" init="@startingTree" storeEvery="10000">
     <distribution id="posterior" spec="util.CompoundDistribution">
@@ -550,6 +560,8 @@ Old_Church_Slavonic = 1000</trait>
       <log idref="clockrate"/>
       <log idref="lossrate"/>
       <log idref="rateVariationGammaShape"/>
+      <log idref="RelaxedClockSigma"/>
+      <log id="RatesStat" spec="beast.evolution.branchratemodel.RateStatistic" branchratemodel="@Clock" tree="@tree"/>
     </logger>
     <logger id="screenlog" spec="Logger" logEvery="10000">
       <log idref="posterior"/>
@@ -558,7 +570,7 @@ Old_Church_Slavonic = 1000</trait>
       <log idref="prior"/>
     </logger>
     <logger id="treelog" spec="Logger" fileName="vocabulary.trees" logEvery="10000" mode="tree">
-      <log id="TreeWithMetaDataLogger" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@tree"/>
+      <log id="TreeWithMetaDataLogger" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@tree" branchratemodel="@Clock"/>
     </logger>
     <operator id="SampledAncestorJump" spec="LeafToSampledAncestorJump" removalProbability="@removalProbability" tree="@tree" weight="3.0"/>
     <operator id="BirthDeathNarrow" spec="SAExchange" tree="@tree" weight="15.0"/>
@@ -617,7 +629,29 @@ Old_Church_Slavonic = 1000</trait>
     <operator id="TipDatesandomWalker:Old_Church_Slavonic" spec="beast.evolution.operators.SampledNodeDateRandomWalker" windowSize="1" tree="@tree" weight="3.0">
       <taxonset idref="Old_Church_Slavonic_tip"/>
     </operator>
+    <operator id="ORCAdaptableOperatorSampler_sigma" spec="orc.operators.AdaptableOperatorSampler" weight="3.0" parameter="@RelaxedClockSigma">
+      <operator id="ORCucldStdevScaler" spec="consoperators.UcldScalerOperator" distr="@ClockRatesPrior" rates="@RelaxedClockBranchRates" scaleFactor="0.5" stdev="@RelaxedClockSigma" weight="1.0" kernel="@BactrianKernel"/>
+      <operator id="ORCUcldStdevRandomWalk" spec="BactrianRandomWalkOperator" parameter="@RelaxedClockSigma" scaleFactor="0.1" weight="1.0" kernelDistribution="@BactrianKernel"/>
+      <operator id="ORCUcldStdevScale" spec="BactrianScaleOperator" parameter="@RelaxedClockSigma" scaleFactor="0.5" upper="10.0" weight="1.0" kernelDistribution="@BactrianKernel"/>
+      <operator id="ORCSampleFromPriorOperator_sigma" spec="orc.operators.SampleFromPriorOperator" parameter="@RelaxedClockSigma" prior2="@RelaxedClockSigmaPrior" weight="1.0"/>
+    </operator>
+    <operator id="ORCAdaptableOperatorSampler_rates_root" spec="orc.operators.AdaptableOperatorSampler" tree="@tree" weight="0.1" parameter="@RelaxedClockBranchRates">
+      <operator id="ORCRootOperator1" spec="consoperators.SimpleDistance" clockModel="@Clock" rates="@RelaxedClockBranchRates" tree="@tree" twindowSize="0.005" weight="1.0" kernel="@BactrianKernel"/>
+      <operator id="ORCRootOperator2" spec="consoperators.SmallPulley" clockModel="@Clock" dwindowSize="0.005" rates="@RelaxedClockBranchRates" tree="@tree" weight="1.0" kernel="@BactrianKernel"/>
+    </operator>
+    <operator id="ORCAdaptableOperatorSampler" spec="orc.operators.AdaptableOperatorSampler" tree="@tree" weight="20.0" parameter="@RelaxedClockBranchRates">
+      <operator id="ORCInternalnodesOperator" spec="consoperators.InConstantDistanceOperator" clockModel="@Clock" rates="@RelaxedClockBranchRates" tree="@tree" twindowSize="0.005" weight="1.0" kernel="@BactrianKernel"/>
+      <operator id="ORCRatesRandomWalk" spec="BactrianRandomWalkOperator" parameter="@RelaxedClockBranchRates" scaleFactor="0.1" weight="1.0" kernelDistribution="@BactrianKernel"/>
+      <operator id="ORCRatesScale" spec="BactrianScaleOperator" parameter="@RelaxedClockBranchRates" scaleFactor="0.5" upper="10.0" weight="1.0" kernelDistribution="@BactrianKernel"/>
+      <operator id="ORCSampleFromPriorOperator" spec="orc.operators.SampleFromPriorOperator" parameter="@RelaxedClockBranchRates" prior2="@RelaxedClockBranchRatesPrior" weight="1.0"/>
+    </operator>
+    <operator id="ORCAdaptableOperatorSampler_NER.c:clock" spec="orc.operators.AdaptableOperatorSampler" tree="@tree" weight="15.0" metric="@RobinsonsFould">
+      <operator id="ORCNER_Exchange" spec="Exchange" tree="@tree" weight="0.0"/>
+      <operator id="ORCNER_dAE_dBE_dCE" spec="orc.ner.NEROperator_dAE_dBE_dCE" rates="@RelaxedClockBranchRates" tree="@tree" weight="1.0"/>
+    </operator>
   </run>
   <map name="Normal">beast.math.distributions.Normal</map>
   <map name="Uniform">beast.math.distributions.Uniform</map>
+  <kernel id="BactrianKernel" spec="KernelDistribution$Bactrian"/>
+  <metric id="RobinsonsFould" spec="beast.evolution.tree.RobinsonsFouldMetric" taxonset="@taxa"/>
 </beast>
