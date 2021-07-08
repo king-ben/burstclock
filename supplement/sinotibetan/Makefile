@@ -16,12 +16,18 @@ sinotibetan-undated.xml stats.tex: raw_cldf/cldf-metadata.json add_calibrations.
 	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json -b -o sinotibetan-undated.xml
 
 sinotibetan.xml: sinotibetan-undated.xml add_calibrations.py
-	cp sinotibetan-undated.xml sinotibetan.xml
-	PYTHONPATH=../ python add_calibrations.py -o sinotibetan.xml
+	python ../no_nested_sampling.py sinotibetan-undated.xml -o sinotibetan.xml
+	PYTHONPATH=../ python add_calibrations.py -s -o sinotibetan.xml
 	python ../set_rho.py sinotibetan.xml sino1245 -o sinotibetan.xml
 
 sinotibetan-burstclock.xml: sinotibetan.xml ../add_burstclock.py
 	python ../add_burstclock.py sinotibetan.xml -o sinotibetan-burstclock.xml
+
+sinotibetan-relaxed.xml: sinotibetan.xml ../relax_clock.py
+	python ../relax_clock.py sinotibetan.xml -o sinotibetan-relaxed.xml
+
+sinotibetan-relaxed-burstclock.xml: sinotibetan-burstclock.xml ../relax_clock.py
+	python ../relax_clock.py sinotibetan-burstclock.xml -o sinotibetan-relaxed-burstclock.xml
 
 run/vocabulary.log: sinotibetan.xml
 	mkdir -p run

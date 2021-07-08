@@ -51,14 +51,19 @@ indoeuropean-undated.xml: included_languages indoeuropean-template.xml raw_cldf/
 	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json -b -o indoeuropean-undated.xml --language-list included_languages
 
 indoeuropean.xml: indoeuropean-undated.xml add_calibrations.py
-	cp indoeuropean-undated.xml indoeuropean.xml
+	python ../no_nested_sampling.py indoeuropean-undated.xml -o indoeuropean.xml
 	PYTHONPATH=../ python add_calibrations.py -w 4000. -s -o indoeuropean.xml --subset included_languages | sort > actually_included_languages
 	python ../set_rho.py indoeuropean.xml indo1319 -o indoeuropean.xml
 	diff included_languages actually_included_languages
 
-
 indoeuropean-burstclock.xml: indoeuropean.xml ../add_burstclock.py
 	python ../add_burstclock.py indoeuropean.xml -o indoeuropean-burstclock.xml
+
+indoeuropean-relaxed.xml: indoeuropean.xml ../relax_clock.py
+	python ../relax_clock.py indoeuropean.xml -o indoeuropean-relaxed.xml
+
+indoeuropean-relaxed-burstclock.xml: indoeuropean-burstclock.xml ../relax_clock.py
+	python ../relax_clock.py indoeuropean-burstclock.xml -o indoeuropean-relaxed-burstclock.xml
 
 run/vocabulary.log: indoeuropean.xml
 	mkdir -p run

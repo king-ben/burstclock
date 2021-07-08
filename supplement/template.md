@@ -409,7 +409,6 @@ Each of the parameters must be modified for sampling, using at least one operato
    > I have forgotten what the uniform tree operator does.
    ```xml
    <operator id="BirthDeathTreeScaler" spec="SAScaleOperator" scaleFactor="0.95" tree="@tree" weight="3.0" />
-   <operator id="BirthDeathSubtreeSlide" spec="SubtreeSlide" tree="@tree" size="4" weight="15.0" />
    <operator id="BirthDeathTreeRootScaler" spec="SAScaleOperator" rootOnly="true" scaleFactor="0.6" tree="@tree" weight="2.0" />
    <operator id="BirthDeathUniformOperator" spec="SAUniform" tree="@tree" weight="30.0" />
    ```

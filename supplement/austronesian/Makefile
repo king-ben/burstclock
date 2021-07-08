@@ -22,12 +22,18 @@ good_austronesian austronesian-undated.xml stats.tex: raw_cldf/cldf-metadata.jso
 	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json -b -o austronesian-undated.xml
 
 austronesian.xml: austronesian-undated.xml add_calibrations.py
-	cp austronesian-undated.xml austronesian.xml
-	PYTHONPATH=../ python add_calibrations.py --subset high_coverage_languages -f aust1307 -o austronesian.xml
+	python ../no_nested_sampling.py austronesian-undated.xml -o austronesian.xml
+	PYTHONPATH=../ python add_calibrations.py -s --subset high_coverage_languages -f aust1307 -o austronesian.xml
 	python ../set_rho.py austronesian.xml aust1307 -o austronesian.xml
 
 austronesian-burstclock.xml: austronesian.xml ../add_burstclock.py
 	python ../add_burstclock.py austronesian.xml -o austronesian-burstclock.xml
+
+austronesian-relaxed.xml: austronesian.xml ../relax_clock.py
+	python ../relax_clock.py austronesian.xml -o austronesian-relaxed.xml
+
+austronesian-relaxed-burstclock.xml: austronesian-burstclock.xml ../relax_clock.py
+	python ../relax_clock.py austronesian-burstclock.xml -o austronesian-relaxed-burstclock.xml
 
 run/vocabulary.log: austronesian.xml
 	mkdir -p run

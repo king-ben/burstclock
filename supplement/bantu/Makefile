@@ -16,12 +16,18 @@ bantu-undated.xml stats.tex: raw_cldf/cldf-metadata.json add_calibrations.py ban
 	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json -b -o bantu-undated.xml
 
 bantu.xml: bantu-undated.xml add_calibrations.py
-	cp bantu-undated.xml bantu.xml
+	python ../no_nested_sampling.py bantu-undated.xml -o bantu.xml
 	PYTHONPATH=../ python add_calibrations.py -o bantu.xml
 	python ../set_rho.py bantu.xml bant1294 -o bantu.xml
 
 bantu-burstclock.xml: bantu.xml ../add_burstclock.py
 	python ../add_burstclock.py bantu.xml -o bantu-burstclock.xml
+
+bantu-relaxed.xml: bantu.xml ../relax_clock.py
+	python ../relax_clock.py bantu.xml -o bantu-relaxed.xml
+
+bantu-relaxed-burstclock.xml: bantu-burstclock.xml ../relax_clock.py
+	python ../relax_clock.py bantu-burstclock.xml -o bantu-relaxed-burstclock.xml
 
 run/vocabulary.log: bantu.xml
 	mkdir -p run

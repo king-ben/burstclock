@@ -15,9 +15,9 @@ def replace_rho(root, rho):
     </beast>
     """
 
-    rho = root.find(".//parameter[@name='rho']")
-    assert rho is not None
-    rho.text = str(rho)
+    rho_p = root.find(".//parameter[@name='rho']")
+    assert rho_p is not None
+    rho_p.text = str(rho)
 
     return root
 
@@ -27,7 +27,7 @@ def count_languages(root) -> int:
     ancient = 0
     for date in tip_dates.text.split(","):
         tip, date = date.split("=")
-        if int(date.strip()) != 0:
+        if float(date.strip()) != 0.0:
             ancient += 1
     n_sequences = len(root.findall(".//sequence"))
     return n_sequences - ancient
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     root = xmlparser.close()
 
     sampled = count_languages(root)
-    root = replace_rho(root, rho=sampled / n)
+    root = replace_rho(root, rho=min(sampled / n, 1))
 
     et = root.getroottree()
     if args.output:
