@@ -399,10 +399,10 @@ Each of the parameters must be modified for sampling, using at least one operato
    tips between being leaves and sampled ancestors.
    > For a relaxed clock, there is a WilsonBaldingWithRateCategories
    ```xml
-   <operator id="SampledAncestorJump" spec="LeafToSampledAncestorJump" removalProbability="@removalProbability" tree="@tree" keepSA="true" weight="3.0" />
+   <operator id="SampledAncestorJump" spec="LeafToSampledAncestorJump" removalProbability="@removalProbability" tree="@tree" weight="3.0" />
    <operator id="BirthDeathNarrow" spec="SAExchange" tree="@tree" weight="15.0" />
    <operator id="BirthDeathWide" spec="SAExchange" isNarrow="false" tree="@tree" weight="3.0" />
-   <operator id="BirthDeathWilsonBalding" spec="SAWilsonBalding" tree="@tree" weight="1.0" />
+   <operator id="BirthDeathWilsonBalding" spec="SAWilsonBalding" keepSA="true" tree="@tree" weight="1.0" />
    ```
  - The branch lengths are modified by scaling the entire tree, sliding subtrees
    (or just re-scaling the root), or a general uniform tree operator.
