@@ -18,6 +18,7 @@ sinotibetan-undated.xml stats.tex: raw_cldf/cldf-metadata.json add_calibrations.
 sinotibetan.xml: sinotibetan-undated.xml add_calibrations.py
 	python ../no_nested_sampling.py sinotibetan-undated.xml -o sinotibetan.xml
 	PYTHONPATH=../ python add_calibrations.py -s -o sinotibetan.xml
+	python ../config_sampled_ancestors.py sinotibetan.xml Tibetan_Old_Tibetan -s Sinitic_Old_Chinese -s Burmish_Old_Burmese -o sinotibetan.xml
 	python ../set_rho.py sinotibetan.xml sino1245 -o sinotibetan.xml
 
 sinotibetan-burstclock.xml: sinotibetan.xml ../add_burstclock.py

@@ -24,6 +24,8 @@ good_austronesian austronesian-undated.xml stats.tex: raw_cldf/cldf-metadata.jso
 austronesian.xml: austronesian-undated.xml add_calibrations.py
 	python ../no_nested_sampling.py austronesian-undated.xml -o austronesian.xml
 	PYTHONPATH=../ python add_calibrations.py -s --subset high_coverage_languages -f aust1307 -o austronesian.xml
+  # Old Javanese is a sampled ancestor
+	python ../config_sampled_ancestors.py austronesian.xml -s 290 -o austronesian.xml
 	python ../set_rho.py austronesian.xml aust1307 -o austronesian.xml
 
 austronesian-burstclock.xml: austronesian.xml ../add_burstclock.py

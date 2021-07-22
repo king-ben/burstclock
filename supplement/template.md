@@ -164,8 +164,8 @@ distribution.)
 A language family that started from 1 language 8000 years ago and reached 20
 languages today would have doubled with an average rate of $\log_2 20 / 8000 =
 0.00054$. years. To diversify into 55 languages in about 3000 years, the
-diversification rate would be $\log_2 55 / 4000 = 0.00145$, or about a factor
-$e$ higher. This gives us a way to specify a lognormal prior:
+diversification rate would be $\log_2 55 / 3000 = 0.00192$, or about a factor
+$3.57$ higher. This gives us a way to specify a lognormal prior:
 
 ```xml
 <prior spec="Prior" id="BirthRatePrior" name="distribution" x="@netDiversificationRate">
@@ -179,10 +179,10 @@ The mean of the distribution in log space is $M=\ln 0.00054=-7.52$.
 ```
 
 The 95\% mark corresponds to roughly the $3\sigma$ interval around the mean, and
-a factor of $e$ translates into a $\pm 1$ in log space, so $S=1/3$.
+a factor of $3.57$ translates into a $\pm 1.27$ in log space, so $S=0.4$.
 
 ```xml
-<S id="LogNormalStd.BirthRate" spec="parameter.RealParameter" estimate="false">0.3333333333333333333</S>
+<S id="LogNormalStd.BirthRate" spec="parameter.RealParameter" estimate="false">0.42392217721272574</S>
 </distr>
 </prior>
 ```
@@ -301,7 +301,7 @@ In summary, the model parameters and (their starting values) are as follows:
 
  - The central parameter is the phylogenetic tree, initialized with a random tree.
    ```xml
-   <init id="startingTree" initial="@tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTree">
+   <init id="startingTree" initial="@tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTreeWithSA">
      <populationModel spec="beast.evolution.tree.coalescent.ConstantPopulation">
        <popSize spec="parameter.RealParameter" value="10000" />
      </populationModel>
@@ -399,7 +399,7 @@ Each of the parameters must be modified for sampling, using at least one operato
    tips between being leaves and sampled ancestors.
    > For a relaxed clock, there is a WilsonBaldingWithRateCategories
    ```xml
-   <operator id="SampledAncestorJump" spec="LeafToSampledAncestorJump" removalProbability="@removalProbability" tree="@tree" weight="3.0" />
+   <operator id="SampledAncestorJump" spec="LeafToSampledAncestorJump" removalProbability="@removalProbability" tree="@tree" keepSA="true" weight="3.0" />
    <operator id="BirthDeathNarrow" spec="SAExchange" tree="@tree" weight="15.0" />
    <operator id="BirthDeathWide" spec="SAExchange" isNarrow="false" tree="@tree" weight="3.0" />
    <operator id="BirthDeathWilsonBalding" spec="SAWilsonBalding" tree="@tree" weight="1.0" />

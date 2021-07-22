@@ -53,6 +53,7 @@ indoeuropean-undated.xml: included_languages indoeuropean-template.xml raw_cldf/
 indoeuropean.xml: indoeuropean-undated.xml add_calibrations.py
 	python ../no_nested_sampling.py indoeuropean-undated.xml -o indoeuropean.xml
 	PYTHONPATH=../ python add_calibrations.py -w 4000. -s -o indoeuropean.xml --subset included_languages | sort > actually_included_languages
+	python ../config_sampled_ancestors.py indoeuropean.xml Latin Vedic_Sanskrit Avestan Ancient_Greek Old_Church_Slavonic -s Old_Irish -s Old_Norse -s Old_English -s Old_High_German -s Classical_Armenian -o indoeuropean.xml
 	python ../set_rho.py indoeuropean.xml indo1319 -o indoeuropean.xml
 	diff included_languages actually_included_languages
 
