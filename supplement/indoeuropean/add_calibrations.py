@@ -37,6 +37,7 @@ r = main(
                 "Afrikaans",
             },
             "name": "Germanic",
+            "monophyletic": True,
             "d": {"tag": "Uniform", "name": "distr", "lower": "2250", "upper": "20000"},
         },
         {
@@ -69,6 +70,7 @@ r = main(
                 "Danish",
             },
             "name": "Scandinavian",
+            "monophyletic": True,
             "d": {"tag": "Uniform", "name": "distr", "lower": "1500", "upper": "20000"},
         },
         {
@@ -113,6 +115,25 @@ r = main(
             },
             "name": "Modern_Irish-Scots_Gaelic",
             "d": {"tag": "Uniform", "name": "distr", "lower": "1050", "upper": "20000"},
+        },
+        {
+            "languages": {
+                "Welsh_N",
+                "Breton_ST",
+                "Cornish",
+                "Old_Irish",
+                "Irish_B",
+                "Scots_Gaelic",
+            },
+            "name": "Celtic",
+            "monophyletic": True,
+            "d": {"tag": "Uniform", "name": "distr", "lower": "1050", "upper": "20000"},
+        },
+        {
+            "languages": {"Classical_Armenian", "Armenian_Mod", "Armenian_List"},
+            "name": "Armenian_Clade",
+            "monophyletic": True,
+            "d": {"tag": "Uniform", "name": "distr", "lower": "0", "upper": "20000"},
         },
         {
             "languages": {
