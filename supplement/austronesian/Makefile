@@ -12,18 +12,19 @@ austronesian-template.xml: ../template.md
 raw_cldf/forms.csv raw_cldf/cognates.csv raw_cldf/cldf-metadata.json: abvd.zip check-zip
 	unzip -DD -o -j abvd.zip "abvd-master/cldf/*" -d raw_cldf/
 
-high_coverage_languages: raw_cldf/cldf-metadata.json raw_cldf/forms.csv
-	python -m lexedata.report.coverage -l --min-concepts 189 --metadata raw_cldf/cldf-metadata.json | grep -v 831 > high_coverage_languages
-
-
-good_austronesian austronesian-undated.xml stats.tex: raw_cldf/cldf-metadata.json high_coverage_languages austronesian-template.xml
-	cp austronesian-template.xml austronesian-undated.xml
+good_languages: raw_cldf/cldf-metadata.json raw_cldf/forms.csv
+	python -m lexedata.report.coverage -l --min-concepts 189 --metadata raw_cldf/cldf-metadata.json > high_coverage_languages
 	echo "Explicitly exclude Favorlang [831]."
+	python -c 'print(*(set(open("high_coverage_languages")) - set(open("bad_languages"))), sep="")' > good_languages
+
+
+austronesian-undated.xml stats.tex: raw_cldf/cldf-metadata.json good_languages austronesian-template.xml
+	cp austronesian-template.xml austronesian-undated.xml
 	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json -b -o austronesian-undated.xml
 
 austronesian.xml: austronesian-undated.xml add_calibrations.py
 	python ../no_nested_sampling.py austronesian-undated.xml -o austronesian.xml
-	PYTHONPATH=../ python add_calibrations.py -s --subset high_coverage_languages -f aust1307 -o austronesian.xml
+	PYTHONPATH=../ python add_calibrations.py -s --subset good_languages -f aust1307 -o austronesian.xml
   # Old Javanese is a sampled ancestor
 	python ../config_sampled_ancestors.py austronesian.xml -s 290 -o austronesian.xml
 	python ../set_rho.py austronesian.xml aust1307 -o austronesian.xml
