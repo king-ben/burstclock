@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<beast namespace="beast.math.distributions:beast.core:beast.evolution.operators:beast.evolution.alignment:beast.evolution.substitutionmodel" version="2.6">
+  <data>...</data>
+  <userDataType id="binary" spec="beast.evolution.datatype.Binary"/>
+  <plate var="concept" range="{partitions}">
+    <data id="data:$(concept)" userDataType="@binary" spec="FilteredAlignment" ascertained="true" data="@concept:$(concept)" excludeto="1" filter="::"/>
+  </plate>
+  <distribution id="likelihood" spec="util.CompoundDistribution" useThreads="true">
+    <plate var="concept" range="{partitions}">
+      <distribution id="likelihood:$(concept)" spec="beast.evolution.likelihood.TreeLikelihood" tree="@tree" siteModel="@SiteModel:$(concept)" data="@data:$(concept)" branchRateModel="@Clock"/>
+    </plate>
+  </distribution>
+  <branchRateModel id="Clock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockrate"/>
+  <substModel id="CTMC" spec="GeneralSubstitutionModel">
+    <parameter id="rates" spec="parameter.RealParameter" dimension="2" estimate="false" lower="0.0" name="rates">1.0 1.0</parameter>
+    <frequencies id="estimatedFreqs" spec="Frequencies" frequencies="@freqParameter"/>
+  </substModel>
+  <plate var="concept" range="{partitions}">
+    <siteModel id="SiteModel:$(concept)" spec="beast.evolution.sitemodel.SiteModel" mutationRate="@speed:$(concept)" proportionInvariant="0.0" substModel="@CTMC"/>
+  </plate>
+  <distribution id="prior" spec="util.CompoundDistribution">
+    <distribution id="BirthDeath" spec="beast.evolution.speciation.BirthDeathSkylineModel" tree="@tree" conditionOnRoot="true">
+      <netDiversification idref="netDiversificationRate"/>
+      <turnOver idref="turnOver"/>
+      <samplingProportion idref="SamplingProportion"/>
+      <parameter name="removalProbability" id="removalProbability">0.0</parameter>
+      <parameter name="rho">0.5</parameter>
+      <reverseTimeArrays spec="beast.core.parameter.BooleanParameter">true true true true true</reverseTimeArrays>
+      <parameter name="samplingRateChangeTimes" id="SamplingChangeTime">0. 500.</parameter>
+    </distribution>
+    <prior spec="Prior" id="BirthRatePrior" name="distribution" x="@netDiversificationRate">
+      <distr id="LogNormal.BirthRate" spec="beast.math.distributions.LogNormalDistributionModel">
+        <M id="LogNormalMean.BirthRate" spec="parameter.RealParameter" estimate="false">-7.52349519971536</M>
+        <S id="LogNormalStd.BirthRate" spec="parameter.RealParameter" estimate="false">0.42392217721272574</S>
+      </distr>
+    </prior>
+    <prior spec="Prior" id="DeathRatePrior" name="distribution" x="@turnOver">
+      <distr spec="Uniform" lower="0" upper="1"/>
+    </prior>
+    <prior spec="Prior" id="ClockPrior" name="distribution">
+      <x id="lossrate" spec="feast.expressions.ExpCalculator"><arg idref="clockrate"/><arg idref="freqParameter"/>
+    clockrate / (2 * freqParameter[1])
+  </x>
+      <distr spec="LogNormalDistributionModel">
+        <parameter id="RealParameter.6" spec="parameter.RealParameter" estimate="false" name="M">-7.4524824544238095</parameter>
+        <parameter id="RealParameter.7" spec="parameter.RealParameter" estimate="false" lower="0.0" name="S" upper="5.0">0.566676206191776</parameter>
+      </distr>
+    </prior>
+    <plate var="concept" range="{partitions}">
+      <prior spec="Prior" id="RateVariation:$(concept)" name="distribution" x="@speed:$(concept)">
+        <distr spec="Gamma" id="Gamma:$(concept)" mode="OneParameter" alpha="@rateVariationGammaShape"/>
+      </prior>
+    </plate>
+    <prior spec="Prior" id="GammaShapePrior" name="distribution" x="@rateVariationGammaShape">
+      <distr spec="Exponential" id="Exponential.0">
+        <parameter id="RealParameter.0" spec="parameter.RealParameter" lower="0.0" name="mean" upper="0.0">1.0</parameter>
+      </distr>
+    </prior>
+  </distribution>
+  <init id="startingTree" initial="@tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTreeWithSA">
+    <populationModel spec="beast.evolution.tree.coalescent.ConstantPopulation">
+      <popSize spec="parameter.RealParameter" value="10000"/>
+    </populationModel>
+  </init>
+  <state id="state" spec="State" storeEvery="5000">
+    <tree id="tree" spec="beast.evolution.tree.Tree" name="stateNode" taxonset="@taxa">
+      <trait id="dateTrait" spec="beast.evolution.tree.TraitSet" traitname="date-backward" taxa="@taxa"/>
+    </tree>
+    <parameter id="freqParameter" spec="parameter.RealParameter" dimension="2" lower="0.0" name="stateNode" upper="1.0">0.9 0.1</parameter>
+    <parameter id="netDiversificationRate" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="10.0">0.0005</parameter>
+    <parameter id="turnOver" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.2</parameter>
+    <parameter id="SamplingProportion" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.2 0.2</parameter>
+    <parameter id="clockrate" spec="parameter.RealParameter" name="stateNode">0.0001</parameter>
+    <plate var="concept" range="{partitions}">
+      <parameter id="speed:$(concept)" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
+    </plate>
+    <parameter id="rateVariationGammaShape" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
+  </state>
+  <run id="mcmc" spec="beast.gss.NS" chainLength="50000000" particleCount="3" epsilon="1e-12" numInitializationAttempts="1000" sampleFromPrior="false" init="@startingTree" subChainLength="10000">
+    <distribution id="posterior" spec="util.CompoundDistribution">
+      <distribution idref="prior"/>
+      <distribution idref="likelihood"/>
+    </distribution>
+    <logger id="tracelog" spec="NSLogger" fileName="vocabulary.log" logEvery="1" model="@posterior" sort="smart">
+      <log idref="posterior"/>
+      <log idref="likelihood"/>
+      <log idref="prior"/>
+      <log id="TreeHeight" spec="beast.evolution.tree.TreeHeightLogger" tree="@tree"/>
+      <log idref="freqParameter"/>
+      <log idref="netDiversificationRate"/>
+      <log idref="turnOver"/>
+      <log idref="SamplingProportion"/>
+      <log idref="clockrate"/>
+      <log idref="lossrate"/>
+      <log idref="rateVariationGammaShape"/>
+    </logger>
+    <logger id="screenlog" spec="NSLogger" logEvery="1">
+      <log idref="posterior"/>
+      <log id="ESS.0" spec="util.ESS" arg="@posterior"/>
+      <log idref="likelihood"/>
+      <log idref="prior"/>
+    </logger>
+    <logger id="treelog" spec="NSLogger" fileName="vocabulary.trees" logEvery="1" mode="tree">
+      <log id="TreeWithMetaDataLogger" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@tree"/>
+    </logger>
+    <operator id="SampledAncestorJump" spec="LeafToSampledAncestorJump" removalProbability="@removalProbability" tree="@tree" weight="3.0"/>
+    <operator id="BirthDeathNarrow" spec="SAExchange" tree="@tree" weight="15.0"/>
+    <operator id="BirthDeathWide" spec="SAExchange" isNarrow="false" tree="@tree" weight="3.0"/>
+    <operator id="BirthDeathWilsonBalding" spec="SAWilsonBalding" keepSA="true" tree="@tree" weight="1.0"/>
+    <operator id="BirthDeathTreeScaler" spec="SAScaleOperator" scaleFactor="0.95" tree="@tree" weight="3.0"/>
+    <operator id="BirthDeathTreeRootScaler" spec="SAScaleOperator" rootOnly="true" scaleFactor="0.6" tree="@tree" weight="2.0"/>
+    <operator id="BirthDeathUniformOperator" spec="SAUniform" tree="@tree" weight="30.0"/>
+    <operator id="FrequenciesExchanger" spec="DeltaExchangeOperator" delta="0.003" weight="1.0" parameter="@freqParameter"/>
+    <operator id="BirthRateScaler" spec="ScaleOperator" parameter="@netDiversificationRate" scaleFactor="0.9" weight="3.0"/>
+    <operator id="DeathRateScaler" spec="ScaleOperator" parameter="@turnOver" scaleFactor="0.9" weight="3.0"/>
+    <operator id="SamplingProportionScaler" spec="ScaleOperator" parameter="@SamplingProportion" scaleAllIndependently="true" scaleFactor="0.9" weight="3.0"/>
+    <operator id="ClockRateScaler" spec="ScaleOperator" parameter="@clockrate" scaleFactor="0.9" weight="4.0"/>
+    <operator id="gammaShapeScaler" spec="ScaleOperator" parameter="@rateVariationGammaShape" scaleFactor="0.5" weight="0.1"/>
+    <operator id="BirthRateUpDownOperator" spec="UpDownOperator" scaleFactor="0.9" weight="3.0" up="@netDiversificationRate" down="@tree"/>
+    <operator id="strictClockUpDownOperator" spec="UpDownOperator" scaleFactor="0.9" weight="3.0" up="@clockrate" down="@tree"/>
+  </run>
+  <map name="Normal">beast.math.distributions.Normal</map>
+  <map name="Uniform">beast.math.distributions.Uniform</map>
+</beast>
