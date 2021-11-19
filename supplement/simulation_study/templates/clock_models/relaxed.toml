@@ -1,0 +1,64 @@
+[xml]
+clock_model = """
+<branchRateModel id="clock" spec="beast.evolution.branchratemodel.UCRelaxedClockModel" rates="@branchRates" tree="@tree" clock.rate="@clockRate">
+    <LogNormal id="logNormal:ucldStdev:clock" meanInRealSpace="true" name="distr" M="1.0" S="@ucldStdev:clock" />
+</branchRateModel>
+"""
+
+parameters = """
+        <stateNode id="clockRate" spec="RealParameter" lower="0.0">{{clock_rate}}</stateNode>
+        <stateNode id="ucldStdev:clock" spec="RealParameter" estimate="false" lower="0.0" upper="3.0" value="{{clock_stdev}}"/>
+        <stateNode id="branchRates" spec="RealParameter" dimension="22" lower="0.0">1.0</stateNode>
+"""
+
+priors = """
+        <prior id="branchRatesPrior" name="distribution" x="@branchRates">
+            <LogNormal name="distr" meanInRealSpace="true" M="1.0" S="@ucldStdev:clock" />
+        </prior>
+        <prior id="clockRatePrior" name="distribution" x="@clockRate">
+            <Uniform name="distr" lower="0.3" upper="0.7"/>
+        </prior>
+"""
+
+_priors = """
+
+"""
+
+operators = """
+    <operator id="clockRateScaler" spec="ScaleOperator" parameter="@clockRate" scaleFactor="0.5" weight="4.0"/>
+    <operator id="branchRatesRandomWalk" spec="RealRandomWalkOperator" parameter="@branchRates" windowSize="0.2" weight="6.0"/>
+    <operator id="branchRatesScaleOperator" spec="ScaleOperator" parameter="@branchRates" scaleFactor="0.6" weight="6.0"/>
+    <operator id="RatesSwapOperator" spec="SwapOperator" parameter="@branchRates" weight="2.0"/>
+"""
+
+_operators = """
+    <operator id="ucldStdevScaler.c:clock" spec="ScaleOperator" parameter="@ucldStdev:clock" scaleFactor="0.5" weight="2.0"/>
+    <operator id="branchRatesUcldStdevScaler" spec="consoperators.UcldScalerOperator"
+          rates="@branchRates" stdev="@ucldStdev:clock" distr="@logNormal:ucldStdev:clock" scaleFactor="0.5" weight="3.0"/>
+"""
+
+priorOperators = """
+    <operator id="clockRateScaler" spec="ScaleOperator" parameter="@clockRate" scaleFactor="0.5" weight="4.0"/>
+    <operator id="branchRatesRandomWalk" spec="RealRandomWalkOperator" parameter="@branchRates" windowSize="0.1" weight="6.0"/>
+    <operator id="branchRatesScaleOperator" spec="ScaleOperator" parameter="@branchRates" scaleFactor="0.7" weight="6.0"/>
+    <operator id="RatesSwapOperator" spec="SwapOperator" parameter="@branchRates" weight="2.0"/>
+"""
+
+logs = """
+        <log idref="clockRate"/>
+        <log idref="ucldStdev:clock"/>
+        <log idref="branchRates"/>
+"""
+
+_logs = """
+        <log branchratemodel="@clock" spec="beast.evolution.branchratemodel.RateStatistic" tree="@tree"/>
+"""
+
+groundTruthLogs = """
+        <log id="sim.clockRate" spec="RealParameter" value="{{clockRate}}" />
+        <log id="sim.branchRates" spec="RealParameter" value="{{branchRates}}"/>
+"""
+
+[defaults]
+clock_rate = 0.5
+clock_stdev = 0.3
