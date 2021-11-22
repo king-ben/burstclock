@@ -7,7 +7,7 @@ population_model = "tree_models/yule.toml"
 clock_model = "clock_models/relaxed_burst.toml"
 
 [defaults]
-chain_length = 1000000
-log_every = 2000
+chain_length = 4000000
+log_every = 10000
 sample_from_prior = false
-seqlength = 2000
+seqlength = 5000

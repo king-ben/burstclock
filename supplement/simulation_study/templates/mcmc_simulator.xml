@@ -39,7 +39,7 @@
 
 <data id="data.sim" dataType="binary">
     {{#taxa}}
-    <sequence taxon="{{.}}" totalcount="2">?</sequence>
+    <sequence taxon="{{.}}">?</sequence>
     {{/taxa}}
 </data>
 

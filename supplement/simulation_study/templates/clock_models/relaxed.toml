@@ -8,15 +8,16 @@ clock_model = """
 parameters = """
         <stateNode id="clockRate" spec="RealParameter" lower="0.0">{{clock_rate}}</stateNode>
         <stateNode id="ucldStdev:clock" spec="RealParameter" estimate="false" lower="0.0" upper="3.0" value="{{clock_stdev}}"/>
-        <stateNode id="branchRates" spec="RealParameter" dimension="22" lower="0.0">1.0</stateNode>
+        <stateNode id="branchRates" spec="RealParameter" dimension="{{n_rates}}" lower="0.0">1.0</stateNode>
+        <stateNode id="perSplit" spec="RealParameter" estimate="true">{{per_split}}</stateNode>
 """
 
 priors = """
         <prior id="branchRatesPrior" name="distribution" x="@branchRates">
-            <LogNormal name="distr" meanInRealSpace="true" M="1.0" S="@ucldStdev:clock" />
+            <distr spec="LogNormalDistributionModel" meanInRealSpace="true" M="1.0" S="@ucldStdev:clock" />
         </prior>
         <prior id="clockRatePrior" name="distribution" x="@clockRate">
-            <Uniform name="distr" lower="0.3" upper="0.7"/>
+            <distr spec="LogNormalDistributionModel" meanInRealSpace="true" M="0.35" S="0.5"/>
         </prior>
 """
 
@@ -25,9 +26,9 @@ _priors = """
 """
 
 operators = """
-    <operator id="clockRateScaler" spec="ScaleOperator" parameter="@clockRate" scaleFactor="0.5" weight="4.0"/>
+    <operator id="clockRateScaler" spec="ScaleOperator" parameter="@clockRate" scaleFactor="0.9" weight="5.0"/>
     <operator id="branchRatesRandomWalk" spec="RealRandomWalkOperator" parameter="@branchRates" windowSize="0.2" weight="6.0"/>
-    <operator id="branchRatesScaleOperator" spec="ScaleOperator" parameter="@branchRates" scaleFactor="0.6" weight="6.0"/>
+    <operator id="branchRatesScaleOperator" spec="ScaleOperator" parameter="@branchRates" scaleFactor="0.85" weight="6.0"/>
     <operator id="RatesSwapOperator" spec="SwapOperator" parameter="@branchRates" weight="2.0"/>
 """
 
@@ -61,4 +62,5 @@ groundTruthLogs = """
 
 [defaults]
 clock_rate = 0.5
-clock_stdev = 0.3
+clock_stdev = 0.5
+per_split = 0.0

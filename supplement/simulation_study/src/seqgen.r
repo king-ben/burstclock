@@ -58,12 +58,11 @@ seqgen_sampling = function( log,
     n.taxa = length(taxa)
     n.nodes = 2 * n.taxa - 1
 
-
-
     for(i in seq_along(trees)){
         variables = as.list(log[i,])
         variables[["tree"]] = ape::write.tree(trees[[i]], "")
         variables[["taxa"]] = taxa
+        variables[["n_rates"]] = n.nodes - 1
         
         variables = merge(variables, parameters)
         sampling_output = repeat_path(output, i)

@@ -14,9 +14,9 @@ SAMPLING.DIR = "intermediate/sampling/"
 
 main = function(){
 
-    ntax = 12
-    nsamples = 500
-    simu_sample_interval = 5000
+    ntax = 20
+    nsamples = 400
+    simu_sample_interval = 100000
     repeats = 1
 
     mkdir("intermediate/sampling")
@@ -33,7 +33,8 @@ main = function(){
         "taxa" = taxa,
         "nsamples" = 1 + nsamples,
         "chain_length" = 1 + simu_sample_interval*nsamples,
-        "sample_interval" = simu_sample_interval
+        "sample_interval" = simu_sample_interval,
+        "n_rates" = 2*ntax - 2
         )
     
     # template_simulator = "templates/direct_simulator.xml"
@@ -63,7 +64,7 @@ main = function(){
         config_bursty,
         taxa,
         "intermediate/bursty/test.xml",
-        list(seqlength="2000"),
+        list(seqlength="5000"),
         repeats = repeats
     )
 
@@ -76,7 +77,7 @@ main = function(){
         config_burstfree,
         taxa,
         "intermediate/burstfree/test.xml",
-        list(seqlength="2000"),
+        list(seqlength="5000"),
         repeats = repeats
     )
     

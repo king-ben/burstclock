@@ -52,9 +52,12 @@
         <frequencies id="estimatedFreqs.sim" spec="Frequencies" frequencies="0.5 0.5"/>
     </substModel>
 </siteModel>
-<branchRateModel id="clock.sim" spec="beast.evolution.branchratemodel.UCRelaxedClockModel" tree="@tree.sim" clock.rate="{{clockRate}}">
-    <rates id="branchRates.sim" spec="RealParameter">{{branchRates}}</rates>
-    <LogNormal id="logNormal:ucldStdev:clock.sim" meanInRealSpace="true" name="distr" M="1.0" S="@ucldStdev:clock" />
+
+<branchRateModel id="clock.sim" spec="BurstClock" perSplit="{{perSplit}}">
+    <branchonlyClock spec="beast.evolution.branchratemodel.UCRelaxedClockModel" tree="@tree.sim" clock.rate="{{clockRate}}">
+        <rates spec="RealParameter">{{branchRates}}</rates>
+        <LogNormal meanInRealSpace="true" name="distr" M="1.0" S="@ucldStdev:clock" />
+    </branchonlyClock>
 </branchRateModel>
 
 
@@ -64,7 +67,7 @@
 <data id="data.sim" spec="beast.app.seqgen.SimulatedAlignment" sequencelength="{{seqlength}}"  dataType="binary" tree="@tree.sim" branchRateModel="@clock.sim" siteModel="@siteModel.sim" outputFileName="{{sequence_output}}">
     <data spec="Alignment" dataType="binary">
         {{#taxa}}
-        <sequence taxon="{{.}}" totalcount="2">?</sequence>
+        <sequence taxon="{{.}}">?</sequence>
         {{/taxa}}
     </data>
 </data>

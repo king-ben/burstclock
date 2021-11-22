@@ -9,30 +9,39 @@ priors = """
             <distribution id="YuleModel" spec="beast.evolution.speciation.YuleModel" tree="@tree" birthDiffRate="@birthRate" conditionalOnRoot="false" />
 
             <distribution id="clade123.prior" spec="MRCAPrior" tree="@tree" monophyletic="true">
-              <taxonset id="clade123" spec="TaxonSet">
+              <taxonset spec="TaxonSet">
                 <taxon idref="1" />
                 <taxon idref="2" />
                 <taxon idref="3" />
               </taxonset>
-              <distr spec="Normal" mean="0.35" sigma="0.02"/>
+              <distr spec="Normal" mean="0.35" sigma="0.04"/>
             </distribution>
 
             <distribution id="clade456.prior" spec="MRCAPrior" tree="@tree" monophyletic="true">
-              <taxonset id="clade456" spec="TaxonSet">
+              <taxonset spec="TaxonSet">
                 <taxon idref="4" />
                 <taxon idref="5" />
                 <taxon idref="6" />
               </taxonset>
-              <distr spec="Normal" mean="0.4" sigma="0.02"/>
+              <distr spec="Normal" mean="0.4" sigma="0.05"/>
             </distribution>
 
             <distribution id="clade78.prior" spec="MRCAPrior" tree="@tree" monophyletic="true">
-              <taxonset id="clade78" spec="TaxonSet">
+              <taxonset spec="TaxonSet">
                 <taxon idref="7" />
                 <taxon idref="8" />
               </taxonset>
-              <distr spec="Normal" mean="0.2" sigma="0.02"/>
+              <distr spec="Normal" mean="0.2" sigma="0.03"/>
+            </distribution>
+
+            <distribution id="clade910.prior" spec="MRCAPrior" tree="@tree" monophyletic="true">
+              <taxonset spec="TaxonSet">
+                <taxon idref="9" />
+                <taxon idref="10" />
+              </taxonset>
+              <distr spec="Normal" mean="0.16" sigma="0.04"/>
             </distribution>"""
+
 _priors = """
             <prior id="birthRatePrior" name="distribution" x="@birthRate">
                 <Gamma id="Gamma.birthRate" mode="ShapeScale" name="distr" alpha="30.0" beta="0.1"/>
@@ -40,6 +49,13 @@ _priors = """
 """
 
 operators = """
+    <operator id="UniformOperator.t" spec="Uniform" tree="@tree" weight="15.0"/>
+    <operator id="treescaler.rootOnly.t" spec="ScaleOperator" rootOnly="true" scaleFactor="0.8" tree="@tree" weight="1.0"/>
+    <operator id="treescaler.t" spec="ScaleOperator" scaleFactor="0.92" tree="@tree" weight="2.0"/>
+    <operator id="treescaler.updown.t" spec="UpDownOperator" scaleFactor="0.8" weight="8.0">
+        <up idref="clockRate"/>
+        <down idref="tree"/>
+    </operator>
 """
 _operators = """
     <operator id="SubtreeSlide.t:tree" size="0.1" spec="SubtreeSlide" tree="@tree" weight="15.0"/>
@@ -49,31 +65,21 @@ _operators = """
     <operator id="wide.t:z" isNarrow="false" spec="Exchange" tree="@tree" weight="8.0"/>
     <operator id="WilsonBalding.t:z" spec="WilsonBalding" tree="@tree" weight="8.0"/>
 
-
-    <operator id="UniformOperator.t" spec="Uniform" tree="@tree" weight="30.0"/>
-    <operator id="treescaler.rootOnly.t" spec="ScaleOperator" rootOnly="true" scaleFactor="0.8" tree="@tree" weight="2.0"/>
-    <operator id="treescaler.t" spec="ScaleOperator" scaleFactor="0.92" tree="@tree" weight="2.0"/>
-    <operator id="treescaler.updown.t" spec="UpDownOperator" scaleFactor="0.8" weight="10.0">
-        <up idref="clockRate"/>
-        <down idref="tree"/>
-    </operator>
-    
-
     <operator id="RestrictedSubtreeSlide" spec="RestrictedSubtreeSlide" weight="25" tree="@tree" clades="@constraints"/>
     <operator id="BirthRateScaler" spec="ScaleOperator" parameter="@birthRate" scaleFactor="0.7" weight="3.0"/>
 """
 
 priorOperators = """
-    <operator id="SubtreeSlide.t:tree" size="0.1" spec="SubtreeSlide" tree="@tree" weight="15.0"/>
-    <operator id="NNI" spec="NNI" size="0.01" weight="15" tree="@tree"/>
-    <operator id="SPR" spec="SPR" size="0.01" weight="3" tree="@tree"/>
+    <operator id="SubtreeSlide.t:tree" size="0.2" spec="SubtreeSlide" tree="@tree" weight="15.0"/>
+    <operator id="NNI" spec="NNI" size="0.1" weight="15" tree="@tree"/>
+    <operator id="SPR" spec="SPR" size="0.05" weight="3" tree="@tree"/>
     <operator id="narrow.t:z" spec="Exchange" tree="@tree" weight="10.0"/>
     <operator id="wide.t:z" isNarrow="false" spec="Exchange" tree="@tree" weight="8.0"/>
     <operator id="WilsonBalding.t:z" spec="WilsonBalding" tree="@tree" weight="8.0"/>
-    <operator id="UniformOperator.t" spec="Uniform" tree="@tree" weight="30.0"/>
-    <operator id="treescaler.rootOnly.t" spec="ScaleOperator" rootOnly="true" scaleFactor="0.8" tree="@tree" weight="2.0"/>
-    <operator id="treescaler.t" spec="ScaleOperator" scaleFactor="0.92" tree="@tree" weight="2.0"/>
-    <operator id="treescaler.updown.t" spec="UpDownOperator" scaleFactor="0.8" weight="10.0">
+    <operator id="UniformOperator.t" spec="Uniform" tree="@tree" weight="20.0"/>
+    <operator id="treescaler.rootOnly.t" spec="ScaleOperator" rootOnly="true" scaleFactor="0.5" tree="@tree" weight="1.0"/>
+    <operator id="treescaler.t" spec="ScaleOperator" scaleFactor="0.7" tree="@tree" weight="2.0"/>
+    <operator id="treescaler.updown.t" spec="UpDownOperator" scaleFactor="0.7" weight="8.0">
         <up idref="clockRate"/>
         <down idref="tree"/>
     </operator>
@@ -89,4 +95,4 @@ groundTruthLogs = """
 """
 
 [defaults]
-birth_rate = 2.1
+birth_rate = 2.8
