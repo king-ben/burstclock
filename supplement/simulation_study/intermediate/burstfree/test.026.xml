@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beast version="2.0"
+       namespace="beast.evolution.tree
+       			 :beast.evolution.tree.coalescent
+                 :beast.evolution.alignment
+                 :beast.evolution.operators
+                 :beast.evolution.sitemodel
+                 :beast.evolution.substitutionmodel
+                 :beast.math.distributions
+                 :beast.evolution.likelihood
+                 :beast.evolution.nuc
+                 :beast.core
+                 :beast.core.util
+                 :beast.core.parameter
+                 :ch.uzh.beast.evolution.branchratemodel">
+
+<!-- Map block -->
+<map name="Uniform">beast.math.distributions.Uniform</map>
+<map name="Exponential">beast.math.distributions.Exponential</map>
+<map name="LogNormal">beast.math.distributions.LogNormalDistributionModel</map>
+<map name="Normal">beast.math.distributions.Normal</map>
+<map name="Beta">beast.math.distributions.Beta</map>
+<map name="Gamma">beast.math.distributions.Gamma</map>
+<map name="LaplaceDistribution">beast.math.distributions.LaplaceDistribution</map>
+<map name="prior">beast.math.distributions.Prior</map>
+<map name="InverseGamma">beast.math.distributions.InverseGamma</map>
+<map name="OneOnX">beast.math.distributions.OneOnX</map>
+
+
+
+<!-- TAXA -->
+
+<taxonset id="taxa" spec="TaxonSet">
+	<taxon id="1" spec="Taxon"/>
+	<taxon id="2" spec="Taxon"/>
+	<taxon id="3" spec="Taxon"/>
+	<taxon id="4" spec="Taxon"/>
+	<taxon id="5" spec="Taxon"/>
+	<taxon id="6" spec="Taxon"/>
+	<taxon id="7" spec="Taxon"/>
+	<taxon id="8" spec="Taxon"/>
+	<taxon id="9" spec="Taxon"/>
+	<taxon id="10" spec="Taxon"/>
+	<taxon id="11" spec="Taxon"/>
+	<taxon id="12" spec="Taxon"/>
+	<taxon id="13" spec="Taxon"/>
+	<taxon id="14" spec="Taxon"/>
+	<taxon id="15" spec="Taxon"/>
+	<taxon id="16" spec="Taxon"/>
+	<taxon id="17" spec="Taxon"/>
+	<taxon id="18" spec="Taxon"/>
+	<taxon id="19" spec="Taxon"/>
+	<taxon id="20" spec="Taxon"/>
+</taxonset>
+
+
+
+<!-- REFERENCE TREE -->
+
+<tree id="tree.sim" spec="beast.util.TreeParser" taxonset="@taxa" newick="(((((1:0.03662998179,3:0.03662998179):0.2897141815,2:0.3263441633):0.1269131482,16:0.4532573115):0.1354241628,(((7:0.225526696,8:0.225526696):0.06271334055,((9:0.1817455865,10:0.1817455865):0.03152175953,12:0.2132673461):0.07497269054):0.1463745231,13:0.4346145597):0.1540669145):0.3440301159,(((((4:0.02983787855,6:0.02983787855):0.3853673279,5:0.4152052064):0.06183583189,17:0.4770410383):0.05268845416,(18:0.1704477861,19:0.1704477861):0.3592817064):0.1029234951,((11:0.4706715862,15:0.4706715862):0.08683859272,(14:0.01716236452,20:0.01716236452):0.5403478144):0.07514280858):0.3000586026):0;"/>
+
+
+
+<!-- SITE AND CLOCK-MODEL -->
+
+<siteModel id="siteModel.sim" spec="SiteModel">
+    <substModel id="binaryCTMC.sim" spec="GeneralSubstitutionModel">
+        <parameter dimension="2" estimate="false" id="rates.binaryCTMC.sim" name="rates">1.0 1.0</parameter>
+        <frequencies id="estimatedFreqs.sim" spec="Frequencies" frequencies="0.5 0.5"/>
+    </substModel>
+</siteModel>
+
+<branchRateModel id="clock.sim" spec="BurstClock" perSplit="-0.00255103217684113">
+    <branchonlyClock spec="beast.evolution.branchratemodel.UCRelaxedClockModel" tree="@tree.sim" clock.rate="0.252700750815568">
+        <rates spec="RealParameter">0.485682386859576 1.25535160569018 0.426879571089575 1.3013903339982 0.575620053011621 0.678746517031094 1.04390699066686 0.719827936580766 0.659515411899791 0.313540580528702 0.658632733995765 1.08305577070825 1.02904740808129 1.66422586124867 0.945948239077167 0.378955045799923 0.454787340861309 0.636813484482266 0.502992244431317 1.44478900367097 0.339545812723504 0.763453705201313 0.831099553228339 0.974567331549745 0.511197994883939 2.19465109967399 1.14473025068377 0.754388386652356 0.381620530992583 2.26564145391002 0.687440709586163 0.826436032523935 1.37323441136257 1.05670129897053 1.60381340062378 1.11317097787353 1.49636284865937 0.713462604875878</rates>
+        <LogNormal meanInRealSpace="true" name="distr" M="1.0" S="@ucldStdev:clock" />
+    </branchonlyClock>
+</branchRateModel>
+
+
+
+<!-- SIMULATED DATA -->
+
+<data id="data.sim" spec="beast.app.seqgen.SimulatedAlignment" sequencelength="5000"  dataType="binary" tree="@tree.sim" branchRateModel="@clock.sim" siteModel="@siteModel.sim" outputFileName="/home/nico/Projects/BurstClock/supplement/simulation_study/intermediate/burstfree/test.026.data/data.xml">
+    <data spec="Alignment" dataType="binary">
+        <sequence taxon="1">?</sequence>
+        <sequence taxon="2">?</sequence>
+        <sequence taxon="3">?</sequence>
+        <sequence taxon="4">?</sequence>
+        <sequence taxon="5">?</sequence>
+        <sequence taxon="6">?</sequence>
+        <sequence taxon="7">?</sequence>
+        <sequence taxon="8">?</sequence>
+        <sequence taxon="9">?</sequence>
+        <sequence taxon="10">?</sequence>
+        <sequence taxon="11">?</sequence>
+        <sequence taxon="12">?</sequence>
+        <sequence taxon="13">?</sequence>
+        <sequence taxon="14">?</sequence>
+        <sequence taxon="15">?</sequence>
+        <sequence taxon="16">?</sequence>
+        <sequence taxon="17">?</sequence>
+        <sequence taxon="18">?</sequence>
+        <sequence taxon="19">?</sequence>
+        <sequence taxon="20">?</sequence>
+    </data>
+</data>
+
+
+
+<!-- ==================== ANALYSIS DEFINITION ==================== -->
+
+<!-- SITE- AND CLOCK-MODEL -->
+
+<siteModel id="siteModel" spec="SiteModel">
+<substModel id="binaryCTMC" spec="GeneralSubstitutionModel">
+    <parameter id="rates.binaryCTMC" dimension="2" name="rates">1.0 1.0</parameter>
+    <frequencies id="freqs" spec="Frequencies" frequencies="0.5 0.5"/>
+</substModel>
+
+</siteModel>
+<branchRateModel id="clock" spec="beast.evolution.branchratemodel.UCRelaxedClockModel" rates="@branchRates" tree="@tree" clock.rate="@clockRate">
+    <LogNormal id="logNormal:ucldStdev:clock" meanInRealSpace="true" name="distr" M="1.0" S="@ucldStdev:clock" />
+</branchRateModel>
+
+
+<!-- MCMC -->
+<run id="mcmc" spec="MCMC" chainLength="5000000" sampleFromPrior="FALSE">
+
+    <!-- STATE -->
+ 	<state id="state" storeEvery="10000">
+    <stateNode id="tree" spec="beast.util.TreeParser" taxonset="@taxa" newick="(((((1:0.03662998179,3:0.03662998179):0.2897141815,2:0.3263441633):0.1269131482,16:0.4532573115):0.1354241628,(((7:0.225526696,8:0.225526696):0.06271334055,((9:0.1817455865,10:0.1817455865):0.03152175953,12:0.2132673461):0.07497269054):0.1463745231,13:0.4346145597):0.1540669145):0.3440301159,(((((4:0.02983787855,6:0.02983787855):0.3853673279,5:0.4152052064):0.06183583189,17:0.4770410383):0.05268845416,(18:0.1704477861,19:0.1704477861):0.3592817064):0.1029234951,((11:0.4706715862,15:0.4706715862):0.08683859272,(14:0.01716236452,20:0.01716236452):0.5403478144):0.07514280858):0.3000586026):0;"/>
+
+        <stateNode id="clockRate" spec="RealParameter" lower="0.0">0.5</stateNode>
+        <stateNode id="ucldStdev:clock" spec="RealParameter" estimate="false" lower="0.0" upper="3.0" value="0.5"/>
+        <stateNode id="branchRates" spec="RealParameter" dimension="38" lower="0.0">1.0</stateNode>
+        <stateNode id="perSplit" spec="RealParameter" estimate="true">0</stateNode>
+
+        <!--stateNode id="tree" spec="Tree" taxonset="@taxa" /-->
+        <stateNode id="birthRate" spec="RealParameter" estimate="false" value="2.8"/>
+
+ 
+ 	</state>
+ 	
+
+    <!-- INITIALIZER
+ 	<init id="RandomTree" spec="beast.evolution.tree.SimpleRandomTree" estimate="false" initial="@tree" taxa="@data.sim"/>
+     -->
+
+	<!-- POSTERIOR -->
+   <distribution id="posterior" spec="util.CompoundDistribution">
+
+        <!-- PRIOR -->
+        <distribution id="prior" spec="util.CompoundDistribution">
+
+        <prior id="branchRatesPrior" name="distribution" x="@branchRates">
+            <distr spec="LogNormalDistributionModel" meanInRealSpace="true" M="1.0" S="@ucldStdev:clock" />
+        </prior>
+        <prior id="clockRatePrior" name="distribution" x="@clockRate">
+            <distr spec="LogNormalDistributionModel" meanInRealSpace="true" M="0.35" S="0.5"/>
+        </prior>
+
+            <distribution id="YuleModel" spec="beast.evolution.speciation.YuleModel" tree="@tree" birthDiffRate="@birthRate" conditionalOnRoot="false" />
+
+            <distribution id="clade123.prior" spec="MRCAPrior" tree="@tree" monophyletic="true">
+              <taxonset spec="TaxonSet">
+                <taxon idref="1" />
+                <taxon idref="2" />
+                <taxon idref="3" />
+              </taxonset>
+              <distr spec="Normal" mean="0.35" sigma="0.04"/>
+            </distribution>
+
+            <distribution id="clade456.prior" spec="MRCAPrior" tree="@tree" monophyletic="true">
+              <taxonset spec="TaxonSet">
+                <taxon idref="4" />
+                <taxon idref="5" />
+                <taxon idref="6" />
+              </taxonset>
+              <distr spec="Normal" mean="0.4" sigma="0.05"/>
+            </distribution>
+
+            <distribution id="clade78.prior" spec="MRCAPrior" tree="@tree" monophyletic="true">
+              <taxonset spec="TaxonSet">
+                <taxon idref="7" />
+                <taxon idref="8" />
+              </taxonset>
+              <distr spec="Normal" mean="0.2" sigma="0.03"/>
+            </distribution>
+
+            <distribution id="clade910.prior" spec="MRCAPrior" tree="@tree" monophyletic="true">
+              <taxonset spec="TaxonSet">
+                <taxon idref="9" />
+                <taxon idref="10" />
+              </taxonset>
+              <distr spec="Normal" mean="0.16" sigma="0.04"/>
+            </distribution>
+
+
+        </distribution>
+
+        <!-- LIKELIHOOD -->
+        <distribution id="likelihood" spec="util.CompoundDistribution">
+            <distribution id="treeLikelihood" spec="TreeLikelihood" data="@data.sim" tree="@tree" branchRateModel="@clock" siteModel="@siteModel"/>
+        </distribution>
+    </distribution>
+	
+    <!-- Operators -->
+    <operator id="clockRateScaler" spec="ScaleOperator" parameter="@clockRate" scaleFactor="0.9" weight="5.0"/>
+    <operator id="branchRatesRandomWalk" spec="RealRandomWalkOperator" parameter="@branchRates" windowSize="0.2" weight="6.0"/>
+    <operator id="branchRatesScaleOperator" spec="ScaleOperator" parameter="@branchRates" scaleFactor="0.85" weight="6.0"/>
+    <operator id="RatesSwapOperator" spec="SwapOperator" parameter="@branchRates" weight="2.0"/>
+
+    <operator id="UniformOperator.t" spec="Uniform" tree="@tree" weight="15.0"/>
+    <operator id="treescaler.rootOnly.t" spec="ScaleOperator" rootOnly="true" scaleFactor="0.8" tree="@tree" weight="1.0"/>
+    <operator id="treescaler.t" spec="ScaleOperator" scaleFactor="0.92" tree="@tree" weight="2.0"/>
+    <operator id="treescaler.updown.t" spec="UpDownOperator" scaleFactor="0.8" weight="8.0">
+        <up idref="clockRate"/>
+        <down idref="tree"/>
+    </operator>
+
+
+
+
+    <!-- Loggers -->
+    <logger id="tracelog"  spec="Logger" fileName="$(filebase).log" logEvery="10000"
+            sanitiseHeaders="true" sort="smart">
+        <log idref="prior"/>
+        <log id="treeDistance" spec="beast.evolution.tree.TreeDistanceLogger" tree="@tree">
+            <ref id="groundTruth.tree" spec="beast.util.TreeParser" taxonset="@taxa" newick="(((((1:0.03662998179,3:0.03662998179):0.2897141815,2:0.3263441633):0.1269131482,16:0.4532573115):0.1354241628,(((7:0.225526696,8:0.225526696):0.06271334055,((9:0.1817455865,10:0.1817455865):0.03152175953,12:0.2132673461):0.07497269054):0.1463745231,13:0.4346145597):0.1540669145):0.3440301159,(((((4:0.02983787855,6:0.02983787855):0.3853673279,5:0.4152052064):0.06183583189,17:0.4770410383):0.05268845416,(18:0.1704477861,19:0.1704477861):0.3592817064):0.1029234951,((11:0.4706715862,15:0.4706715862):0.08683859272,(14:0.01716236452,20:0.01716236452):0.5403478144):0.07514280858):0.3000586026):0;"/>
+        </log>
+        <log idref="clockRate"/>
+        <log idref="ucldStdev:clock"/>
+        <log idref="branchRates"/>
+
+        <log idref="birthRate"/>
+        <log spec="TreeStatLogger" tree="@tree" />
+
+
+        <log id="sim.clockRate" spec="RealParameter" value="0.252700750815568" />
+        <log id="sim.branchRates" spec="RealParameter" value="0.485682386859576 1.25535160569018 0.426879571089575 1.3013903339982 0.575620053011621 0.678746517031094 1.04390699066686 0.719827936580766 0.659515411899791 0.313540580528702 0.658632733995765 1.08305577070825 1.02904740808129 1.66422586124867 0.945948239077167 0.378955045799923 0.454787340861309 0.636813484482266 0.502992244431317 1.44478900367097 0.339545812723504 0.763453705201313 0.831099553228339 0.974567331549745 0.511197994883939 2.19465109967399 1.14473025068377 0.754388386652356 0.381620530992583 2.26564145391002 0.687440709586163 0.826436032523935 1.37323441136257 1.05670129897053 1.60381340062378 1.11317097787353 1.49636284865937 0.713462604875878"/>
+
+
+    </logger>
+
+    <logger id="screenlog" spec="Logger" logEvery="5000">
+        <log idref="posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+        <log idref="treeDistance"/>
+        <log idref="clockRate"/>
+        <log idref="ucldStdev:clock"/>
+        <log idref="branchRates"/>
+
+        <log idref="birthRate"/>
+        <log spec="TreeStatLogger" tree="@tree" />
+
+
+    </logger>
+
+    <logger spec="Logger" fileName="$(filebase).trees" logEvery="10000" mode="tree">
+    	<log spec="TreeWithMetaDataLogger" tree="@tree" />
+    </logger>
+    
+</run>
+
+</beast>
