@@ -31,8 +31,10 @@ def replace_clock(root):
         id="ClockRatesPrior",
         spec="beast.math.distributions.LogNormalDistributionModel",
         S="@RelaxedClockSigma",
-        M="0.0",
-        meanInRealSpace="false",
+        # TODO: This does not give a mean clock rate of 1. It should be changed
+        # to M=1.0, meanInRealSpace="true"
+        M="1.0",
+        meanInRealSpace="true",
     )
 
     state = root.find(".//state[@id='state']")
@@ -56,6 +58,9 @@ def replace_clock(root):
     clock_rates.text = " 1.0" * (count_languages(root) * 2)
 
     prior = root.find(".//distribution[@id='prior']")
+    # TODO: This seems to be redundant with the ClockRatesPrior??? We don't
+    # know why it needs to be in there twice, with potentially different specs,
+    # and have contacted Jordan Douglas to find out.
     ratesprior = ET.SubElement(
         prior,
         "prior",
@@ -69,9 +74,9 @@ def replace_clock(root):
         "distr",
         id="LogNormal.RelaxedClockBranchRates",
         spec="beast.math.distributions.LogNormalDistributionModel",
-        M="0.0",
         S="@RelaxedClockSigma",
-        meanInRealSpace="false",
+        M="1.0",
+        meanInRealSpace="true",
     )
     sigmaprior = ET.SubElement(
         prior,
