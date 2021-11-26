@@ -70,19 +70,21 @@
 \begin{abstract}
   Due to increased rates of evolution at cladogenenesis, potentially arising
   from linguistic founder effects or the exaggeration of language differences to
-  mark social boundaries, lanugages tend to evolve in bursts.
+  mark social boundaries, languages tend to evolve in bursts.
   \Textcite{atkinson2008languages} showed that a significant proportion of up to
   a third of lexical disparity arises from such punctuated events at splitting
-  events. Similar bursts of evolution also at initial niche settlement in
+  events. Similar bursts of evolution also occur at initial niche settlement in
   biology. Given the prevalence with which phylogenetic models in linguistics
   are used to date language families, it is surprising that this result has not
   found its way back into the clock models used in phylogenetic inferences,
   which tend to focus instead on per-branch variation \parencite{}. Here, we
-  develop a simple extension to the Strict Clock model \parencite{} in BEAST2
+  develop a simple extension to the strict and relaxed clock models \parencite{} in BEAST2
   \parencite{} to account for bursts at language splits. We fit it to four major
-  language families of the world –~Austronesian, Bantu, Indo-European, and Sino-Tibetan~– and find that the Burst Clock fits the data better than either
-  a Strict Clock or an Uncorrelated Relaxed Clock, and on average a binary split
-  is associated with XXX lexical changes in the basic vocabulary.
+  language families of the world –~Austronesian, Bantu, Indo-European, and
+  Sino-Tibetan~– and find that the Burst Clock fits the data better than either
+  a strict Clock or an uncorrelated Relaxed Clock, and on average a binary split
+  is associated with about as much lexical changes in the basic vocabulary as
+  150 years of independent evolution.
 \end{abstract}
 
 \section{Introduction}
@@ -100,7 +102,7 @@ thus be more different from the ancestral languages than stable languages.
 Quantitative evidence for this effect was supplied by
 \textcite{atkinson2008languages}. Using lexical cognate data, they studied the
 signal of punctuation in the Austronesian, Bantu, and Indo-European tree. The
-lexicon is one of the domain of language most apparent to speakers and
+lexicon is one of the domains of language most apparent to speakers and
 accessible to conscious manipulation \textcite{}.
 \Citeauthor{atkinson2008languages} found that between 9.5\% and 33\% of lexical
 differences are due to punctuated events.
@@ -166,6 +168,7 @@ per-node burst values $b_i$. For $c=0$, this gives rise to non-clock models, and
 with an appropriate model of the $b_i$ can represent various non-clock priors,
 such as the compound Dirichlet prior (Rannala et al. 2012).
 % https://academic.oup.com/sysbio/article/61/5/779/1735441
+The focus of this article, however, is on the simple extension of clock models where $b$ is constant.
 
 In addition, the unobserved splits, where a language splits in two, but one of
 the two descendant branches goes extinct before being observed, can contribute
@@ -190,14 +193,22 @@ This is formally the same model as in \cref{eq:simple-burst}: The expected numbe
 in a way that takes the underlying tree prior into account,
 which should lead to better mixing and better interpretability.
 
+This model extends to non-strict clocks in a straightforward manner, where with per-branch clock rates $c_i$, we get
+\begin{align}
+  e_i = (c_i + \lambda (1-q) b) \cdot l_i + b
+  \label{eq:relaxed}
+\end{align}
+so a common implementation that wraps an internal clock model and exposes the branch lengths and clock rates is sufficient for
+both the strict burst clock and the relaxed burst clock.
+
 \section{Bayesian phylogenetic inference}
 
-In order to assess whether the burst clock is a useful model for Bayesian phylogenetics, we reproduce four studies on
-Bayesian phylogenetics on well-studied language phylogenies: Austronesian \parencite{}, Bantu \parencite{}, Indo-European
-\parencite{} and Sino-Tibetan \parencite{}. We first use a state-of-the-art inference model with a non-burst clock, as a
-baseline comparable with published studies, before adding a burst clock to the inference procedure. We assess the posterior
-probability distribution of the added parameter $b$, and compare model fit using Stepping Stone analysis implemented in BEAST2's
-\texttt{modelselection} package \parencite{}.
+In order to assess whether the burst clock is a useful model for Bayesian phylogenetics, we test it using four case studies in
+Bayesian phylogenetics on language families with a long history of linguistic phylogenies:
+Austronesian \parencite{}, Bantu \parencite{}, Indo-European \parencite{} and Sino-Tibetan \parencite{}.
+We use a common state-of-the-art baseline model for all four language families, comparing the fit of
+the strict clock, the uncorrelated relaxed clock, the strict burst clock, and the uncorrelated relaxed burst clock
+using nested sampling implemented in a package for Beast2 \parencite{nestedsampling}.
 
 \subsection{Data}
 The data for the phylogenetic analysis is composed of lexical items in comparable concepts (“word list” or “concept list”) annotated
@@ -219,8 +230,8 @@ Hovever, in that case the dataset is reduced to the overlap with a grammatical d
 All three papers use the Austronesian Basic Vocabulary Database for their lexical data, but the official version of that database
 (https://abvd.shh.mpg.de/austronesian/) is published without a persistent identifier, not freely usable, and not available in a re-usable format, so we instead make use of the ABVD
 data in the standardized CLDF format \parencite{cldf} curated on \url{https://github.com/lexibank/abvd}, which is published under a
-permissive Creative Commons (CC-BY-4.0) license. We used the most recent version, commit \texttt{17a4b30922f9d1010667ae8974f814c624e3e9a4}
-(2020-07-10). We filtered filtered to the Austronesian doculects\footnote{The database contains several instances where different
+permissive Creative Commons (CC-BY-4.0) license. We use the most recent version, commit \texttt{17a4b30922f9d1010667ae8974f814c624e3e9a4}
+(2020-07-10). We filtered to the Austronesian doculects\footnote{The database contains several instances where different
 sources for the same variety (judging by name and Glottocode) give rise to different ‘language’ objects in the dataset, so the term
 ‘doculect’ appears more appropriate than ‘language’ or ‘dialect’ in discussing the composition of the dataset, even though some languages may be aggregated from more than one source.} that have a coverage
 of at least 85\% of all concepts (189 or more concepts). This results in \countlects{} doculects and \countconcepts{} concepts being included in the data.
@@ -249,7 +260,7 @@ The only \glot{Reefs-Santa Cruz language}{reef1242} in our Austronesian lexical 
 
 In terms of tip calibrations given by \textcite{gray2009language}, table row on \abvd{Old Javanese}{290} cites \textcite{zoetmulder1982old} for a date between 700 and 1200 BP ($\mu=950, \sigma=125$).
 All their other tip calibrations either do not apply to our filtered data set or are dubious:
-For \abvd{Favorlang}{831}, some of the derives from Dutch sources from the mid-1600s, others from wordlists collected around 1900. Such a mix of data makes it unsuitable for dating, so we excluded \abvd{Favorlang}{831} from the lexical data.
+For \abvd{Favorlang}{831}, some of the data derives from Dutch sources from the mid-1600s, others from wordlists collected around 1900. Such a mix of data makes it unsuitable for dating, so we completely exclude \abvd{Favorlang}{831} from the lexical data.
 
 \subsubsection{Bantu}
 The Bantu languages are a part of the Atlantic-Congo languagage family. They
@@ -279,7 +290,7 @@ of that field
 \parencite{bouckaert2012mapping,chang-ie,gray2003language,holm2017steppe,rama2018three,willems2016using}
 
 \paragraph{Lexical Data}
-Datasets generally go back to \textcite{dyen1992comparative} and its derivatives such as IELex \parencite{ielex},
+Datasets generally go back to \textcite{dyen1997comparative} and its derivatives such as IELex \parencite{ielex},
 but have been improved
 step by step. The most recent study correcting
 the quality of cognate codes is by \textcite{chang-ie}. Their different datasets are explicitly compared by \textcite{rama2018three}, who finds that the
@@ -290,7 +301,29 @@ that dataset over the alternatives considered, so we base our analysis on that d
 \paragraph{Calibrations}
 Following the evidence presented by \textcite[Tables 7 and 12]{chang-ie}, we implement the following node and tip calibrations.
 \begin{itemize}
-    \item 
+\item Germanic (i.\,e. the MRCA of Gothic, Old West Norse, Icelandic, Faroese, Norwegian, Swedish, Danish, Old English, English, Frisian, Old High German, German, Luxembourgish, Swiss German, Dutch, Flemish and Afrikaans): Uniform between 2250~yBP and 20000~yBP;
+\item Romance (i.\,e. the MRCA of Latin, Nuorese, Cagliari, Romanian, Catalan, Portuguese, Spanish, French, Provencal, Walloon, Ladin, Romansh, Friulian and Italian): Uniform between 1750~yBP and 20000~yBP;
+\item Scandinavian (i.\,e. the MRCA of Old West Norse, Icelandic, Faroese, Norwegian, Swedish and Danish): Uniform between 1500~yBP and 20000~yBP;
+\item Slavic (i.\,e. the MRCA of Czech, Slovak, Polish, Upper Sorbian, Ukrainian, Belarusian, Russian, Slovenian, Macedonian, Bulgarian, Serbian and Old Church Slavic): Uniform between 1500~yBP and 20000~yBP;
+\item East Baltic (i.\,e. the MRCA of Lithuanian and Latvian): Uniform between 1300~yBP and 20000~yBP;
+\item British Celtic (i.\,e. the MRCA of Welsh, Breton and Cornish): Uniform between 1250~yBP and 20000~yBP;
+\item the MRCA of Irish and Scots Gaelic: Uniform between 1050~yBP and 20000~yBP;
+\item the MRCA of Tajik and Persian: Uniform between 750~yBP and 20000~yBP;
+
+        \item Hittite: $\mu=3400, \sigma=100$;
+        \item Vedic Sanskrit: $\mu=3250, \sigma=250$;
+        \item Avestan: $\mu=2500, \sigma=50$;
+        \item Ancient Greek: $\mu=2450, \sigma=50$;
+        \item Latin: $\mu=2150, \sigma=50$;
+        \item Gothic: $\mu=1650, \sigma=25$;
+        \item Old High German: $\mu=1150, \sigma=50$;
+        \item Old English: $\mu=1000, \sigma=50$;
+        \item Old West Norse: $\mu=800, \sigma=50$;
+        \item Classical Armenian: $\mu=1550, \sigma=50$;
+        \item Tocharian B: $\mu=1350, \sigma=150$;
+        \item Old Irish: $\mu=1200, \sigma=100$;
+        \item Cornish: $\mu=300, \sigma=100$;
+        \item Old Church Slavic: $\mu=1000, \sigma=50$;
 \end{itemize}
 
 \subsubsection{Sino-Tibetan}
@@ -299,14 +332,25 @@ The Sino-Tibetan language family has been recently studied phylogenetically by t
 \paragraph{Lexical Data}
 The lexical data is available as supplementary material for each of these two
 articles. Both data sets are ultimately derived from the STEDT dataset
-\parencite{}. \Citeauthor{sagart2019dated} are very explicit concerning their
-data selection and cognate coding method, while
-\Citeauthor{zhang2019phylogenetic} retain a larger language sample. While
-smaller, the \textcite{sagart2019dated} dataset seems thus much more carefully
-curated, and is thus preferable for our analysis.
+\parencite{stedt}. \Citeauthor{sagart2019dated} are very explicit concerning their
+data selection and cognate coding method and also make their BEAST2 file available from \url{https://github.com/lingpy/sino-tibetan-paper/blob/v1.0.3/BeastFiles/sinotibetan-beast-covarion-relaxed-fbd.xml}, while
+\Citeauthor{zhang2019phylogenetic} retain a larger language sample.
+While smaller, the \textcite{sagart2019dated} dataset seems thus much more carefully
+curated and re-usable, and is therefore preferable for our analysis.
+The data underlying that article is curated on \url{https://github.com/lexibank/sagartst}, the specific analyses have been published on \url{https://github.com/lingpy/sino-tibetan-paper}.
 
 \paragraph{Calibrations}
-We follow \textcite{sagart2019dated} in the tip calibrations, ‘Old Chinese, [2,800 to 2,300] yBP, in a uniform prior; Old Burmese, 800 yBP; Old Tibetan, 1,200 yBP; and Tangut, 900 yBP’.
+\Textcite{sagart2019dated} list a few fixed tip dates. Three of these tip dates are taken from the dating of earliest sources and rounded to the nearest century, so they actually come with an uncertainty of about $\sigma=25$. In their BEAST2 XML, these tip dates (even the Old Chinese tip date described with a uniform prior in the paper text) are assumed fixed.
+We therefore take tip dates to be the following.
+\begin{itemize}
+    \item Old Chinese: $\mu=2550, \sigma=125$;
+    \item Old Burmese: $\mu=800, \sigma=25$;
+    \item Old Tibetan: $\mu=1200, \sigma=25$;
+    \item Tangut: $\mu=900, \sigma=25$.
+\end{itemize}
+In addition, their BEAST2 XML file contains a uniform node calibration between 2.0 to 2.2 kyBP for the MRCA of the Sinitic dialects (Beijing, Chaozhou, Guangzhou, Jieyang, Longgang, and Xingning). We implement normal version ($\mu=2100, \sigma=50$) of this MRCA calibration.
+The additional node calibrations from \textcite{zhang2019phylogenetic} are either approximately given by the tip calibrations already (Chinese, Tibetan, Burmese), or not applicable to the reduced dataset by \textcite{sagart2019dated} (Pumi, Yi).
+
 % sagart2019dated: We specified calibrations as follows: Old Chinese, [2,800 to 2,300] yBP, in a uniform prior; Old Burmese, 800 yBP; Old Tibetan, 1,200 yBP; and Tangut, 900 yBP (the date range for Old Chinese corresponds to the period of the great Classical Chinese texts; the other dates correspond to the date of the earliest text rounded to the nearest century; see also SI Appendix, section 4).
 % zhang2019: Supplementary table 2 (https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-019-1153-z/MediaObjects/41586_2019_1153_MOESM1_ESM.pdf):
 % Chinese Normally distributed with mean 2700.0 and 150.0 standard deviation The earliest known written records of the Chinese language dates from about 1250 BC.
@@ -318,6 +362,11 @@ We follow \textcite{sagart2019dated} in the tip calibrations, ‘Old Chinese, [2
 
 \section{Methods and Models}
 We infer a dated language phylogeny for each of the datasets described above.
+The detailed model description, in the shape of an XML template file in the
+style of literate programming \parencite{knuth1984literate}, can be found in the supplement,
+which also contains the tools to add data and calibrations for each language
+family to the template.
+
 \paragraph{Data coding and substitution model}
 We use the same binary root-meaning presence/absence coding also used in the
 cited phylogenetic studies. We account for the ascertainment bias that the data
@@ -326,44 +375,45 @@ While the binary covarion model has been shown to outperform the binary CTMC
 model on several occasions, its main purpose is to absorb varying substitution
 rates along branches. Substitutions are highly informative for our burst clock,
 so we model substitutions using a binary CTMC model and expect that the varying
-rates of substitution along branches instead inform the branch lengths,
-per-branch clock rates and the parameter $b$ of our burst clock.
-Following \parencite{}, we assume that substitution rates are constant within a
+rates of substitution along branches instead inform the branch lengths $l_i$,
+per-branch clock rates $c_i$ and the parameter $b$ of our burst clock.
+Following \parencite{BEASTLINGPAPER?}, we assume that substitution rates are constant within a
 meaning class, but that the substitution rates between different meaning classes
-are distributed according to a Gamma distribution with mean 1 and shape 1.
+are distributed according to a Gamma distribution.
 
-\paragraph{Tree prior} We assume a fossilized birth/death tree prior, with a low
-turnover of 20\% \parencite{} and a sampling proportion derived from the number
-of contemporary tips in the dataset divided by the family's number of languages
-according to Glottolog \parencite{glottolog}. We take the net diversification
-rate to follow a lognormal prior with 95\% of the probability mass between “one
-split per generation” and “one split per 1000 years”,
-% ln 1/20 = -2.995732273553991 = x1
-% ln 1/1000 = -6.907755278982137 = x2
-% 95\% interval == 2 σ interval, so
-% μ = (x1 + x2) / 2 = -4.951743776268064
-% σ = (x1 - x2) / 4 = 0.9780057513570365
-i.\,e. with mean $-4.951743776268064$ and standard deviation $0.9780057513570365$ in log space.
+\paragraph{Tree prior} We assume a skyline fossilized birth/death tree prior.
+% The only source on turnovers I can think of right now is the logfile by Sagart&al.
+The sampling proportion is permitted to be different for the last 500 years,
+when alphabetically written sources become available in many parts of the world
+due to colonization and Christian missionaries, from the time more than 500 years ago.
 
 \paragraph{Clock model}
-To account for rate variation between different parts of the phylogeny, we
-assume a lognormal relaxed clock. This means that the branch rate $c_i$ on a
-branch $i$ is drawn from a lognormal distribution with mean $1$ and log-stdev
-$???$, independent of every other branch. In a secondary analysis step, we
-assume a burst clock with split bursts $b$ distributed according to an
-exponential distribution with mean $1$ (so favouring small bursts, but
-permitting any number of changes per split) and brach rates $c_i$ following the
-same lognormal relaxed clock as before.
+We test each dataset with both a strict and a relaxed clock, in each case
+comparing the results without punctuated bursts with the results
+using a burst version of the clock. The prior on the number of changes per split for the 
+burst clocks is estimated as follows. We aim for a broad prior centred around $b=0$,
+where parameter values less than 0 are interpreted as probability mass in the point $b=0$ (i.\,e. no punctuated evolution).
+Loss rates are estimated around $5.8 × 10^{-4}$ \parencite[405]{pagel2000history}, which
+corresponds to a clock rate of very roughly $2 \cdot 4\% \cdot 5.8 × 10^{-4}=4.64\times 10^{-5}$
+if 200 concepts are attested by a total of 5000 cognate sets and thus the frequency of absences is around 4\%.
+Assuming a time depth of the trees of generally up to 7000 years,
+there are about $0.325$ changes in the tree for each cognate set. With about 500 languages or more for each of our 
+families, there will be usually around 9 splits between the root and the
+tips, which may contribute up to 30\% \parencite{greenhill} of the changes, so we take a
+normal distribution with $3\sigma = 0.30 \cdot 0.325 / 9$, so $\sigma=3.6 \times 10^{-3}$.
+As a very rough estimate, this should provide a soft upper bound to the size of bursts.
 
 \paragraph{Phylogenetic inference}
 We infer the phylogenies using Markov chain Monte Carlo sampling, using the MCMC
-software tool BEAST2 \parencite{beast2}. We run the Markov chain for 10'000'000
-steps, sampling every 1'000th step and discarding the first 10\% as burn-in,
-thus creating 900 sampled phylogenies, which we compare to the published
-phylogenies. We use a stepping stone analysis for estimating marginal model
-likelihoods using the modelselection package \parencite{modelselection} for
-BEAST2 to compare the marginal likelihood of the models with and without bursts
-at language splits.
+software tool BEAST2 \parencite{beast2}. The time until converges varies greatly
+between the different datasets (with different numbers of languages, concepts, and
+cognate sets each).
+We run 5 replications of each of the chains, running them in bouts of 24 hours on a high-performance
+computing cluster and sampling every 10'000th step, until each parameter has reached an effective sampling size of 
+200 or more.
+In addition, we run two nested sampling for each of the 16 combinations of
+language family and clock model, in order to estimate the marginal model likelihood
+of each clock model given the data.
 
 The Python source code to generate the BEAST2 configuration files, as well as
 those XML files themselves and the raw log file outputs of the BEAST runs are
