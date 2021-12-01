@@ -13,14 +13,12 @@ raw_cldf/forms.csv raw_cldf/cognates.csv raw_cldf/cldf-metadata.json: abvd.zip c
 	unzip -DD -o -j abvd.zip "abvd-master/cldf/*" -d raw_cldf/
 
 good_languages: raw_cldf/cldf-metadata.json raw_cldf/forms.csv
-	python -m lexedata.report.coverage -l --min-concepts 189 --metadata raw_cldf/cldf-metadata.json > high_coverage_languages
 	echo "Explicitly exclude Favorlang [831]."
-	python -c 'print(*(set(open("high_coverage_languages")) - set(open("bad_languages"))), sep="")' > good_languages
-
+	python -m lexedata.report.coverage --metadata raw_cldf/cldf-metadata.json --min-percentage 80.3 --coded -l | grep -v '^831$$' > good_languages
 
 austronesian-undated.xml stats.tex: raw_cldf/cldf-metadata.json good_languages austronesian-template.xml
 	cp austronesian-template.xml austronesian-undated.xml
-	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json -b -o austronesian-undated.xml
+	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json -b -o austronesian-undated.xml --language-list good_languages
 
 austronesian.xml: austronesian-undated.xml add_calibrations.py
 	python ../no_nested_sampling.py austronesian-undated.xml -o austronesian.xml
