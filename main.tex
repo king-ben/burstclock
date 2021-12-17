@@ -488,18 +488,128 @@ available in the supplementary material.
 
 \section{Results}
 We find a vastly different time to apparent convergence for the different
-analyses. While the strict clock for Austronesian converged within 120 hours,
-one run for the relaxed clock with bursts for the Bantu dataset was not
-completely converged after 2500 hours.
-The complete setup (data, tools to generate the Beast XMLs, Beast XML files,
-and run log files) is available in the supplementary material.
+analyses. While the strict clock for Sinotibetan converged within 50 hours,
+several runs for Austronesian and Bantu with relaxed clock were not completely
+converged even after 2500 hours. Despite using the optimized relaxed clock
+implementation by \parencite{orc}, the runs for Austronesian with relaxed clock
+(with or without bursts) regularly jumped between two regions in the parameter
+space, one containing trees with a mean height of ca. 4400 years and one with a
+mean tree heigh above 5000 years. Following \parencite{bad-mixing}, we cannot
+assume that the posterior sample of these chains is informative about the
+model's posterior probability for these two different parameter regions.
+We can therefore not accurately describe the tree height and mean clock rate of
+the relaxed Austronesian runs. All other parameters of these runs however appear
+converged and uncorrelated with tree height, so they allow valid analysis.
+All other runs seem to have converged; some Bantu relaxed clock runs achieve
+effective sample sizes of 200 for all parameters only for burnins >> 10\%.
 
+\begin{figure}
+  \centering
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/austronesian_replacement.png}
+    \caption{Austronesian}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/bantu_replacement.png}
+    \caption{Bantu}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/indoeuropean_replacement.png}
+    \caption{Indoeuropean}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/sinotibetan_replacement.png}
+    \caption{Sinotibetan}
+  \end{subfigure}
+  \caption{Expected lexical replacement in 1000~years for the different models
+    in the different language families}
+    \label{f:clock}
+\end{figure}
+
+The expected lexical replacement over 1000 years according to the different
+inferences is shown in \cref{f:clock}. These values are derived from the loss
+rate (transition rate from ‘presence’ to ‘absence’ of a cognate class in a
+concept) which governs the clock rate of the inference. While the median of our
+prior lies around 44\% lexical replacement over 1000 years, the data suggests
+much faster replacement, closer to \parencite{swadesh1955greater}'s
+rule-of-thumb of 20\% over 1000 years, but varying widely around it, with
+Austronesian showing much faster change and Sinotibetan much slower. With the
+exception of Sinotibetan, the relaxed clock with bursts infers the lowest
+lexical replacement rates and the strict clock without bursts the highest rates.
+Because the bursts are not contributing to this estimate, they compensate for
+the lower rate of change; so it is surprising that this is not seen for
+Sinotibetan.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/austronesian_years_per_split.png}
+    \caption{Austronesian}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/bantu_years_per_split.png}
+    \caption{Bantu}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/indoeuropean_years_per_split.png}
+    \caption{Indoeuropean}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/sinotibetan_years_per_split.png}
+    \caption{Sinotibetan}
+  \end{subfigure}
+  \caption{Evolutionary contribution of each language split, in effective years}
+  \label{f:peryear}
+\end{figure}
+
+The average contribution of a language split varies between $...$ and $...$
+expected changes per cognate class. Comparing this with the clock rate, we get
+that around the time of a split, languages change about as much as otherwise in
+about 100 to 150 years of independent evolution. The distributions of the
+evolutionary contributions of split events compared to time of independent
+evolution in shown in \cref{f:peryear}.
+
+In each burst clock run, the model was unconstrained and permitted to instead
+select a model without bursts. The prior probability mass was equally distributed
+between no bursts and bursts. Despite this prior, all samples of the
+Austronesian, Bantu, and Indoeuropean analysis have a positive value for bursts,
+so the Bayes factor in favour of the burst clock is the effective sample size of
+the burst parameter in these models (between $...$ and $...$). For Sinotibetan,
+the posterior probability of the Burst clock is $...$ as much as the clock
+without bursts.
+
+The complete setup (data, tools to generate the Beast XMLs, Beast XML files, and
+run log files including tree posterior samples) is available in the
+supplementary material.
 
 \section{Discussion}
-Three explanations for this apparent schismogenesis:
-Founding Effects, deliberate schismogenesis,
+The burst clock is the preferred model. By far.
+
+Not only is the burst clock the preferred model, but it can als contribute to
+better mixing.
+
+On the topic of mixing, what's the problem with those relaxed clocks? Did we do
+something wrong, or should this cast doubt on many studies using relaxed clocks?
+
+Our literate programming template is nice, we encourage other researchers to
+adapt it, criticise it, and modify it, feeding changes back to us, so that the
+field can get towards comparable studies. By the way, we think that comparable
+studies across different language families haven't been done very often –
+Gerhard Jäger's typological models have a similar philosophy, but if I remember
+correctly, he uses existing posterior samples and builds a cross-family
+hierarchical model on top of them. (Whereas our models don't inform each other,
+a hierarchical model might be interesting.)
+
+Sinotibetan is weird. The results may be due to the much stricter data coding by
+the authors, or is it down to the structure of calibrations or something
+actually interesting about the language family
+
+Three explanations have been suggested for the phenomenon of schismogenesis:
+Founding Effects, deliberate/conscious schismogenesis,
 correlation of split rate with evolution rate. How
 to distinguish them in the future?
+
+Niche selection in Biology, like in that other paper we found recently.
 
 \printbibliography{}
 
