@@ -53,7 +53,7 @@
   {}%
 }
 
-\newcommand{\glot}[2]{#1 [\texttt{\hyperlink{https://glottolog.org/resource/languoid/id/#2}{#2}}]}
+\newcommand{\glot}[2]{#1 {\scriptsize{[\texttt{\hyperlink{https://glottolog.org/resource/languoid/id/#2}{#2}}]}}}
 
 % Code inclusion with syntax highlighting
 \usepackage{minted}
@@ -68,37 +68,42 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-  Due to increased rates of evolution at cladogenenesis, potentially arising
-  from linguistic founder effects or the exaggeration of language differences to
-  mark social boundaries, languages tend to evolve in bursts.
-  \Textcite{atkinson2008languages} showed that a significant proportion of up to
-  a third of lexical disparity arises from such punctuated events at splitting
-  events. Similar bursts of evolution also occur at initial niche settlement in
-  biology. Given the prevalence with which phylogenetic models in linguistics
-  are used to date language families, it is surprising that this result has not
-  found its way back into the clock models used in phylogenetic inferences,
-  which tend to focus instead on per-branch variation \parencite{}. Here, we
-  develop a simple extension to the strict and relaxed clock models \parencite{} in BEAST2
-  \parencite{} to account for bursts at language splits. We fit it to four major
-  language families of the world –~Austronesian, Bantu, Indo-European, and
-  Sino-Tibetan~– and find that the Burst Clock fits the data better than either
-  a strict Clock or an uncorrelated Relaxed Clock, and on average a binary split
-  is associated with about as much lexical changes in the basic vocabulary as
-  150 years of independent evolution.
+When a language splits into different speaker communities, the speed of
+language change increases. \Textcite{atkinson2008languages} showed that a
+significant proportion of up to a third of lexical disparity can be attributed
+to the splitting events, potentially arising from linguistic founder effects or
+the exaggeration of language differences to mark social boundaries. Given the
+prevalence with which phylogenetic models in linguistics are used to date
+language families, it is surprising that this result has not found its way back
+into the clock models used in phylogenetic inferences, which tend to focus
+instead on per-branch variation \parencite{}. Here, we develop a simple
+extension to the Strict Clock model \parencite{} in BEAST2 \parencite{} to
+account for bursts at language splits. We use simulation studies and also fit
+the new model to four major language families of the world –~Austronesian,
+Bantu, Indo-European, and Sino-Tibetan~– and find that the Burst Clock fits the
+data better than either a Strict Clock or an Uncorrelated Relaxed Clock, and on
+average a binary split is associated with XXX lexical changes in the basic
+vocabulary. This is equivalent to the amount of lexical change a language
+accumulates in about 100 years of independent evolution. Similar bursts of evolution
+occur also at initial niche settlement in biology, so the model may also be
+interesting in that context.
 \end{abstract}
 
 \section{Introduction}
+
 Linguistic differences, in particular those apparent to speakers, are often
 exaggerated among different social groups to mark ethnic boundaries. This
-process, dubbed schismogenesis by Bateson (1935) and esoterogeny by Thurston
-(1987), is thought to drive language disparity in as wide a range of locations
-as Vanuatu \parencite{}, South America \parencite{} and …. Here, languages
-function to identify in-groups, and as such they mark social boundaries (Labov
-1963) and define potential marriage partners in exogamous societies
-\parencite{}. These processes presumably happen in particular at times where
-languages split, driving the schism and in turn being driven by the exaggerated
-observation of differences. Lineages with more language diversification will
-thus be more different from the ancestral languages than stable languages.
+process, dubbed schismogenesis by \textcite{bateson1935culture} and esoterogeny
+by \textcite{thurston1987processes}, is thought to drive language disparity in
+as wide a range of locations as Vanuatu \parencite{}, South America \parencite{}
+and …. Here, languages function to identify in-groups, and as such they mark
+social boundaries \parencite{labov1963social} and define potential marriage
+partners in exogamous societies \parencite{}. These processes presumably happen
+in particular at times where languages split, driving the schism and in turn
+being driven by the exaggerated observation of differences. Lineages with more
+language diversification will thus be more different from the ancestral
+languages than stable languages.
+
 Quantitative evidence for this effect was supplied by
 \textcite{atkinson2008languages}. Using lexical cognate data, they studied the
 signal of punctuation in the Austronesian, Bantu, and Indo-European tree. The
@@ -111,15 +116,22 @@ differences are due to punctuated events.
 % atkinson2008languages is N. Eldredge, S. J. Gould, in Models in Paleobiology,
 % T. J. M. Schopf, Ed. (Freeman, San Francisco, 1972), pp. 82–115.
 
-% There is also a paper by Søren Wichman and Taraka Rama on ‘Bayesian Dating’ or something, I think it basically does linear interpolation, so it's also case in point?
+% Rama & Wichmann (2020) infer $t = 1843 × MTL^0.35$, regressing the *median
+% length* (not height) of the tree sample to the otherwise estimated age of the
+% language family. This might have an interpretation in our context? I don't
+% know what, though.
 
-\Textcite{gray2013three} raise the question whether this holds equally for
+\Textcite{gray2013three} raise the question in how much this holds for
 different linguistic domains. They argue that “[t]o the extent that closely
 related speech communities differ more in accent than they do in vocabulary, and
 more in vocabulary than in language structure, it might be predicted that the
 schismogenesis effect would be most pronounced in phonetics and least in
-structural features of language.” In order to explicitly test this prediction,
-an explicit model of punctuated evolution would be necessary.
+structural features of language.”
+
+In order to explicitly test this prediction, an explicit model of punctuated
+evolution would be necessary. In addition to contributing to our understanding
+of schismogenesis as a process of cross-cultural interaction, such a model would
+also benefit the field of language phylogeny in general, because it in
 
 The big driver of phylogenetic methods in linguistics has been their ability to
 date language histories based on a relatively small number of broad calibration
@@ -129,10 +141,18 @@ modelling of the punctuated evolution.
 \paragraph{The structure of the paper} is as follows. In section
 \cref{sec:description}, we describe the Burst Clock model, a generalization of
 the Strict Clock. We provide and describe a BEAST2 \parencite{beast2} package
-implementing this clock. We then describe the Bayesian phylogenetic inference on
+implementing this clock. In \cref{s:simulation}, we show using a simulation
+study that the Burst Clock model can distinguish between data generated with
+evolutionary bursts at the languages splits and those without, and that
+a clock model without bursts mis-estimates tree parameters when applied to data
+generated with bursts.
+We then describe a case study using Bayesian phylogenetic inference
+with a burst clock on
 lexical data of Austronesian, Bantu, Indo-European, and Sino-Tibetan data in
-\cref{s:lexical}. In \cref{s:domains} we expand the Indo-European model to
-incorporate phonological and grammatical features. We present our results in
+\cref{s:lexical}.
+% In \cref{s:domains} we expand the Indo-European model to incorporate
+% phonological and grammatical features.
+We present our results in
 \cref{s:results}. In \cref{s:discussion}, we discuss the results. In
 \cref{s:conclusions} we formulate our conclusions.
 
@@ -142,35 +162,59 @@ available as online supplementary material and through
 
 \section{Introducing the Burst Clock}
 \label{sec:description}
-In a strict clock \parencite{}, a constant rate $c$ maps branch lengths $l_i$,
-measured in time (years, millennia, megayears) to expected numbers of changes
+In a strict clock,
+a constant rate $c$ maps branch lengths $l_i$,
+measured in time (years, millennia, My) to expected numbers of changes
 along a branch
 \begin{align}
   e_i = c \cdot l_i
   \label{eq:strict}
 \end{align}
-In the most mathematically simple case,
-every observed split (i.\,e. any split where descendants on both sides survived
-to the be observed later) contributes a constant amount of expected changes to
-the evolutionary history of the descendant languages, and there are no
-unobserved splits in the tree.
-That is, in addition the parameter $c$, this clock model has another
-non-negative parameter $b$ and the expected number of changes is 
+This mapping between time and expected number of evolutionary changes goes back
+to the “molecular clock” observation in the 1960s
+\parencite{zuckerkandl1965evolutionary}. Since then, a variety of clock models
+has been developed and applied in biology (see \textcite{ho2014molecularclock} for an
+overview).
+% https://onlinelibrary.wiley.com/doi/full/10.1111/mec.12953: This was
+% transformed by the development of the molecular clock in the 1960s
+% (Zuckerkandl & Pauling 1962, 1965; Margoliash 1963; Doolittle & Blombäck 1964)
+
+In linguistic phylogenies, the strict clock model and the uncorrelated relaxed
+clock (URC) are the prevalent branch rate models. In addition, analyses that are
+concerned only with linguistic subgrouping may use branch rate models that
+produce non-ultrametric trees and do not permit ascribing times to nodes and
+branches. The URC \parencite{drummond2006relaxed} was introduced to linguistic
+phylogenetics by \textcite{kitchen2009bayesian}, and has generally been seen to
+fit the data better than a strict clock
+\parencite{bouckaert2012mapping,honkola2013cultural,lee2013evolution}
+(Exceptions: \textcite{savelyev2020bayesian,kaiping2021systematic})
+and has found its way into current general advice on linguistic phylogenies
+\parencite{maurits2017beastling,hoffmann2021bayesian}.
+
+The burst clock generalizes the strict clock in a different manner, which is
+orthogonal to and can be combined with relaxed clock models adjusting branch
+rates. In the most mathematically simple case, there are no unobserved splits in
+the tree (all languages survived to be sampled) and every split contributes a
+constant amount of expected changes to the evolutionary history of the
+descendant languages. That is, in addition the parameter $c$, this clock model
+has another non-negative parameter $b$ and the expected number of changes is
 \begin{align}
   e_i = c \cdot l_i + b
   \label{eq:simple-burst}
 \end{align}
 For $b=0$, this models reduces to the strict clock.
 
-Like the strict clock can be relaxed, eg. by drawing per-branch clock rates $c_i$ from
-a lognormal distribution \parencite{}, so can the parameter $b$ be extended to
-per-node burst values $b_i$. For $c=0$, this gives rise to non-clock models, and
-with an appropriate model of the $b_i$ can represent various non-clock priors,
-such as the compound Dirichlet prior (Rannala et al. 2012).
-% https://academic.oup.com/sysbio/article/61/5/779/1735441
-The focus of this article, however, is on the simple extension of clock models where $b$ is constant.
+% NOTE: Don't do, and don't discuss, relaxed-burst relaxed clocks.
+%
+% Like the strict clock can be relaxed, eg. by drawing per-branch clock rates
+% $c_i$ from a lognormal distribution \parencite{}, so can the parameter $b$ be
+% extended to per-node burst values $b_i$. For $c=0$, this gives rise to
+% non-clock models, and with an appropriate model of the $b_i$ can represent
+% various non-clock priors, such as the compound Dirichlet prior (Rannala et al.
+% 2012). https://academic.oup.com/sysbio/article/61/5/779/1735441
+% The focus of this article, however, is on the simple extension of clock models where $b$ is constant.
 
-In addition, the unobserved splits, where a language splits in two, but one of
+In addition, unobserved splits, where a language splits in two, but one of
 the two descendant branches goes extinct before being observed, can contribute
 to language change in this manner. In a birth-death tree model \parencite{}, the rate at which
 languages split (birth rate $\lambda$) is a parameter of the model, either given explicitly or in terms of net diversification rate and turnover. Therefore
@@ -201,14 +245,37 @@ This model extends to non-strict clocks in a straightforward manner, where with 
 so a common implementation that wraps an internal clock model and exposes the branch lengths and clock rates is sufficient for
 both the strict burst clock and the relaxed burst clock.
 
+\section{Simulation Study}
+Because the relaxed burst clock allows two ways of modifying the expected number
+of changes per branch to match the data, it is not clear a priori that a burst
+clock and a relaxed clock can be distinguished, respectively that the
+contributions of per-branch clock rates and burst amounts can be recovered from
+data generated under a relaxed burst clock.
+In order to check this, we implement the following simulation experiment.
+
+% DESCRIBE
 \section{Bayesian phylogenetic inference}
 
-In order to assess whether the burst clock is a useful model for Bayesian phylogenetics, we test it using four case studies in
-Bayesian phylogenetics on language families with a long history of linguistic phylogenies:
-Austronesian \parencite{}, Bantu \parencite{}, Indo-European \parencite{} and Sino-Tibetan \parencite{}.
-We use a common state-of-the-art baseline model for all four language families, comparing the fit of
-the strict clock, the uncorrelated relaxed clock, the strict burst clock, and the uncorrelated relaxed burst clock
-using nested sampling implemented in a package for Beast2 \parencite{nestedsampling}.
+In order to assess whether the burst clock is a useful model for Bayesian
+phylogenetics of languages, we reproduce four studies on Bayesian phylogenetics
+on well-studied language phylogenies:
+Austronesian
+\parencite{gray2009language,greenhill2017evolutionary,greenhill2018population},
+Bantu
+\parencite{grollemund2015bantu,greenhill2018population,currie2013cultural},
+Indo-European
+\parencite{bouckaert2012mapping,chang2015ancestryconstrained,gray2003language,holm2017steppe,rama2018three,willems2016using}
+and
+Sino-Tibetan \parencite{sagart2019dated,zhang2019phylogenetic}.
+We first
+use a state-of-the-art inference model with a non-burst clock, as a baseline
+comparable with published studies, before adding a burst clock to the inference
+procedure. We assess the posterior probability distribution of the added
+parameter $b$, which has a prior that produces a non-burst clock with a
+probability of $\frac{1}{2}$ and a burst clock with a probability also of
+$\frac{1}{2}$, allowing us to directly compare the models based on the posterior
+distribution.
+% and compare model fit using Stepping Stone analysis implemented in BEAST2's \texttt{modelselection} package \parencite{}.
 
 \subsection{Data}
 The data for the phylogenetic analysis is composed of lexical items in comparable concepts (“word list” or “concept list”) annotated
@@ -258,7 +325,7 @@ distributed priors. We supplement this with age constraints taken from \textcite
 \end{itemize}
 The only \glot{Reefs-Santa Cruz language}{reef1242} in our Austronesian lexical dataset is \abvd{Äiwoo}{501}, so a calibration of the most recent ancestor of all Reefs-Santa Cruz languages is not possible.
 
-In terms of tip calibrations given by \textcite{gray2009language}, table row on \abvd{Old Javanese}{290} cites \textcite{zoetmulder1982old} for a date between 700 and 1200 BP ($\mu=950, \sigma=125$).
+In terms of tip calibrations given by \textcite{gray2009language}, the table row on \abvd{Old Javanese}{290} cites \textcite{zoetmulder1982old} for a date between 700 and 1200 BP ($\mu=950, \sigma=125$).
 All their other tip calibrations either do not apply to our filtered data set or are dubious:
 For \abvd{Favorlang}{831}, some of the data derives from Dutch sources from the mid-1600s, others from wordlists collected around 1900. Such a mix of data makes it unsuitable for dating, so we completely exclude \abvd{Favorlang}{831} from the lexical data.
 
@@ -287,19 +354,19 @@ We take the calibration ranges from \textcite{grollemund2015bantu}, but generall
 \subsubsection{Indo-European}
 For obvious reasons, Indo-European has been extensively studied using lexical Bayesian phylogenetics since the beginning
 of that field
-\parencite{bouckaert2012mapping,chang-ie,gray2003language,holm2017steppe,rama2018three,willems2016using}
+\parencite{bouckaert2012mapping,chang2015ancestryconstrained,gray2003language,holm2017steppe,rama2018three,willems2016using}
 
 \paragraph{Lexical Data}
 Datasets generally go back to \textcite{dyen1997comparative} and its derivatives such as IELex \parencite{ielex},
 but have been improved
 step by step. The most recent study correcting
-the quality of cognate codes is by \textcite{chang-ie}. Their different datasets are explicitly compared by \textcite{rama2018three}, who finds that the
+the quality of cognate codes is by \textcite{chang2015ancestryconstrained}. Their different datasets are explicitly compared by \textcite{rama2018three}, who finds that the
 ‘\textsc{medium}’ dataset fits the expected node ages best given a uniform tree prior. \Citeauthor{rama2018three} also argues qualitatively in favour of
 that dataset over the alternatives considered, so we base our analysis on that dataset, available from
 \url{https://github.com/PhyloStar/ie-phylo-exps/blob/a63c0b52f7772adc2341572932a74b23d92570df/medium1.nex}.
 
 \paragraph{Calibrations}
-Following the evidence presented by \textcite[Tables 7 and 12]{chang-ie}, we implement the following node and tip calibrations.
+Following the evidence presented by \textcite[Tables 7 and 12]{chang2015ancestryconstrained}, we implement the following node and tip calibrations.
 \begin{itemize}
 \item Germanic (i.\,e. the MRCA of Gothic, Old West Norse, Icelandic, Faroese, Norwegian, Swedish, Danish, Old English, English, Frisian, Old High German, German, Luxembourgish, Swiss German, Dutch, Flemish and Afrikaans): Uniform between 2250~yBP and 20000~yBP;
 \item Romance (i.\,e. the MRCA of Latin, Nuorese, Cagliari, Romanian, Catalan, Portuguese, Spanish, French, Provencal, Walloon, Ladin, Romansh, Friulian and Italian): Uniform between 1750~yBP and 20000~yBP;
@@ -428,4 +495,5 @@ available in the supplementary material.
 
 % Local Variables:
 % TeX-engine: luatex
+% TeX-command-extra-options: "-shell-escape"
 % End:
