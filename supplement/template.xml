@@ -1,0 +1,123 @@
+<beast beautitemplate="BinaryCTMC" beautistatus="" namespace="beast.core:beast.evolution.alignment:beast.evolution.tree.coalescent:beast.core.util:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.likelihood" required="" version="2.6">
+  <data>...</data>
+  <map name="Uniform">beast.math.distributions.Uniform</map>
+  <map name="Exponential">beast.math.distributions.Exponential</map>
+  <map name="LogNormal">beast.math.distributions.LogNormalDistributionModel</map>
+  <map name="Normal">beast.math.distributions.Normal</map>
+  <map name="Beta">beast.math.distributions.Beta</map>
+  <map name="Gamma">beast.math.distributions.Gamma</map>
+  <map name="LaplaceDistribution">beast.math.distributions.LaplaceDistribution</map>
+  <map name="prior">beast.math.distributions.Prior</map>
+  <map name="InverseGamma">beast.math.distributions.InverseGamma</map>
+  <map name="OneOnX">beast.math.distributions.OneOnX</map>
+  <run id="mcmc" spec="MCMC" chainLength="10000000" numInitializationAttempts="1000" sampleFromPrior="false">
+    <state id="state" spec="State" storeEvery="5000">
+      <tree id="Tree.t:tree" spec="beast.evolution.tree.Tree" name="stateNode">
+        <trait id="dateTrait.t:tree" spec="beast.evolution.tree.TraitSet" traitname="date-backward" value="">
+          <taxa id="TaxonSet.vocabulary" spec="TaxonSet">
+            <alignment idref="vocabulary" />
+          </taxa>
+        </trait>
+      </tree>
+      <parameter id="gammaShape.s:vocabulary" spec="parameter.RealParameter" name="stateNode">1.0</parameter>
+      <parameter id="freqParameter.s:vocabulary" spec="parameter.RealParameter" dimension="2" lower="0.0" name="stateNode" upper="1.0">0.9 0.1</parameter>
+      <parameter id="clockRate.c:clock" spec="parameter.RealParameter" name="stateNode">0.001</parameter>
+      <parameter id="BDBirthRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="10000.0">0.0005</parameter>
+      <parameter id="BDDeathRate.t:tree" spec="parameter.RealParameter" lower="0.0" name="stateNode" upper="1.0">0.5</parameter>
+    </state>
+    <init estimate="false" id="startingTree" initial="@Tree.t:tree" taxonset="@taxa" spec="beast.evolution.tree.RandomTree">
+      <populationModel spec="ConstantPopulation">
+        <popSize spec="parameter.RealParameter" value="10000" />
+      </populationModel>
+    </init>
+    <distribution id="posterior" spec="util.CompoundDistribution">
+      <distribution id="prior" spec="util.CompoundDistribution">
+	<!-- <distribution id="BirthDeath.t:tree" spec="beast.evolution.speciation.BirthDeathGernhard08Model" birthDiffRate="@BDBirthRate.t:tree" relativeDeathRate="@BDDeathRate.t:tree" tree="@Tree.t:tree">
+        </distribution> -->
+        <prior id="BirthRatePrior.t:tree" name="distribution" x="@BDBirthRate.t:tree">
+          <Uniform id="Uniform.3" name="distr" upper="0.05" />
+        </prior>
+        <prior id="DeathRatePrior.t:tree" name="distribution" x="@BDDeathRate.t:tree">
+          <Uniform id="Uniform.4" name="distr" />
+        </prior>
+        <prior id="ClockPrior.c:clock" name="distribution" x="@clockRate.c:clock">
+          <LogNormal id="LogNormalDistributionModel.0" name="distr">
+            <parameter id="RealParameter.6" spec="parameter.RealParameter" estimate="false" name="M">-6.907755278982137</parameter>
+            <parameter id="RealParameter.7" spec="parameter.RealParameter" estimate="false" lower="0.0" name="S" upper="5.0">2.302585092994046</parameter>
+          </LogNormal>
+        </prior>
+        <prior id="GammaShapePrior.s:vocabulary" name="distribution" x="@gammaShape.s:vocabulary">
+          <Exponential id="Exponential.0" name="distr">
+            <parameter id="RealParameter.0" spec="parameter.RealParameter" lower="0.0" name="mean" upper="0.0">1.0</parameter>
+          </Exponential>
+        </prior>
+      </distribution>
+      <distribution id="likelihood" spec="util.CompoundDistribution" useThreads="true">
+        <distribution id="treeLikelihood.vocabulary" spec="TreeLikelihood" tree="@Tree.t:tree">
+          <data id="bin.vocabulary" spec="FilteredAlignment" ascertained="true" data="@vocabulary" excludeto="1" filter="::">
+            <userDataType id="Binary.0" spec="beast.evolution.datatype.Binary" />
+          </data>
+          <siteModel id="SiteModel.s:vocabulary" spec="SiteModel" gammaCategoryCount="4" mutationRate="1.0" shape="@gammaShape.s:vocabulary">
+            <parameter id="proportionInvariant.s:vocabulary" spec="parameter.RealParameter" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
+            <substModel id="CTMC.s:vocabulary" spec="GeneralSubstitutionModel">
+              <parameter id="rates.s:vocabulary" spec="parameter.RealParameter" dimension="2" estimate="false" lower="0.0" name="rates">1.0 1.0</parameter>
+              <frequencies id="estimatedFreqs.s:vocabulary" spec="Frequencies" frequencies="@freqParameter.s:vocabulary" />
+            </substModel>
+          </siteModel>
+          <branchRateModel id="StrictClock.c:clock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockRate.c:clock" />
+        </distribution>
+      </distribution>
+    </distribution>
+    <operator id="gammaShapeScaler.s:vocabulary" spec="ScaleOperator" parameter="@gammaShape.s:vocabulary" scaleFactor="0.5" weight="0.1" />
+    <operator id="FrequenciesExchanger.s:vocabulary" spec="DeltaExchangeOperator" delta="0.003" weight="1.0">
+      <parameter idref="freqParameter.s:vocabulary" />
+    </operator>
+    <operator id="StrictClockRateScaler.c:clock" spec="ScaleOperator" parameter="@clockRate.c:clock" scaleFactor="0.9" weight="4.0" />
+    <operator id="strictClockUpDownOperator.c:clock" spec="UpDownOperator" scaleFactor="0.9" weight="3.0">
+      <up idref="clockRate.c:clock" />
+      <down idref="Tree.t:tree" />
+    </operator>
+    <operator id="BirthDeathTreeScaler.t:tree" spec="ScaleOperator" scaleFactor="0.95" tree="@Tree.t:tree" weight="3.0" />
+    <operator id="BirthDeathTreeRootScaler.t:tree" spec="ScaleOperator" rootOnly="true" scaleFactor="0.6" tree="@Tree.t:tree" weight="2.0" />
+    <operator id="BirthDeathUniformOperator.t:tree" spec="Uniform" tree="@Tree.t:tree" weight="30.0" />
+    <operator id="BirthDeathSubtreeSlide.t:tree" spec="SubtreeSlide" tree="@Tree.t:tree" size="4" weight="15.0" />
+    <operator id="BirthDeathNarrow.t:tree" spec="Exchange" tree="@Tree.t:tree" weight="15.0" />
+    <operator id="BirthDeathWide.t:tree" spec="Exchange" isNarrow="false" tree="@Tree.t:tree" weight="3.0" />
+    <operator id="BirthDeathWilsonBalding.t:tree" spec="WilsonBalding" tree="@Tree.t:tree" weight="1.0" />
+    <operator id="BirthRateScaler.t:tree" spec="ScaleOperator" parameter="@BDBirthRate.t:tree" scaleFactor="0.9" weight="6.0" />
+    <operator id="BirthRateUpDownOperator.c:clock" spec="UpDownOperator" scaleFactor="0.9" weight="3.0">
+      <up idref="BDBirthRate.t:tree" />
+      <down idref="Tree.t:tree" />
+    </operator>
+    <operator id="DeathRateScaler.t:tree" spec="ScaleOperator" parameter="@BDDeathRate.t:tree" scaleFactor="0.9" weight="3.0" />
+    <operator id="DeathRateUpDownOperator.c:clock" spec="UpDownOperator" scaleFactor="0.9" weight="3.0">
+      <up idref="BDDeathRate.t:tree" />
+      <down idref="Tree.t:tree" />
+    </operator>
+    <operator id="BirthDeathRatesUpDownOperator.c:clock" spec="UpDownOperator" scaleFactor="0.9" weight="3.0">
+      <up idref="BDDeathRate.t:tree" />
+      <down idref="BDBirthRate.t:tree" />
+    </operator>
+    <logger id="tracelog" spec="Logger" fileName="vocabulary.log" logEvery="3000" model="@posterior" sort="smart">
+      <log idref="posterior" />
+      <log idref="likelihood" />
+      <log idref="prior" />
+      <log id="TreeHeight.t:tree" spec="beast.evolution.tree.TreeHeightLogger" tree="@Tree.t:tree" />
+      <log idref="gammaShape.s:vocabulary" />
+      <log idref="freqParameter.s:vocabulary" />
+      <log idref="clockRate.c:clock" />
+      <!-- <log idref="BirthDeath.t:tree" /> -->
+      <log idref="BDBirthRate.t:tree" />
+      <log idref="BDDeathRate.t:tree" />
+    </logger>
+    <logger id="screenlog" spec="Logger" logEvery="1000">
+      <log idref="posterior" />
+      <log id="ESS.0" spec="util.ESS" arg="@posterior" />
+      <log idref="likelihood" />
+      <log idref="prior" />
+    </logger>
+    <logger id="treelog.t:tree" spec="Logger" fileName="vocabulary.trees" logEvery="1000" mode="tree">
+      <log id="TreeWithMetaDataLogger.t:tree" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:tree" />
+    </logger>
+  </run>
+</beast>
