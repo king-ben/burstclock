@@ -30,10 +30,37 @@ def family_to_path(family: str) -> str:
 
 def read_logfile(vocabulary: Path, r: bool, b: bool, threshold: float = 200):
     log: dict[str, list[float]] = defaultdict(list)
-    for row in csv.DictReader(
-        (r for r in vocabulary.open() if not r.startswith("#")),
+    csvfile = csv.DictReader(
+        (r for r in vocabulary.open() if not r.startswith("#") if '\0' not in r),
         dialect=BeastLogDialect,
-    ):
+    )
+    fieldnames = csvfile.fieldnames[:]
+    if b:
+        fieldnames.append("Years")
+
+    step = None
+    previous = None
+    deviation = 0
+    write_back_fixed = csv.DictWriter(
+        vocabulary.with_suffix(".log2").open("w"),
+        fieldnames, dialect=BeastLogDialect)
+    write_back_fixed.writeheader()
+    for n_row, row in enumerate(csvfile):
+        row["Sample"] = int(row["Sample"])
+        if step is None and previous is None:
+            previous = row["Sample"]
+        elif step is None and previous is not None:
+            step = int(row["Sample"]) - previous
+            previous = row["Sample"]
+        elif row["Sample"] - previous - step != deviation:
+            print("Expected", previous + step + deviation, "but found", row["Sample"])
+            previous = previous + step
+            deviation = row["Sample"] - previous
+            row["Sample"] = previous
+        else:
+            previous = previous + step
+            row["Sample"] = previous
+        
         for key, value in row.items():
             try:
                 log[key].append(float(value))
@@ -48,10 +75,12 @@ def read_logfile(vocabulary: Path, r: bool, b: bool, threshold: float = 200):
             log["clock_std"].append(float(row["RatesStat.variance"]) ** 0.5)
         else:
             log["clockrate_est"].append(float(row["clockrate"]))
+
+        write_back_fixed.writerow(row)
         log["lossrate"].append((1 - (1-float(row["lossrate"]))**1000) * 100)
     unconverged = False
     for key, value in log.items():
-        log[key] = value[len(value) // 10 :]
+        log[key] = value[int(round(len(value)*BURNIN)):]
         neff = ess(numpy.array(log[key]), method="bulk")
         if key != "Sample" and neff < threshold:
             print(f"Effective sample size of {key:} in {vocabulary:} was {neff:}")
@@ -202,7 +231,9 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("ess_threshold",
         type=float, nargs="?", default=200)
+parser.add_argument("--burnin", type=float, default=0.1)
 args = parser.parse_args()
+BURNIN = args.burnin
 
 runtimes = []
 for f, family in enumerate(FAMILIES):
