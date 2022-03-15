@@ -31,6 +31,13 @@
 \usepackage{subcaption}
 \usepackage[font=small,labelfont=it]{caption}
 \usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{bayesnet}
+\usepackage[linguistics,edges]{forest}
+\usepackage{rotating}
 
 % Bibliography
 \usepackage[backend=biber,
@@ -161,9 +168,31 @@ available as online supplementary material and through
 \url{https://osf.io/??????????????????}.
 
 \section{Introducing the Burst Clock}
+\begin{figure}
+    \centering
+      \begin{tikzpicture}
+        \tikzset{vertex/.style = {shape=rectangle,draw,minimum size=1.5em,align=center,text height=1.5ex,text depth=.25ex}}
+        \tikzset{edge/.style = {-{Latex[length=3mm]}}}
+        \node[vertex] (root) at  (-0.5,3) {$r$};
+        \node[vertex] (i) at  (1,0) {$i$};
+        \node[vertex] (l1) at  (-2,1) {};
+        \node[vertex] (l2) at  (-1,0) {};
+        \node[vertex] (l3) at  (-3,0) {};
+        \draw[edge] (root) -| node[midway,name=r] {} (i);
+        \draw[edge] (root) -| (l1);
+        \draw[edge] (l1) -|  (l2);
+        \draw[edge] (l1) -| (l3);
+        \draw[decorate,decoration={brace,mirror,raise=1ex}]
+            (i.east) -- node [midway,right=3ex] {$l_i$} (r.east);
+    
+     \node at (4, 0) {$e_i = c \dot l_i + b$};
+    \end{tikzpicture}
+    \caption{The Burst Clock model: }
+    \label{fig:burstclock}
+\end{figure}
 \label{sec:description}
 In a strict clock,
-a constant rate $c$ maps branch lengths $l_i$,
+a constant rate $c$ maps the length $l_i$ of the branch leading to node $i$
 measured in time (years, millennia, My) to expected numbers of changes
 along a branch
 \begin{align}
@@ -490,13 +519,13 @@ available in the supplementary material.
 We find a vastly different time to apparent convergence for the different
 analyses. While the strict clock for Sinotibetan converged within 50 hours,
 several runs for Austronesian and Bantu with relaxed clock were not completely
-converged even after 2500 hours. Despite using the optimized relaxed clock
-implementation by \parencite{orc}, the runs for Austronesian with relaxed clock
+converged even after more than 2000 hours. Despite using the optimized relaxed clock
+implementation by \textcite{orc}, the runs for Austronesian with relaxed clock
 (with or without bursts) regularly jumped between two regions in the parameter
 space, one containing trees with a mean height of ca. 4400 years and one with a
 mean tree heigh above 5000 years. Following \parencite{bad-mixing}, we cannot
 assume that the posterior sample of these chains is informative about the
-model's posterior probability for these two different parameter regions.
+model's relative posterior probability for these two different parameter regions.
 We can therefore not accurately describe the tree height and mean clock rate of
 the relaxed Austronesian runs. All other parameters of these runs however appear
 converged and uncorrelated with tree height, so they allow valid analysis.
@@ -585,8 +614,8 @@ supplementary material.
 \section{Discussion}
 The burst clock is the preferred model. By far.
 
-Not only is the burst clock the preferred model, but it can als contribute to
-better mixing.
+Not only is the burst clock the preferred model, but it can also contribute to
+better mixing. (No guarantee!)
 
 On the topic of mixing, what's the problem with those relaxed clocks? Did we do
 something wrong, or should this cast doubt on many studies using relaxed clocks?
@@ -610,6 +639,9 @@ correlation of split rate with evolution rate. How
 to distinguish them in the future?
 
 Niche selection in Biology, like in that other paper we found recently.
+(https://academic.oup.com/sysbio/advance-article/doi/10.1093/sysbio/syab085/6407161)
+
+Random walks (diversification causing/caused by migration?) \parencite{neureitercan}
 
 \printbibliography{}
 
