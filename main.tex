@@ -152,8 +152,8 @@ well as on four well-studied language families.
 
 \paragraph{The structure of the paper} is as follows. In section
 \cref{sec:description}, we describe the Burst Clock model, a generalization of
-the Strict Clock. We provide and describe a BEAST2 \parencite{beast2} package
-implementing this clock. In \cref{s:simulation}, we show using a simulation
+the Strict Clock. We provide and describe a BEAST2 \parencite{drummond2015bayesian} package
+implementing this clock. In \cref{sec:simulation}, we show using a simulation
 study that the Burst Clock model can distinguish between data generated with
 evolutionary bursts at the languages splits and those without, and that
 a clock model without bursts mis-estimates tree parameters when applied to data
@@ -161,18 +161,18 @@ generated with bursts.
 We then describe a case study using Bayesian phylogenetic inference
 with a burst clock on
 lexical data of Austronesian, Bantu, Indo-European, and Sino-Tibetan data in
-\cref{s:lexical}.
+\cref{sec:lexical}.
 % In \cref{s:domains} we expand the Indo-European model to incorporate
 % phonological and grammatical features.
 We present our results in
-\cref{s:results}. In \cref{s:discussion}, we discuss the results. In
-\cref{s:conclusions} we formulate our conclusions.
+\cref{sec:results}. In \cref{sec:discussion}, we discuss the results and formulate our conclusions.
 
 Data and methods used to produce the results and figures shown in this paper are
 available as online supplementary material and through
 \url{https://osf.io/??????????????????}.
 
 \section{Introducing the Burst Clock}
+\label{sec:description}
 \begin{figure}
     \centering
       \begin{tikzpicture}
@@ -195,7 +195,6 @@ available as online supplementary material and through
     \caption{The Burst Clock model: }
     \label{fig:burstclock}
 \end{figure}
-\label{sec:description}
 In a strict clock,
 a constant rate $c$ maps the length $l_i$ of the branch leading to node $i$
 measured in time (years, millennia, My) to expected numbers of changes
@@ -259,7 +258,7 @@ For $b=0$, this models reduces to the strict clock.
 In addition, unobserved splits, where a language splits in two, but one of
 the two descendant branches goes extinct before being observed, can contribute
 to language change in this manner.
-In a birth-death tree model \parencite{gernhard2008conditioned,stadler2010samlingthroughtime,heath2014fossilized}, the rate at which
+In a birth-death tree model \parencite{gernhard2008conditioned,stadler2010samplingthroughtime,heath2014fossilized}, the rate at which
 languages split (birth rate $\lambda$) is a parameter of the model, either given explicitly or in terms of net diversification rate and turnover. Therefore
 we can estimate the expected number of splits along a branch as $\lambda \cdot
 l_i$. If turnover is low and many tips are sampled, this over-estimates the number of branches, because it does not take into account that the majority of branches are actually observed. For a sampling proportion $q$ and $l$ observed leaves, the number of net splits will be
@@ -291,6 +290,7 @@ We implemented such a burst-clock wrapper as BEAST 2 package.
 The implementation is available from XXX.
 
 \section{Simulation Study}
+\label{sec:simulation}
 Because the relaxed burst clock allows two ways of modifying the expected number
 of changes per branch to match the data, it is not clear a priori that a burst
 clock and a relaxed clock can be distinguished, respectively that the
@@ -299,7 +299,8 @@ data generated under a relaxed burst clock.
 In order to check this, we implement the following simulation experiment.
 
 % DESCRIBE
-\section{Bayesian phylogenetic inference}
+\section{Inference based on lexical data}
+\label{sec:lexical}
 
 In order to assess whether the burst clock is a useful model for Bayesian
 phylogenetics of languages, we use it to systematically revisit studies on Bayesian phylogenetics
@@ -477,6 +478,7 @@ The additional node calibrations from \textcite{zhang2019phylogenetic} are eithe
 % Yi Normally distributed with mean 1500.0 and 100.0 standard deviation The expansion of Yi people to northeast and south Yunnan, and northwest Guizhou dated to 3th century. About in the eighth and ninth century, a kindom called Nazhao was ruled by Yi (Lolo) speakers but the people also included Bai language.
 
 \section{Methods and Models}
+\label{sec:methods}
 We infer a dated language phylogeny for each of the datasets described above.
 The detailed model description, in the shape of an XML template file in the
 style of literate programming \parencite{knuth1984literate}, can be found in the supplement,
@@ -493,7 +495,7 @@ rates along branches. Substitutions are highly informative for our burst clock,
 so we model substitutions using a binary CTMC model and expect that the varying
 rates of substitution along branches instead inform the branch lengths $l_i$,
 per-branch clock rates $c_i$ and the parameter $b$ of our burst clock.
-Following \parencite{BEASTLINGPAPER?}, we assume that substitution rates are constant within a
+Following \textcite{maurits2017beastling}, we assume that substitution rates are constant within a
 meaning class, but that the substitution rates between different meaning classes
 are distributed according to a Gamma distribution.
 
@@ -515,13 +517,13 @@ if 200 concepts are attested by a total of 5000 cognate sets and thus the freque
 Assuming a time depth of the trees of generally up to 7000 years,
 there are about $0.325$ changes in the tree for each cognate set. With about 500 languages or more for each of our 
 families, there will be usually around 9 splits between the root and the
-tips, which may contribute up to 30\% \parencite{greenhill} of the changes, so we take a
+tips, which may contribute up to 30\% \parencite{atkinson2008languages} of the changes, so we take a
 normal distribution with $3\sigma = 0.30 \cdot 0.325 / 9$, so $\sigma=3.6 \times 10^{-3}$.
 As a very rough estimate, this should provide a soft upper bound to the size of bursts.
 
 \paragraph{Phylogenetic inference}
 We infer the phylogenies using Markov chain Monte Carlo sampling, using the MCMC
-software tool BEAST2 \parencite{beast2}. The time until converges varies greatly
+software tool BEAST2 \parencite{drummond2015bayesian}. The time until converges varies greatly
 between the different datasets (with different numbers of languages, concepts, and
 cognate sets each).
 We run 5 replications of each of the chains, running them in bouts of 24 hours on a high-performance
@@ -536,6 +538,7 @@ those XML files themselves and the raw log file outputs of the BEAST runs are
 available in the supplementary material.
 
 \section{Results}
+\label{sec:results}
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{supplement/analysis/runtimes.png}
@@ -548,7 +551,7 @@ converged even after more than 2000 hours. Despite using the optimized relaxed c
 implementation by \textcite{orc}, the runs for Austronesian with relaxed clock
 (with or without bursts) regularly jumped between two regions in the parameter
 space, one containing trees with a mean height of ca. 4400 years and one with a
-mean tree heigh above 5000 years. Following \parencite{bad-mixing}, we cannot
+mean tree heigh above 5000 years. Following \parencite{brown2018behavior,???}, we cannot
 assume that the posterior sample of these chains is informative about the
 model's relative posterior probability for these two different parameter regions.
 We can therefore not accurately describe the tree height and mean clock rate of
@@ -585,7 +588,7 @@ inferences is shown in \cref{f:clock}. These values are derived from the loss
 rate (transition rate from ‘presence’ to ‘absence’ of a cognate class in a
 concept) which governs the clock rate of the inference. While the median of our
 prior lies around 44\% lexical replacement over 1000 years, the data suggests
-much faster replacement, closer to \parencite{swadesh1955greater}'s
+much faster replacement, closer to \textcite{swadesh1955greater}
 rule-of-thumb of 20\% over 1000 years, but varying widely around it, with
 Austronesian showing much faster change and Sinotibetan much slower. With the
 exception of Sinotibetan, the relaxed clock with bursts infers the lowest
@@ -637,6 +640,7 @@ run log files including tree posterior samples) is available in the
 supplementary material.
 
 \section{Discussion}
+\label{sec:discussion}
 
 Our phylogenetic analysis for well-studied lanugage families shows that the
 burst clock is the preferred model. This indicates that schismogenesis, or
@@ -690,7 +694,7 @@ schismogenesis, we would expect, in agreement with \authorcite{gray2013three}, a
 higher amount of bursts for phonetics than for lexicon, and for lexicon than for
 structural features, even when controlling for rates of change of individual
 features. Another potential avenue of further investigation into the mechanisms
-concerns the use of phylogeographic models \parencite{neureitercan}, where
+concerns the use of phylogeographic models \parencite{neureiter2021can}, where
 migration rates can differ between different branches of the tree. [HOW? or did I move this to the wrong context?]
 
 Niche selection in Biology, like in that other paper we found recently.
