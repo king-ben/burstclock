@@ -31,8 +31,6 @@ def replace_clock(root):
         id="ClockRatesPrior",
         spec="beast.math.distributions.LogNormalDistributionModel",
         S="@RelaxedClockSigma",
-        # TODO: This does not give a mean clock rate of 1. It should be changed
-        # to M=1.0, meanInRealSpace="true"
         M="1.0",
         meanInRealSpace="true",
     )
