@@ -650,33 +650,43 @@ improve the results, but also the mixing behaviour of the MCMC. However, this
 effect is not pronounced where it would matter most: We observe that for
 Austronesian and Bantu data, the relaxed clock mixes very badly, despite using
 recent improvements to the implementation which were supposed to improve mixing
-behavior.
+behavior. This does not improve with a burst clock. Given the reported success
+of relaxed clocks in particular for Austronesian, we consider it vital for the
+field that phylogenetic articles give not only a high-level description of the
+models used for inference, but also make their configuration files and outputs
+available for inspection. Only then can ...
 
-strong when the , what's the problem with those relaxed clocks? Did we do
-something wrong, or should this cast doubt on many studies using relaxed clocks?
+As our contribution to this effort, we have presented our BEAST2 configuration
+file as a literate programming template. The BEAST2 configuration language is so
+flexible as to allows us to structure the file as a readable model description,
+while maintaining the functionality as a BEAST2 input file. We encourage other
+researchers to adapt, criticise, and modify our inference procedure, so that the
+field can get towards comparable studies.
 
-Our literate programming template is nice, we encourage other researchers to
-adapt it, criticise it, and modify it, feeding changes back to us, so that the
-field can get towards comparable studies. By the way, we think that comparable
-studies across different language families haven't been done very often –
-Gerhard Jäger's typological models have a similar philosophy, but if I remember
-correctly, he uses existing posterior samples and builds a cross-family
-hierarchical model on top of them. (Whereas our models don't inform each other,
-a hierarchical model might be interesting.)
+In quantitative diachronic typology, it is necessary to work with cross-family
+data, so unified approaches using the same setup for different families, or even
+hierarchical models connected by shared hyperpriors, have sometimes been
+employed \parencite{dunn2011evolved,jager2021phylogenetic}. However, for lexical
+data, individul language families are often studied by separate groups of
+researchers with different model details and there is little indication that
+models are re-used and compared between different language families.
 
-Sinotibetan is weird. The results may be due to the much stricter data coding by
-the authors, or is it down to the structure of calibrations or something
-actually interesting about the language family
+As a case in point, our analyses show that while Austronesian, Bantu, and
+Indoeuropean show somewhat similar evolutionary dynamics, while Sinotibetan
+seems to evolve noticeably different. Without comparable analyses, it would be
+unclear whether such observations are instead due to (potentially subtle)
+differences in the models, or whether they stem from different data coding
+methods, or from particularities of the language family.
 
 Three explanations have been suggested for the phenomenon of schismogenesis:
 Founding Effects, deliberate/conscious schismogenesis,
-correlation of split rate with evolution rate. How
+or correlation of split rate with evolution rate. How
 to distinguish them in the future?
+Random walks (diversification causing/caused by migration?) \parencite{neureitercan}
 
 Niche selection in Biology, like in that other paper we found recently.
 (https://academic.oup.com/sysbio/advance-article/doi/10.1093/sysbio/syab085/6407161)
 
-Random walks (diversification causing/caused by migration?) \parencite{neureitercan}
 
 \printbibliography{}
 
