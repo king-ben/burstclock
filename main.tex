@@ -103,13 +103,15 @@ exaggerated among different social groups to mark ethnic boundaries. This
 process, dubbed schismogenesis by \textcite{bateson1935culture} and esoterogeny
 by \textcite{thurston1987processes}, is thought to drive language disparity in
 as wide a range of locations as Vanuatu \parencite{}, South America \parencite{}
-and …. Here, languages function to identify in-groups, and as such they mark
-social boundaries \parencite{labov1963social} and define potential marriage
-partners in exogamous societies \parencite{}. These processes presumably happen
-in particular at times where languages split, driving the schism and in turn
-being driven by the exaggerated observation of differences. Lineages with more
-language diversification will thus be more different from the ancestral
-languages than stable languages.
+and …. Languages function to identify in-groups, and as such they mark social
+boundaries \parencite{labov1963social}. In some known cases, they thus serve to
+define potential marriage partners in exogamous societies \parencite{}.
+
+Linguistic processes related to schismogenesis presumably happen in particular
+at times where languages split, driving the schism and in turn being driven by
+the exaggerated observation of differences. Lineages with more language
+diversification will thus be more different from the ancestral languages than
+stable languages.
 
 Quantitative evidence for this effect was supplied by
 \textcite{atkinson2008languages}. Using lexical cognate data, they studied the
@@ -138,12 +140,15 @@ structural features of language.”
 In order to explicitly test this prediction, an explicit model of punctuated
 evolution would be necessary. In addition to contributing to our understanding
 of schismogenesis as a process of cross-cultural interaction, such a model would
-also benefit the field of language phylogeny in general, because it in
-
-The big driver of phylogenetic methods in linguistics has been their ability to
-date language histories based on a relatively small number of broad calibration
-points \parencite{}. Such models would also profit greatly from explicit
-modelling of the punctuated evolution.
+also benefit the field of language phylogeny in general. The big driver of
+phylogenetic methods in linguistics has been their ability to date language
+histories based on a relatively small number of broad calibration points
+\parencite{}. Such models would also profit greatly from explicit modelling of
+the punctuated evolution, for a better estimate of branch rates and thus time
+depths. We present such an explicit “burst clock” model in this article, and
+test it both on simulation data, in order to see whether it is able to
+distinguish between data generated with and without schismogenetic bursts, as
+well as on four well-studied language families.
 
 \paragraph{The structure of the paper} is as follows. In section
 \cref{sec:description}, we describe the Burst Clock model, a generalization of
@@ -185,7 +190,7 @@ available as online supplementary material and through
         \draw[decorate,decoration={brace,mirror,raise=1ex}]
             (i.east) -- node [midway,right=3ex] {$l_i$} (r.east);
     
-     \node at (4, 0) {$e_i = c \dot l_i + b$};
+     \node at (4, 0) {$e_i = c \cdot l_i + b$};
     \end{tikzpicture}
     \caption{The Burst Clock model: }
     \label{fig:burstclock}
@@ -208,11 +213,19 @@ overview).
 % transformed by the development of the molecular clock in the 1960s
 % (Zuckerkandl & Pauling 1962, 1965; Margoliash 1963; Doolittle & Blombäck 1964)
 
-In linguistic phylogenies, the strict clock model and the uncorrelated relaxed
-clock (URC) are the prevalent branch rate models. In addition, analyses that are
+In linguistic phylogenies,
+analyses that are
 concerned only with linguistic subgrouping may use branch rate models that
 produce non-ultrametric trees and do not permit ascribing times to nodes and
-branches. The URC \parencite{drummond2006relaxed} was introduced to linguistic
+branches.
+Otherwise, the strict clock model described above, and the uncorrelated relaxed
+clock (URC) are the prevalent branch rate models.
+
+The URC \parencite{drummond2006relaxed} permits the clock rate $c$ to depend on
+the branch, instead of being constant throughout the tree. Clock
+rates $c_i$ for each branch are drawn from independent, identically distributed random
+variables, so the branch rates are a priori uncorrelated.
+The URC was introduced to linguistic
 phylogenetics by \textcite{kitchen2009bayesian}, and has generally been seen to
 fit the data better than a strict clock
 \parencite{bouckaert2012mapping,honkola2013cultural,lee2013evolution}
@@ -221,8 +234,8 @@ and has found its way into current general advice on linguistic phylogenies
 \parencite{maurits2017beastling,hoffmann2021bayesian}.
 
 The burst clock generalizes the strict clock in a different manner, which is
-orthogonal to and can be combined with relaxed clock models adjusting branch
-rates. In the most mathematically simple case, there are no unobserved splits in
+orthogonal to and can be combined with relaxed clock models.
+In the most mathematically simple case, there are no unobserved splits in
 the tree (all languages survived to be sampled) and every split contributes a
 constant amount of expected changes to the evolutionary history of the
 descendant languages. That is, in addition the parameter $c$, this clock model
@@ -245,7 +258,8 @@ For $b=0$, this models reduces to the strict clock.
 
 In addition, unobserved splits, where a language splits in two, but one of
 the two descendant branches goes extinct before being observed, can contribute
-to language change in this manner. In a birth-death tree model \parencite{}, the rate at which
+to language change in this manner.
+In a birth-death tree model \parencite{gernhard2008conditioned,stadler2010samlingthroughtime,heath2014fossilized}, the rate at which
 languages split (birth rate $\lambda$) is a parameter of the model, either given explicitly or in terms of net diversification rate and turnover. Therefore
 we can estimate the expected number of splits along a branch as $\lambda \cdot
 l_i$. If turnover is low and many tips are sampled, this over-estimates the number of branches, because it does not take into account that the majority of branches are actually observed. For a sampling proportion $q$ and $l$ observed leaves, the number of net splits will be
@@ -271,8 +285,10 @@ This model extends to non-strict clocks in a straightforward manner, where with 
   e_i = (c_i + \lambda (1-q) b) \cdot l_i + b
   \label{eq:relaxed}
 \end{align}
-so a common implementation that wraps an internal clock model and exposes the branch lengths and clock rates is sufficient for
-both the strict burst clock and the relaxed burst clock.
+to obtain a relaxed burst clock.
+The strict burst clock and the relaxed burst clock can both be implemented using one common package, which wraps any internal clock model exposing branch lengths and clock rates.
+We implemented such a burst-clock wrapper as BEAST 2 package.
+The implementation is available from XXX.
 
 \section{Simulation Study}
 Because the relaxed burst clock allows two ways of modifying the expected number
@@ -286,8 +302,8 @@ In order to check this, we implement the following simulation experiment.
 \section{Bayesian phylogenetic inference}
 
 In order to assess whether the burst clock is a useful model for Bayesian
-phylogenetics of languages, we reproduce four studies on Bayesian phylogenetics
-on well-studied language phylogenies:
+phylogenetics of languages, we use it to systematically revisit studies on Bayesian phylogenetics
+on four well-studied language phylogenies:
 Austronesian
 \parencite{gray2009language,greenhill2017evolutionary,greenhill2018population},
 Bantu
@@ -296,10 +312,12 @@ Indo-European
 \parencite{bouckaert2012mapping,chang2015ancestryconstrained,gray2003language,holm2017steppe,rama2018three,willems2016using}
 and
 Sino-Tibetan \parencite{sagart2019dated,zhang2019phylogenetic}.
-We first
-use a state-of-the-art inference model with a non-burst clock, as a baseline
-comparable with published studies, before adding a burst clock to the inference
-procedure. We assess the posterior probability distribution of the added
+We compare
+a state-of-the-art inference model with a non-burst clock, as a baseline
+comparable with published studies, with a burst clock inference
+for both a strict clock and a uncorrelated relaxed clock each, thus
+comparing four different clock models in each case.
+We assess the posterior probability distribution of the added
 parameter $b$, which has a prior that produces a non-burst clock with a
 probability of $\frac{1}{2}$ and a burst clock with a probability also of
 $\frac{1}{2}$, allowing us to directly compare the models based on the posterior
@@ -308,7 +326,9 @@ distribution.
 
 \subsection{Data}
 The data for the phylogenetic analysis is composed of lexical items in comparable concepts (“word list” or “concept list”) annotated
-for cognacy, i.\,e. presumed inheritance from a shared root. Dated trees with meaningful branch lengths and clock data also require calibration points.
+for cognacy, i.\,e. presumed inheritance from a shared root.
+We will discuss the sources of the lexical data for each of the language families below.
+Dated trees with meaningful branch lengths and clock data also require calibration points.
 These are specific to the language families and will also be discussed in the following.
 
 \subsubsection{Austronesian}
@@ -333,7 +353,7 @@ sources for the same variety (judging by name and Glottocode) give rise to diffe
 of at least 85\% of all concepts (189 or more concepts). This results in \countlects{} doculects and \countconcepts{} concepts being included in the data.
 
 \paragraph{Calibrations}
-\newcommand{\abvd}[2]{#1 [\hyperlink{https://abvd.shh.mpg.de/austronesian/language.php?id=#2}{#2}]}
+\newcommand{\abvd}[2]{#1 [\href{https://abvd.shh.mpg.de/austronesian/language.php?id=#2}{#2}]}
 % gray2009language: clades not explicitly tied to calibrations, only description needing interpretation in Table S3
 % greenhill2018population: No calibrations
 % greenhill2017: To calibrate these clocks, we incorporated historical evidence of language divergence times as described by Gray et al. (50). We implemented five calibrations on the tree using normally distributed priors on the node heights. These calibrations were the following: (i) Proto-Oceanic (mean of 3,300 y, SD = 100 y), (ii) Proto-Central Pacific (mean of 3,000 y, SD = 100), (iii) Proto-Malayo-Polynesian (mean of 4,000 y, SD = 250), (iv) Proto-Micronesian (mean of 2,000 y, SD = 100), and (v) Proto-Austronesian (mean of 5,200 y, SD = 300).
@@ -516,8 +536,13 @@ those XML files themselves and the raw log file outputs of the BEAST runs are
 available in the supplementary material.
 
 \section{Results}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{supplement/analysis/runtimes.png}
+  \caption{Runtimes of different analyses}
+\end{figure}
 We find a vastly different time to apparent convergence for the different
-analyses. While the strict clock for Sinotibetan converged within 50 hours,
+analyses, see \cref{fig:runtimes}. While the strict clock for Sinotibetan converged within 50 hours,
 several runs for Austronesian and Bantu with relaxed clock were not completely
 converged even after more than 2000 hours. Despite using the optimized relaxed clock
 implementation by \textcite{orc}, the runs for Austronesian with relaxed clock
@@ -530,7 +555,7 @@ We can therefore not accurately describe the tree height and mean clock rate of
 the relaxed Austronesian runs. All other parameters of these runs however appear
 converged and uncorrelated with tree height, so they allow valid analysis.
 All other runs seem to have converged; some Bantu relaxed clock runs achieve
-effective sample sizes of 200 for all parameters only for burnins >> 10\%.
+effective sample sizes of 200 for all parameters only for burnins $\gg 10\%$.
 
 \begin{figure}
   \centering
@@ -612,12 +637,22 @@ run log files including tree posterior samples) is available in the
 supplementary material.
 
 \section{Discussion}
-The burst clock is the preferred model. By far.
 
-Not only is the burst clock the preferred model, but it can also contribute to
-better mixing. (No guarantee!)
+Our phylogenetic analysis for well-studied lanugage families shows that the
+burst clock is the preferred model. This indicates that schismogenesis, or
+related processes discussed below, play a major role in the evolution of
+languages. As our simulation study shows, phylogenetic inference is abe to tease
+apart the contribution of these processes from rate heterogeneity more
+generally.
 
-On the topic of mixing, what's the problem with those relaxed clocks? Did we do
+In some, but not all of our analyses, adding the burst clock did not only
+improve the results, but also the mixing behaviour of the MCMC. However, this
+effect is not pronounced where it would matter most: We observe that for
+Austronesian and Bantu data, the relaxed clock mixes very badly, despite using
+recent improvements to the implementation which were supposed to improve mixing
+behavior.
+
+strong when the , what's the problem with those relaxed clocks? Did we do
 something wrong, or should this cast doubt on many studies using relaxed clocks?
 
 Our literate programming template is nice, we encourage other researchers to
