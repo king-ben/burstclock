@@ -151,9 +151,9 @@ distinguish between data generated with and without schismogenetic bursts, as
 well as on four well-studied language families.
 
 \paragraph{The structure of the paper} is as follows. In section
-\cref{sec:description}, we describe the Burst Clock model, a generalization of
+\cref{s:description}, we describe the Burst Clock model, a generalization of
 the Strict Clock. We provide and describe a BEAST2 \parencite{drummond2015bayesian} package
-implementing this clock. In \cref{sec:simulation}, we show using a simulation
+implementing this clock. In \cref{s:simulation}, we show using a simulation
 study that the Burst Clock model can distinguish between data generated with
 evolutionary bursts at the languages splits and those without, and that
 a clock model without bursts mis-estimates tree parameters when applied to data
@@ -161,17 +161,17 @@ generated with bursts.
 We then describe a case study using Bayesian phylogenetic inference
 with a burst clock on
 lexical data of Austronesian, Bantu, Indo-European, and Sino-Tibetan data in
-\cref{sec:lexical}.
+\cref{s:lexical}.
 % In \cref{s:domains} we expand the Indo-European model to incorporate
 % phonological and grammatical features.
 We present our results in
-\cref{sec:results}. In \cref{sec:discussion}, we discuss the results and formulate our conclusions.
+\cref{s:results}. In \cref{s:discussion}, we discuss the results and formulate our conclusions.
 
 Data and methods used to produce the results and figures shown in this paper are
 available as online supplementary material and through
 \url{https://osf.io/??????????????????}.
 
-\section{Introducing the Burst Clock}\label{sec:description}
+\section{Introducing the Burst Clock}\label{s:description}
 \begin{figure}
     \centering
       \begin{tikzpicture}
@@ -192,7 +192,7 @@ available as online supplementary material and through
      \node at (4, 0) {$e_i = c \cdot l_i + b$};
     \end{tikzpicture}
     \caption{The Burst Clock model: }
-    \label{fig:burstclock}
+    \label{f:burstclock}
 \end{figure}
 In a strict clock,
 a constant rate $c$ maps the length $l_i$ of the branch leading to node $i$
@@ -289,7 +289,7 @@ We implemented such a burst-clock wrapper as BEAST 2 package.
 The implementation is available from XXX.
 
 \section{Simulation Study}
-\label{sec:simulation}
+\label{s:simulation}
 Because the relaxed burst clock allows two ways of modifying the expected number
 of changes per branch to match the data, it is not clear a priori that a burst
 clock and a relaxed clock can be distinguished, respectively that the
@@ -299,7 +299,7 @@ In order to check this, we implement the following simulation experiment.
 
 % DESCRIBE
 \section{Inference based on lexical data}
-\label{sec:lexical}
+\label{s:lexical}
 
 In order to assess whether the burst clock is a useful model for Bayesian
 phylogenetics of languages, we use it to systematically revisit studies on Bayesian phylogenetics
@@ -475,7 +475,7 @@ The additional node calibrations from \textcite{zhang2019phylogenetic} are eithe
 % Pumi Normally distributed with mean 750.0 and 50.0 standard deviation Pumi people migarated into the regions of Ninglang, Lijiang, Weixi and Lanpin from 13th century.
 % Yi Normally distributed with mean 1500.0 and 100.0 standard deviation The expansion of Yi people to northeast and south Yunnan, and northwest Guizhou dated to 3th century. About in the eighth and ninth century, a kindom called Nazhao was ruled by Yi (Lolo) speakers but the people also included Bai language.
 
-\section{Methods and Models}\label{sec:methods}
+\section{Methods and Models}\label{s:methods}
 We infer a dated language phylogeny for each of the datasets described above.
 The detailed model description, in the shape of an XML template file in the
 style of literate programming \parencite{knuth1984literate}, can be found in the supplement,
@@ -534,20 +534,20 @@ The Python source code to generate the BEAST2 configuration files, as well as
 those XML files themselves and the raw log file outputs of the BEAST runs are
 available in the supplementary material.
 
-\section{Results}\label{sec:results}
+\section{Results}\label{s:results}
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{supplement/analysis/runtimes.png}
-  \caption{Runtimes of different analyses}
+  \caption{Runtimes of different analyses}\label{f:runtimes}
 \end{figure}
 We find a vastly different time to apparent convergence for the different
-analyses, see \cref{fig:runtimes}. While the strict clock for Sinotibetan converged within 50 hours,
-several runs for Austronesian and Bantu with relaxed clock were not completely
-converged even after more than 2000 hours. Despite using the optimized relaxed clock
+analyses, see \cref{f:runtimes}. While the strict clock for Sinotibetan converged within 50 hours,
+several runs for Austronesian and Bantu with relaxed clock did not meet our
+stopping criteria after more than 2500 hours. Despite using the optimized relaxed clock
 implementation by \textcite{orc}, the runs for Austronesian with relaxed clock
 (with or without bursts) regularly jumped between two regions in the parameter
 space, one containing trees with a mean height of ca. 4400 years and one with a
-mean tree heigh above 5000 years. Following \parencite{brown2018behavior,???}, we cannot
+mean tree heigh above 5000 years. Following \textcite{brown2018behavior}, we cannot
 assume that the posterior sample of these chains is informative about the
 model's relative posterior probability for these two different parameter regions.
 We can therefore not accurately describe the tree height and mean clock rate of
@@ -588,9 +588,6 @@ rule-of-thumb of 20\% over 1000 years, but varying widely around it, with
 Austronesian showing much faster change and Sinotibetan much slower. With the
 exception of Sinotibetan, the relaxed clock with bursts infers the lowest
 lexical replacement rates and the strict clock without bursts the highest rates.
-Because the bursts are not contributing to this estimate, they compensate for
-the lower rate of change; so it is surprising that this is not seen for
-Sinotibetan.
 
 \begin{figure}
   \centering
@@ -614,7 +611,9 @@ Sinotibetan.
   \label{f:peryear}
 \end{figure}
 
-The average contribution of a language split varies between $...$ and $...$
+\input{supplement/analysis/stats.tex}
+The average contribution of a language split varies between $\minx$ (5\%
+quantile of \minn) and $\maxx$ (95\% quantile of \maxn)
 expected changes per cognate class. Comparing this with the clock rate, we get
 that around the time of a split, languages change about as much as otherwise in
 about 100 to 150 years of independent evolution. The distributions of the
@@ -626,15 +625,20 @@ select a model without bursts. The prior probability mass was equally distribute
 between no bursts and bursts. Despite this prior, all samples of the
 Austronesian, Bantu, and Indoeuropean analysis have a positive value for bursts,
 so the Bayes factor in favour of the burst clock is the effective sample size of
-the burst parameter in these models (between $...$ and $...$). For Sinotibetan,
-the posterior probability of the Burst clock is $...$ as much as the clock
+the burst parameter in these models (between $\minessx$ for \minessn and
+$\maxessx$ for \maxessn). For Sinotibetan,
+the posterior probability of the Burst clock is at least $\worstburst$ as much as the clock
 without bursts.
 
 The complete setup (data, tools to generate the Beast XMLs, Beast XML files, and
 run log files including tree posterior samples) is available in the
 supplementary material.
 
-\section{Discussion}\label{sec:discussion}
+\section{Discussion}\label{s:discussion}
+%Because the bursts are not contributing to this estimate, they compensate for
+%the lower rate of change; so it is surprising that this is not seen for
+%Sinotibetan. Which does have a different structure of calibrations.
+
 
 Our phylogenetic analysis for well-studied lanugage families shows that the
 burst clock is the preferred model. This indicates that schismogenesis, or
