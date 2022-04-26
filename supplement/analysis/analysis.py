@@ -178,6 +178,8 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
                     + ("(relaxed" if r else "(strict")
                     + (" with bursts)" if b else ", no bursts)")
                 ].append(runtime * log["n_samples"][-1] / 1_000_000)
+            if not log:
+                raise Unconverged()
             if b:
                 summaries[
                     "Years per split " + ("(relaxed)" if r else "(strict)")
@@ -262,7 +264,7 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
             "relaxed\nwith bursts",
         ],
     )
-    plt.ylim(bottom=0, top=35)
+    plt.ylim(bottom=0, top=38)
     plt.savefig(
         Path(__file__).parent / f"{basename}_replacement.png", bbox_inches="tight"
     )
@@ -300,15 +302,25 @@ for f, family in enumerate(FAMILIES):
     if s["Changes per split (strict)"][2] > max_95:
         max_95 = s["Changes per split (strict)"][2]
         max_95_run = f"{family} (strict)"
-    if numpy.min(s["Changes per split (strict)"]) > 0:
-        if s["ESS of burst parameter (strict)"] < min_ess:
-            min_ess = s["ESS of burst parameter (strict)"]
-            min_ess_run = f"{family} (strict)"
+    if numpy.min(s["Bursts (relaxed)"]) == 1:
         if s["ESS of burst parameter (relaxed)"] > max_ess:
             max_ess = s["ESS of burst parameter (relaxed)"]
             max_ess_run = f"{family} (relaxed)"
+        if s["ESS of burst parameter (relaxed)"] < min_ess:
+            min_ess = s["ESS of burst parameter (relaxed)"]
+            min_ess_run = f"{family} (relaxed)"
     else:
-        for p in itertools.chain(s["Bursts (relaxed)"], s["Bursts (strict)"]):
+        for p in s["Bursts (relaxed)"]:
+            p_bursts.append(p / (1 - p))
+    if numpy.min(s["Bursts (strict)"]) == 1:
+        if s["ESS of burst parameter (strict)"] > max_ess:
+            max_ess = s["ESS of burst parameter (strict)"]
+            max_ess_run = f"{family} (strict)"
+        if s["ESS of burst parameter (strict)"] < min_ess:
+            min_ess = s["ESS of burst parameter (strict)"]
+            min_ess_run = f"{family} (strict)"
+    else:
+        for p in s["Bursts (strict)"]:
             p_bursts.append(p / (1 - p))
 
     runtimes.extend(
@@ -346,9 +358,9 @@ with (Path(__file__).parent / "stats.tex").open("w") as stats:
     print(r"\newcommand{\minn}{%s}" % min_05_run, file=stats)
     print(r"\newcommand{\maxx}{%f}" % max_95, file=stats)
     print(r"\newcommand{\maxn}{%s}" % max_95_run, file=stats)
-    print(r"\newcommand{\minessx}{%f}" % min_ess, file=stats)
+    print(r"\newcommand{\minessx}{%0.0f}" % min_ess, file=stats)
     print(r"\newcommand{\minessn}{%s}" % min_ess_run, file=stats)
-    print(r"\newcommand{\maxessx}{%f}" % max_ess, file=stats)
+    print(r"\newcommand{\maxessx}{%0.0f}" % max_ess, file=stats)
     print(r"\newcommand{\maxessn}{%s}" % max_ess_run, file=stats)
-    print(r"\newcommand{\worstburst}{%f}" % numpy.min(p_bursts), file=stats)
+    print(r"\newcommand{\worstburst}{%0.1f}" % numpy.min(p_bursts), file=stats)
 
