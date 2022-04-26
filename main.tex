@@ -327,7 +327,7 @@ distribution.
 
 \subsection{Data}
 The data for the phylogenetic analysis is composed of lexical items in comparable concepts (“word list” or “concept list”) annotated
-for cognacy, i.\,e. presumed inheritance from a shared root.
+for cognacy, i.\,e.\ presumed inheritance from a shared root.
 We will discuss the sources of the lexical data for each of the language families below.
 Dated trees with meaningful branch lengths and clock data also require calibration points.
 These are specific to the language families and will also be discussed in the following.
@@ -361,9 +361,9 @@ of at least 85\% of all concepts (189 or more concepts). This results in \countl
 Following \textcite{greenhill2017evolutionary}, we calibrate five nodes using normally
 distributed priors. We supplement this with age constraints taken from \textcite[Table S3]{gray2009language}. There, we interpret the ranges given there as $2\sigma$ intervals of a normal distribution. This leads to the following node calibrations, sorted by their mean. We do not constrain the languages with these calibrations to be clades: a given calibrated MRCA node may be ancestral to more languages than explicitly listed.
 \begin{itemize}
-\item ‘Proto-Austronesian (mean of 5,200 y, SD = 300)’, i.\,e. on the root of our tree;
-\item ‘Proto-Malayo-Polynesian (mean of 4,000 y, SD = 250)’, i.\,e. on the most recent common ancestor (MRCA) of all languages inside the Glottolog family \glot{Malayo-Polynesian}{mala1545};
-\item ‘Proto-Oceanic (mean of 3,300 y, SD = 100 y)’, i.\,e. on the MRCA of \glot{Oceanic}{ocea1241};
+\item ‘Proto-Austronesian (mean of 5,200 y, SD = 300)’, i.\,e.\ on the root of our tree;
+\item ‘Proto-Malayo-Polynesian (mean of 4,000 y, SD = 250)’, i.\,e.\ on the most recent common ancestor (MRCA) of all languages inside the Glottolog family \glot{Malayo-Polynesian}{mala1545};
+\item ‘Proto-Oceanic (mean of 3,300 y, SD = 100 y)’, i.\,e.\ on the MRCA of \glot{Oceanic}{ocea1241};
 \item \glot{Central Pacific}{cent2060} $\mu=3000, \sigma=100$;
 \item \glot{Micronesian}{micr1243} $\mu=2000, \sigma=100$;
 \item \glot{Malayo-Chamic}{nort3170}: $\mu=1500, \sigma=250$.
@@ -418,29 +418,28 @@ that dataset over the alternatives considered, so we base our analysis on that d
 \paragraph{Calibrations}
 Following the evidence presented by \textcite[Tables 7 and 12]{chang2015ancestryconstrained}, we implement the following node and tip calibrations.
 \begin{itemize}
-\item Germanic (i.\,e. the MRCA of Gothic, Old West Norse, Icelandic, Faroese, Norwegian, Swedish, Danish, Old English, English, Frisian, Old High German, German, Luxembourgish, Swiss German, Dutch, Flemish and Afrikaans): Uniform between 2250~yBP and 20000~yBP;
-\item Romance (i.\,e. the MRCA of Latin, Nuorese, Cagliari, Romanian, Catalan, Portuguese, Spanish, French, Provencal, Walloon, Ladin, Romansh, Friulian and Italian): Uniform between 1750~yBP and 20000~yBP;
-\item Scandinavian (i.\,e. the MRCA of Old West Norse, Icelandic, Faroese, Norwegian, Swedish and Danish): Uniform between 1500~yBP and 20000~yBP;
-\item Slavic (i.\,e. the MRCA of Czech, Slovak, Polish, Upper Sorbian, Ukrainian, Belarusian, Russian, Slovenian, Macedonian, Bulgarian, Serbian and Old Church Slavic): Uniform between 1500~yBP and 20000~yBP;
-\item East Baltic (i.\,e. the MRCA of Lithuanian and Latvian): Uniform between 1300~yBP and 20000~yBP;
-\item British Celtic (i.\,e. the MRCA of Welsh, Breton and Cornish): Uniform between 1250~yBP and 20000~yBP;
-\item the MRCA of Irish and Scots Gaelic: Uniform between 1050~yBP and 20000~yBP;
-\item the MRCA of Tajik and Persian: Uniform between 750~yBP and 20000~yBP;
-
-        \item Hittite: $\mu=3400, \sigma=100$;
-        \item Vedic Sanskrit: $\mu=3250, \sigma=250$;
-        \item Avestan: $\mu=2500, \sigma=50$;
-        \item Ancient Greek: $\mu=2450, \sigma=50$;
-        \item Latin: $\mu=2150, \sigma=50$;
-        \item Gothic: $\mu=1650, \sigma=25$;
-        \item Old High German: $\mu=1150, \sigma=50$;
-        \item Old English: $\mu=1000, \sigma=50$;
-        \item Old West Norse: $\mu=800, \sigma=50$;
-        \item Classical Armenian: $\mu=1550, \sigma=50$;
-        \item Tocharian B: $\mu=1350, \sigma=150$;
-        \item Old Irish: $\mu=1200, \sigma=100$;
-        \item Cornish: $\mu=300, \sigma=100$;
-        \item Old Church Slavic: $\mu=1000, \sigma=50$;
+  \item Germanic (i.\,e.\ the MRCA of Gothic, Old West Norse, Icelandic, Faroese, Norwegian, Swedish, Danish, Old English, English, Frisian, Old High German, German, Luxembourgish, Swiss German, Dutch, Flemish and Afrikaans): Uniform between 2250~yBP and 20000~yBP;
+  \item Romance (i.\,e.\ the MRCA of Latin, Nuorese, Cagliari, Romanian, Catalan, Portuguese, Spanish, French, Provencal, Walloon, Ladin, Romansh, Friulian and Italian): Uniform between 1750~yBP and 20000~yBP;
+  \item Scandinavian (i.\,e.\ the MRCA of Old West Norse, Icelandic, Faroese, Norwegian, Swedish and Danish): Uniform between 1500~yBP and 20000~yBP;
+  \item Slavic (i.\,e.\ the MRCA of Czech, Slovak, Polish, Upper Sorbian, Ukrainian, Belarusian, Russian, Slovenian, Macedonian, Bulgarian, Serbian and Old Church Slavic): Uniform between 1500~yBP and 20000~yBP;
+  \item East Baltic (i.\,e.\ the MRCA of Lithuanian and Latvian): Uniform between 1300~yBP and 20000~yBP;
+  \item British Celtic (i.\,e.\ the MRCA of Welsh, Breton and Cornish): Uniform between 1250~yBP and 20000~yBP;
+  \item the MRCA of Irish and Scots Gaelic: Uniform between 1050~yBP and 20000~yBP;
+  \item the MRCA of Tajik and Persian: Uniform between 750~yBP and 20000~yBP;
+  \item Hittite: $\mu=3400, \sigma=100$;
+  \item Vedic Sanskrit: $\mu=3250, \sigma=250$;
+  \item Avestan: $\mu=2500, \sigma=50$;
+  \item Ancient Greek: $\mu=2450, \sigma=50$;
+  \item Latin: $\mu=2150, \sigma=50$;
+  \item Gothic: $\mu=1650, \sigma=25$;
+  \item Old High German: $\mu=1150, \sigma=50$;
+  \item Old English: $\mu=1000, \sigma=50$;
+  \item Old West Norse: $\mu=800, \sigma=50$;
+  \item Classical Armenian: $\mu=1550, \sigma=50$;
+  \item Tocharian B: $\mu=1350, \sigma=150$;
+  \item Old Irish: $\mu=1200, \sigma=100$;
+  \item Cornish: $\mu=300, \sigma=100$;
+  \item Old Church Slavic: $\mu=1000, \sigma=50$;
 \end{itemize}
 
 \subsubsection{Sino-Tibetan}
@@ -477,8 +476,7 @@ The additional node calibrations from \textcite{zhang2019phylogenetic} are eithe
 % Pumi Normally distributed with mean 750.0 and 50.0 standard deviation Pumi people migarated into the regions of Ninglang, Lijiang, Weixi and Lanpin from 13th century.
 % Yi Normally distributed with mean 1500.0 and 100.0 standard deviation The expansion of Yi people to northeast and south Yunnan, and northwest Guizhou dated to 3th century. About in the eighth and ninth century, a kindom called Nazhao was ruled by Yi (Lolo) speakers but the people also included Bai language.
 
-\section{Methods and Models}
-\label{sec:methods}
+\section{Methods and Models}\label{sec:methods}
 We infer a dated language phylogeny for each of the datasets described above.
 The detailed model description, in the shape of an XML template file in the
 style of literate programming \parencite{knuth1984literate}, can be found in the supplement,
@@ -510,7 +508,7 @@ We test each dataset with both a strict and a relaxed clock, in each case
 comparing the results without punctuated bursts with the results
 using a burst version of the clock. The prior on the number of changes per split for the 
 burst clocks is estimated as follows. We aim for a broad prior centred around $b=0$,
-where parameter values less than 0 are interpreted as probability mass in the point $b=0$ (i.\,e. no punctuated evolution).
+where parameter values less than 0 are interpreted as probability mass in the point $b=0$ (i.\,e.\ no punctuated evolution).
 Loss rates are estimated around $5.8 × 10^{-4}$ \parencite[405]{pagel2000history}, which
 corresponds to a clock rate of very roughly $2 \cdot 4\% \cdot 5.8 × 10^{-4}=4.64\times 10^{-5}$
 if 200 concepts are attested by a total of 5000 cognate sets and thus the frequency of absences is around 4\%.
@@ -537,8 +535,7 @@ The Python source code to generate the BEAST2 configuration files, as well as
 those XML files themselves and the raw log file outputs of the BEAST runs are
 available in the supplementary material.
 
-\section{Results}
-\label{sec:results}
+\section{Results}\label{sec:results}
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{supplement/analysis/runtimes.png}
@@ -639,8 +636,7 @@ The complete setup (data, tools to generate the Beast XMLs, Beast XML files, and
 run log files including tree posterior samples) is available in the
 supplementary material.
 
-\section{Discussion}
-\label{sec:discussion}
+\section{Discussion}\label{sec:discussion}
 
 Our phylogenetic analysis for well-studied lanugage families shows that the
 burst clock is the preferred model. This indicates that schismogenesis, or
