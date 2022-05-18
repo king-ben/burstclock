@@ -1,14 +1,17 @@
-\documentclass[a4paper,12pt]{scrartcl}
+%% Author_tex.tex
+%% V1.0
+%% 2012/13/12
+%% developed by Techset
+%% 
+%% This file describes the coding for rsproca.cls
 
-% Title page
-\usepackage{authblk}
+\documentclass[]{rsos}%%%%where rsos is the template name
+
+%%%% *** Do not adjust lengths that control margins, column widths, etc. ***
 
 % General style
-\usepackage{fontspec}
-\setmainfont[BoldFont = GenBasB.ttf]{Gentium Plus}
-\setsansfont{DejaVu Sans}
 \usepackage{newunicodechar}
-\newunicodechar{→}{\fontspec{Gentium Plus}→}
+%\newunicodechar{→}{\fontspec{Gentium Plus}→}
 
 % Formulas
 \usepackage{amsmath}
@@ -20,12 +23,6 @@
 \usepackage[capitalize]{cleveref}
 \Crefname{appsec}{Appendix}{Appendices}
 \crefname{appsec}{appendix}{appendices}
-
-% Draft style
-\usepackage{setspace}
-\setstretch{1.5}
-\usepackage[top=2.5cm, bottom=2.5cm, left=2.2cm, right=3.5cm]{geometry}
-\usepackage{lineno} 
 
 % Figures
 \usepackage{subcaption}
@@ -66,19 +63,27 @@
 \usepackage{minted}
 \setminted{fontsize=\tiny,baselinestretch=0.9}
 
+\begin{document}
+
 \title{Clocks with bursts: Phylogenetic inference of schismogenesis in language evolution}
 \date{\today}
-\author[1]{Gereon A. Kaiping}
-\author[1]{Nico Neureiter}
-\affil[1]{Geographic Information Science Center, Universität Zürich, CH}
+\author{
+  Gereon A. Kaiping$^{1}$,
+  Nico Neureiter$^{1}$}
+\address{$^{1}$Geographic Information Science Center, Universität Zürich, CH}
+\subject{Linguistics, Bioinformatics}
+\keywords{Language Evolution, Phylogenetics, Schismogenesis}
 
-\begin{document}
-\maketitle
+\corres{Gereon A. Kaiping\\
+  \email{gereon.kaiping@geo.uzh.ch}}
+
+% Aim: 200 words or less
 \begin{abstract}
 When a language splits into different speaker communities, the speed of
-language change increases. \Textcite{atkinson2008languages} showed that a
-significant proportion of up to a third of lexical disparity can be attributed
+language change increases such that a
+significant proportion of lexical disparity can be attributed
 to the splitting events, potentially arising from linguistic founder effects or
+“schismogenesis”, i.\,e.
 the exaggeration of language differences to mark social boundaries. Given the
 prevalence with which phylogenetic models in linguistics are used to date
 language families, it is surprising that this result has not found its way back
@@ -91,11 +96,11 @@ Bantu, Indo-European, and Sino-Tibetan~– and find that the Burst Clock fits th
 data better than either a Strict Clock or an Uncorrelated Relaxed Clock, and on
 average a binary split is associated with XXX lexical changes in the basic
 vocabulary. This is equivalent to the amount of lexical change a language
-accumulates in about 100 years of independent evolution. Similar bursts of evolution
-occur also at initial niche settlement in biology, so the model may also be
-interesting in that context.
+accumulates in about 100 years of independent evolution.
 \end{abstract}
 
+
+\begin{fmtext}
 \section{Introduction}
 
 Linguistic differences, in particular those apparent to speakers, are often
@@ -103,7 +108,11 @@ exaggerated among different social groups to mark ethnic boundaries. This
 process, dubbed schismogenesis by \textcite{bateson1935culture} and esoterogeny
 by \textcite{thurston1987processes}, is thought to drive language disparity in
 as wide a range of locations as Vanuatu \parencite{???}, South America \parencite{???}
-and \parencite{???}. Languages function to identify in-groups, and as such they mark social
+and \parencite{???}.
+\end{fmtext}
+\maketitle
+
+Languages function to identify in-groups, and as such they mark social
 boundaries \parencite{labov1963social}. In some known cases, they thus serve to
 define potential marriage partners in exogamous societies \parencite{???}.
 
