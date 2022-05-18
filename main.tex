@@ -68,8 +68,8 @@
 
 \title{Clocks with bursts: Phylogenetic inference of schismogenesis in language evolution}
 \date{\today}
-\author[1]{Nico Neureiter}
 \author[1]{Gereon A. Kaiping}
+\author[1]{Nico Neureiter}
 \affil[1]{Geographic Information Science Center, Universität Zürich, CH}
 
 \begin{document}
@@ -83,8 +83,8 @@ the exaggeration of language differences to mark social boundaries. Given the
 prevalence with which phylogenetic models in linguistics are used to date
 language families, it is surprising that this result has not found its way back
 into the clock models used in phylogenetic inferences, which tend to focus
-instead on per-branch variation. Here, we develop a simple
-extension to the Strict Clock model in BEAST2 to
+instead on per-branch variation. Here, we develop an
+extension to existing phylogenetic clock models in BEAST2 to
 account for bursts at language splits. We use simulation studies and also fit
 the new model to four major language families of the world –~Austronesian,
 Bantu, Indo-European, and Sino-Tibetan~– and find that the Burst Clock fits the
@@ -147,9 +147,9 @@ test it both on simulation data, in order to see whether it is able to
 distinguish between data generated with and without schismogenetic bursts, as
 well as on four well-studied language families.
 
-\paragraph{The structure of the paper} is as follows. In section
+\paragraph{The structure of the paper} is as follows. In
 \cref{s:description}, we describe the Burst Clock model, a generalization of
-the Strict Clock. We provide and describe a BEAST2 \parencite{drummond2015bayesian} package
+existing phylogenetic clock models. We provide and describe a BEAST2 \parencite{drummond2015bayesian} package
 implementing this clock. In \cref{s:simulation}, we show using a simulation
 study that the Burst Clock model can distinguish between data generated with
 evolutionary bursts at the languages splits and those without, and that
@@ -228,10 +228,9 @@ fit the data better than a strict clock
 and has found its way into current general advice on linguistic phylogenies
 \parencite{maurits2017beastling,hoffmann2021bayesian}.
 
-The burst clock generalizes the strict clock in a different manner, which is
-orthogonal to and can be combined with relaxed clock models.
-In the most mathematically simple case, there are no unobserved splits in
-the tree (all languages survived to be sampled) and every split contributes a
+The burst clock generalizes the strict clock in a different manner, which can be combined with relaxed clock models.
+%In the most mathematically simple case, there are no unobserved splits in the tree (all languages survived to be sampled) and 
+At every split, the burst clock contributes a
 constant amount of expected changes to the evolutionary history of the
 descendant languages. That is, in addition the parameter $c$, this clock model
 has another non-negative parameter $b$ and the expected number of changes is
@@ -627,7 +626,7 @@ $\maxessx$ for \maxessn{}). For Sino-Tibetan,
 the posterior probability of the Burst clock is at least $\worstburst$ as much as the clock
 without bursts.
 
-The complete analysis (data, tools to generate the Beast XMLs, Beast XML files,
+The complete analysis (data, tools to generate the BEAST XML files, generated XML files,
 run log files including tree posterior samples, and analysis procedure) is
 available in the supplementary material.
 
@@ -639,9 +638,9 @@ available in the supplementary material.
 
 Our phylogenetic analysis for well-studied language families shows that the
 burst clock is clearly the preferred model in all language families, and
-independent of whether evolution a branch is assumed to follow a strict or
+irrespective of whether evolution across branches is assumed to follow a strict or
 relaxed clock.
-As our simulation study shows, phylogenetic inference is abe to tease
+As our simulation study shows, phylogenetic inference is able to tease
 apart the contribution of schismogenesis, or
 related processes discussed below, from more general rate heterogeneity.
 This indicates that these processes play a major role in the evolution of
@@ -672,7 +671,7 @@ In quantitative diachronic typology, it is necessary to work with cross-family
 data, so unified approaches using the same setup for different families, or even
 hierarchical models connected by shared hyperpriors, have sometimes been
 employed \parencite{dunn2011evolved,jager2021phylogenetic}. However, for lexical
-data, individul language families are often studied by separate groups of
+data, individual language families are often studied by separate groups of
 researchers with different model details and there is little indication
 (we are not aware of any other studies) that
 models are re-used and compared between different language families.
