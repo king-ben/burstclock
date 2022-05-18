@@ -178,6 +178,11 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
                     + ("(relaxed" if r else "(strict")
                     + (" with bursts)" if b else ", no bursts)")
                 ].append(runtime * log["n_samples"][-1] / 1_000_000)
+                summaries[
+                    "Tree height "
+                    + ("(relaxed" if r else "(strict")
+                    + (" with bursts)" if b else ", no bursts)")
+                ] = log["TreeHeight"]
             if not log:
                 raise Unconverged()
             if b:
@@ -186,13 +191,20 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
                 ] = log["Years"]
                 summaries[
                     "Changes per split " + ("(relaxed)" if r else "(strict)")
-                ] = numpy.quantile([x for x in log["perSplit"] if x>0], [0.05, 0.5, 0.95])
+                ] = numpy.quantile(
+                    [x for x in log["perSplit"] if x > 0], [0.05, 0.5, 0.95]
+                )
                 summaries[
                     "ESS of burst parameter " + ("(relaxed)" if r else "(strict)")
                 ] = numpy.min(log["perSplit_ess"])
                 summaries["Bursts " + ("(relaxed)" if r else "(strict)")] = [
                     numpy.mean(numpy.array(log["perSplit"]) > 0)
                 ]
+            if r:
+                summaries[
+                    "Standard deviation of the clock relaxation "
+                    + ("(with bursts)" if b else "(no bursts)")
+                ] = log["RelaxedClockSigma"]
             summaries[
                 "Loss per 100 years "
                 + ("(relaxed" if r else "(strict")
@@ -220,6 +232,32 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
     plt.show()
 
     plt.figure(figsize=(6, 4))
+    plt.title("Tree height")
+    plt.boxplot(
+        [
+            summaries["Tree height (strict, no bursts)"],
+            summaries["Tree height (relaxed, no bursts)"],
+            summaries["Tree height (strict with bursts)"],
+            summaries["Tree height (relaxed with bursts)"],
+        ],
+        showfliers=False,
+        widths=0.7,
+    )
+    plt.xticks(
+        [1, 2, 3, 4],
+        [
+            "strict,\nno bursts",
+            "relaxed,\nno bursts",
+            "strict\nwith bursts",
+            "relaxed\nwith bursts",
+        ],
+    )
+    plt.ylim(bottom=0)
+    plt.savefig(
+        Path(__file__).parent / f"{basename}_treeheight.png", bbox_inches="tight"
+    )
+
+    plt.figure(figsize=(6, 4))
     plt.boxplot(
         [
             summaries["Clock rate (strict, no bursts)"],
@@ -236,6 +274,28 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
             "strict,\nno bursts",
             "relaxed,\nno bursts",
             "strict\nwith bursts",
+            "relaxed\nwith bursts",
+        ],
+    )
+    plt.ylim(bottom=0)
+    plt.savefig(
+        Path(__file__).parent / f"{basename}_clockrates.png", bbox_inches="tight"
+    )
+
+    plt.figure(figsize=(6, 4))
+    plt.title("Standard deviation of the clock relaxation")
+    plt.boxplot(
+        [
+            summaries["Standard deviation of the clock relaxation (with bursts)"],
+            summaries["Standard deviation of the clock relaxation (no bursts)"],
+        ],
+        showfliers=False,
+        widths=0.7,
+    )
+    plt.xticks(
+        [1, 2],
+        [
+            "relaxed,\nno bursts",
             "relaxed\nwith bursts",
         ],
     )
@@ -363,4 +423,3 @@ with (Path(__file__).parent / "stats.tex").open("w") as stats:
     print(r"\newcommand{\maxessx}{%0.0f}" % max_ess, file=stats)
     print(r"\newcommand{\maxessn}{%s}" % max_ess_run, file=stats)
     print(r"\newcommand{\worstburst}{%0.1f}" % numpy.min(p_bursts), file=stats)
-
