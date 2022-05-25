@@ -1,0 +1,30 @@
+[xml]
+clock_model = """
+	<branchRateModel id="clock" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockRate"/>
+"""
+parameters = """
+        <stateNode id="clockRate" spec="RealParameter" estimate="true" lower="0.0" value="{{clock_rate}}" />
+"""
+priors = """
+            <prior id="clockRatePrior" name="distribution" x="@clockRate">
+                <!--Uniform id="Uniform.clockRate" name="distr" lower="0.2" upper="2.0"/-->
+                <Gamma id="Gamma.clockRate" mode="ShapeScale" name="distr" alpha="8.0" beta="0.125"/>
+            </prior>
+"""
+operators = """
+    <operator id="clockRateScaler" spec="ScaleOperator" parameter="@clockRate" scaleFactor="0.9" weight="10.0"/>
+"""
+priorOperators = """
+    <operator id="clockRateScaler" spec="ScaleOperator" parameter="@clockRate" scaleFactor="0.25" weight="10.0"/>
+"""
+
+logs = """
+        <log idref="clockRate"/>
+"""
+
+groundTruthLogs = """
+        <log id="sim.clockRate" spec="RealParameter" value="{{clockRate}}"/>
+"""
+
+[defaults]
+clock_rate=1.0
