@@ -94,13 +94,19 @@ def main_plots():
     )
 
     # Column + row titles
-    for lbl in ['height_lbl', 'rate_lbl', 'burst_lbl', 'bt_burst']: axes[lbl].axis('off')
+    for lbl in ['height_lbl', 'rate_lbl', 'burst_lbl']: 
+        axes[lbl].axis('off')
+
     axes['height_lbl'].text(0.0, 0.5, 'root height', rotation=90, va='center', ha='center', **SUBPLOT_TITLE_ARGS)
     axes['rate_lbl'].text(0.0, 0.5, 'clock rate', rotation=90, va='center', ha='center', **SUBPLOT_TITLE_ARGS)
     axes['burst_lbl'].text(0.0, 0.5, 'burst size', rotation=90, va='center', ha='center', **SUBPLOT_TITLE_ARGS)
 
     axes['bt_height'].set_title('without bursts', pad=20, **SUBPLOT_TITLE_ARGS)
     axes['ct_height'].set_title('with bursts', pad=20, **SUBPLOT_TITLE_ARGS)
+
+    bt_stats['perSplit.mean'] = np.zeros_like(ct_stats['perSplit.mean'])
+    bt_stats[r'perSplit.95%HPDlo'] = np.zeros_like(ct_stats['perSplit.mean'])
+    bt_stats[r'perSplit.95%HPDup'] = np.zeros_like(ct_stats['perSplit.mean'])
 
     plot_coverage(bt_stats, groundtruth,
                   stat_id='tree.height', stat_label='burstfree: root height',
@@ -124,11 +130,12 @@ def main_plots():
                   lim=(0.3, 0.7),
                   ax=axes['ct_rate'])
 
-#    plot_coverage(bt_stats, groundtruth,
-#                  stat_id='clockRate', stat_label='burstfree: burst size',
-#                  ticks=[0.3, 0.4, 0.5, 0.6, 0.7],
-#                  lim=(0.3, 0.7),
-#                  ax=axes['bt_burst'])
+    plot_coverage(bt_stats, groundtruth,
+                  stat_id='perSplit', stat_label='burstfree: burst size',
+                  ticks=[-0.1, 0.0, 0.1],
+                  lim=(-0.14, 0.14),
+                  ax=axes['bt_burst'])
+
     plot_coverage(ct_stats, groundtruth,
                   stat_id='perSplit', stat_label='bursty: burst size',
 #                  ticks=[-0.14, -0.07, 0.0, 0.07, 0.14],
