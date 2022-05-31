@@ -567,6 +567,14 @@ available in the supplementary material.
 
 \subsection{Simulation study}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{supplement/simulation_study/coverage.pdf}
+    \caption{The simulated values (x-axes) and reconstructed $95\%$ credible intervals (y-axes) of the root height, clock rate and burst size ($b$) parameters. The parameters are simulated from the burst clock model, but we show a reconstruction without (left column) and with (right column) the burst clock. Red bars indicate runs where the credible interval of the reconstruction did not cover the actually simulated value.}
+    \label{f:simulation}
+\end{figure}
+
+In the simulation study we simulated data with varying burst size $b$. Negative values of $b$ result in a model without bursts, and the absolute value of $b$ does not affect the data. Positive values of $b$ result in a Burst Clock model, and the absolute value of $b$ should be identifiable. \cref{f:simulation} shows the simulated and estimated root height, clock rate and burst size for one reconstruction without bursts (left column; $b$ is fixed to $0$) and one reconstruction with bursts (right column; $b$ is estimated).
 Reconstructing the parameters with the burst clock model serves as a
 verification that the MCMC can faithfully infer parameters under model
 assumptions. We show that this is the case in \cref{f:simulation}, where the x-axis shows
@@ -766,10 +774,13 @@ assumption that biological evolution alternates between periods of “stasis” 
 bursts of change.
 In biology, the issue is not resolved. A recent observation by
 \textcite{janzen2021nucleotide} indicates the need for a quantitative model of
-punctuated evolution also for biological phylogenetics, and after a history of
-adaptations of models developed for biological evolution being applied to
-historical linguistics, it might contribute to the understanding of similarity
-and differences between the two evolutionary processes \parencite{list2016alignment,levinson2012tools,SOMETHING-BETTER?} if our model
+punctuated evolution also for biological phylogenetics.
+The past has mostly seen models developed for biological evolution being applied to
+historical linguistics. It would thus contribute to the dialog between the disciplines and to the
+understanding of similarity
+and differences between the two evolutionary processes
+\parencite{list2016alignment,levinson2012tools,SOMETHING-BETTER?}
+if our Burst Clock model went in the opposite direction and
 found use in bioinformatics.
 
 
