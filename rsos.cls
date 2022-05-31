@@ -1032,7 +1032,8 @@
 
 \newdimen\bibindent
 \setlength\bibindent{0pc}
-\def\bibfont{\fontfamily{\rmdefault}\fontseries{m}\fontshape{n}\fontsize{9}{11}\selectfont}
+% We use BibLaTeX
+%\def\bibfont{\fontfamily{\rmdefault}\fontseries{m}\fontshape{n}\fontsize{9}{11}\selectfont}
 \newenvironment{thebibliography}[1]
      {\section*{\refname%\@mkboth{\refname}{\refname}
      }%
@@ -1458,7 +1459,8 @@ at http://dx.doi.org/\@doi\ or via http://\@jname.royalsocietypublishing.org.\pa
   \ignorespacesafterend
 }
 
-\usepackage[nospace]{cite}
+% We use BibLaTeX instead of LaTeX
+% \usepackage[nospace]{cite}
 
 \newcommand{\sfrac}[2]{\leavevmode\kern.1em
             \raise.5ex\hbox{\footnotesize #1}\kern-.1em
