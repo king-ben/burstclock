@@ -399,7 +399,7 @@ We expect that at least for some of these language families, the analysis will s
 a preference of clocks with bursts over clocks without bursts,
 in line with the results of \textcite{atkinson2008languages}.
 
-We infer dated language phylogenies using a state-of-the-art inference model for each of these datasets, using a strict burst clock and a relaxed burst clock.
+We infer dated language phylogenies using a state-of-the-art inference model for each of these data sets, using a strict burst clock and a relaxed burst clock.
 Both clock models are configured such that their priors produce a non-burst clock with a
 probability of $\frac{1}{2}$ and a burst clock with a probability also of
 $\frac{1}{2}$, allowing us to directly compare the models and compute Bayes factors based on the posterior
@@ -441,7 +441,7 @@ meaning class, but that the substitution rates between different meaning classes
 are distributed according to a Gamma distribution.
 
 \paragraph{Clock model}
-We test each dataset with both a strict and a relaxed clock, in each case
+We test each data set with both a strict and a relaxed clock, in each case
 comparing the results without bursts with the results
 using a burst version of the clock. The prior on the number of changes per split for the 
 burst clocks is estimated as follows. We aim for a broad prior centred around $b=0$,
@@ -466,7 +466,7 @@ As a very rough estimate, this should provide a soft upper bound to the size of 
 \paragraph{Phylogenetic inference}
 We infer the phylogenies using Markov chain Monte Carlo sampling, using the MCMC
 software tool BEAST2 \parencite{drummond2015bayesian}. The time until convergence varies greatly
-between the different datasets (with different numbers of languages, concepts, and
+between the different data sets (with different numbers of languages, concepts, and
 cognate sets each).
 We run 5 replications of each of the chains, running them in bouts of 24 hours on a high-performance
 computing cluster and sampling every 10'000th step, until each parameter has reached an effective sampling size of 
@@ -500,16 +500,16 @@ Due to the wide spread, these languages have been regularly studied using phylog
 Among the articles using lexical data to infer Austronesian language phylogenies, only the second one
 % gray2009language: “The data used in this study were extracted from the Austronesian Basic Vocabulary Database (“ABVD”) project (Greenhill et al. 2008). We selected the 400 languages/dialects with the most available data, and excluded known creoles and languages with large amounts of admixture (Table S1). We included two non-Austronesian languages as outgroups to “root” the trees: an archaic variant of the Sino-Tibetan language Chinese that was spoken between 2,300 and 2,900 years ago, and theTai-Kadai language Buyang. We extracted the cognate set data for these 400 languages across all 210 wordlist items. These data were translated into a binary matrix representing the presence or absence of each cognate set in each language.”
 % greenhill20818population: “For the Austronesian languages we used the Austronesian Basic Vocabulary Database (ABVD, Greenhill et al., 2008) which contains wordlists for 210 semantic categories from 1,278 languages.”, not even mentioning data coding, no supplement
-% greenhill2017evolutionary: “We used the ABVD (17) to find lexical data for the languages in the PIMdb. We identified 81 languages in both the PIMdb and the ABVD. [...] All lexical and cognate information is available online at https://abvd.shh.mpg.de/austronesian, and the cognate file is available in SI Materials and Methods and Dataset S4. are published with the acutal data in supplement.
+% greenhill2017evolutionary: “We used the ABVD (17) to find lexical data for the languages in the PIMdb. We identified 81 languages in both the PIMdb and the ABVD. [...] All lexical and cognate information is available online at https://abvd.shh.mpg.de/austronesian, and the cognate file is available in SI Materials and Methods and Data Set S4. are published with the acutal data in supplement.
 \parencite{greenhill2018population} makes the associated lexical data available, instead of only describing the data gathering procedure.
-Hovever, in that case the dataset is reduced to the overlap with a grammatical dataset.
+Hovever, in that case the data set is reduced to the overlap with a grammatical data set.
 All three papers use the Austronesian Basic Vocabulary Database for their lexical data, but the official version of that database
 (\url{https://abvd.shh.mpg.de/austronesian/}) is published without a persistent identifier, not freely usable, and not available in a re-usable format, so we instead make use of the ABVD
 data in the standardized CLDF format \parencite{cldf} curated on \url{https://github.com/lexibank/abvd}, which is published under a
 permissive Creative Commons (CC-BY-4.0) license. We use the most recent version, commit \texttt{17a4b30922f9d1010667ae8974f814c624e3e9a4}
 (2020-07-10). We filtered to the Austronesian doculects\footnote{The database contains several instances where different
-sources for the same variety (judging by name and Glottocode) give rise to different ‘language’ objects in the dataset, so the term
-‘doculect’ appears more appropriate than ‘language’ or ‘dialect’ in discussing the composition of the dataset, even though some languages may be aggregated from more than one source.} that have a coverage
+sources for the same variety (judging by name and Glottocode) give rise to different ‘language’ objects in the data set, so the term
+‘doculect’ appears more appropriate than ‘language’ or ‘dialect’ in discussing the composition of the data set, even though some languages may be aggregated from more than one source.} that have a coverage
 of at least 85\% of all concepts (189 or more concepts). This results in \countlects{} doculects and \countconcepts{} concepts being included in the data.
 
 \paragraph{Calibrations}
@@ -532,7 +532,7 @@ distributed priors. We supplement this with age constraints taken from \textcite
 \item \glot{Javanese}{java1253}: $\mu=1200, \sigma=50$;
 \item \glot{Chamic}{cham1330}: $\mu=1150, \sigma=175$;
 \end{itemize}
-The only \glot{Reefs-Santa Cruz language}{reef1242} in our Austronesian lexical dataset is \abvd{Äiwoo}{501}, so a calibration of the most recent ancestor of all Reefs-Santa Cruz languages is not possible.
+The only \glot{Reefs-Santa Cruz language}{reef1242} in our Austronesian lexical data set is \abvd{Äiwoo}{501}, so a calibration of the most recent ancestor of all Reefs-Santa Cruz languages is not possible.
 
 In terms of tip calibrations given by \textcite{gray2009language}, the table row on \abvd{Old Javanese}{290} cites \textcite{zoetmulder1982old} for a date between 700 and 1200 BP ($\mu=950, \sigma=125$).
 All their other tip calibrations either do not apply to our filtered data set or are dubious:
@@ -543,11 +543,11 @@ The Bantu languages are a part of the Atlantic-Congo language family. They
 have been studied in lexical phylogenetics by
 \textcite{grollemund2015bantu,greenhill2018population,currie2013cultural}.
 \paragraph{Lexical Data}
-% grollemund2015bantu: For each of the n=100 lexical items (meanings), we have used the comparative method wherever possible to identify cognate sets(words with the same meaning that derive from a common ancestor). Where it was not possible to establish strict correspondences for every word, we based our cognacy judgment on the principle of resemblance. This work was conducted by R.G. as part of her PhD and postdoctoral work on the Bantu languages (66). We identified 3,859 cognate sets across then=100 meanings.These were coded as binary characters for purposes of phylogenetic analysis. In practice, expert opinion on cognate classifications can differ (this difference also occurs in the alignment of gene sequence data where it is necessary to identify homologous genes), so we have conducted a series of analyses to check that our principal results are robust to variation in the data. We created subsampled datasets, with each one consisting of 50meanings randomly sampled without replacement from the data. These datasets were then converted to a binary matrix from which we inferred the tree. We repeated this procedure 100 times. We found that in 98% of these random samples based on just half the data, the tree we inferred showed the ladderized or pectinate backbone that we reported for the full-dataset tree in Fig. 1. This result ensured that the signal for the tree we use to infer the Bantu migration route was robust to variation in the data
-% greenhill2018population: “Basic vocabulary for 100 words from 409 Bantu languages were provided by Grollemund et al. (2015) in a phylogenetic dataset that records a single variant per semantic category for each language.
+% grollemund2015bantu: For each of the n=100 lexical items (meanings), we have used the comparative method wherever possible to identify cognate sets(words with the same meaning that derive from a common ancestor). Where it was not possible to establish strict correspondences for every word, we based our cognacy judgment on the principle of resemblance. This work was conducted by R.G. as part of her PhD and postdoctoral work on the Bantu languages (66). We identified 3,859 cognate sets across then=100 meanings.These were coded as binary characters for purposes of phylogenetic analysis. In practice, expert opinion on cognate classifications can differ (this difference also occurs in the alignment of gene sequence data where it is necessary to identify homologous genes), so we have conducted a series of analyses to check that our principal results are robust to variation in the data. We created subsampled data sets, with each one consisting of 50meanings randomly sampled without replacement from the data. These data sets were then converted to a binary matrix from which we inferred the tree. We repeated this procedure 100 times. We found that in 98% of these random samples based on just half the data, the tree we inferred showed the ladderized or pectinate backbone that we reported for the full-data set tree in Fig. 1. This result ensured that the signal for the tree we use to infer the Bantu migration route was robust to variation in the data
+% greenhill2018population: “Basic vocabulary for 100 words from 409 Bantu languages were provided by Grollemund et al. (2015) in a phylogenetic data set that records a single variant per semantic category for each language.
 % currie2013cultural: “Here, we use linguistic data from 542 spoken varieties of Bantu [16]. The names and alpha-numeric codes of all these languages are listed in the electronic supplementary material, table S1. Linguistic data in the form of different lexical items (‘words’) were taken from Bastin et al. [16]. These data code whether these basic vocabulary words from different languages can be considered cognate (i.e. they share a common origin). To facilitate phylogenetic analyses, these data were recoded into binary cognate sets reflecting the presence or the absence of each cognate in each language.
 The supplementary data from the 2015 paper \parencite{grollemund2015bantu} is available from
-\url{http://www.evolution.reading.ac.uk/DataSets.html}. A CLDF version of this dataset by Robert Forkel, Tiago Tresoldi, Mark Pagel, and Rebecca Grollemund, published under the CC-BY-NC 4.0 license, can be found on \url{https://github.com/lexibank/grollemundbantu}. We use version v1.0rc6 of the dataset.
+\url{http://www.evolution.reading.ac.uk/DataSets.html}. A CLDF version of this data set by Robert Forkel, Tiago Tresoldi, Mark Pagel, and Rebecca Grollemund, published under the CC-BY-NC 4.0 license, can be found on \url{https://github.com/lexibank/grollemundbantu}. We use version v1.0rc6 of the data set.
 
 \paragraph{Calibrations}
 % greenhill2018population: No calibrations
@@ -570,12 +570,12 @@ of the field
 \parencite{bouckaert2012mapping,chang2015ancestryconstrained,gray2003language,holm2017steppe,rama2018three,willems2016using}
 
 \paragraph{Lexical Data}
-Datasets generally go back to Dyen's work \parencite{dyen1992indoeuropean,dyen1997comparative} in the 1990s and its derivatives such as IELex \parencite{ielex},
+Data sets generally go back to Dyen's work \parencite{dyen1992indoeuropean,dyen1997comparative} in the 1990s and its derivatives such as IELex \parencite{ielex},
 but have been improved
 step by step. The most recent study correcting
-the quality of cognate codes is by \textcite{chang2015ancestryconstrained}. Their different datasets are explicitly compared by \textcite{rama2018three}, who finds that the
-‘\textsc{medium}’ dataset fits the expected node ages best given a uniform tree prior. \Citeauthor{rama2018three} also argues qualitatively in favour of
-that dataset over the alternatives considered, so we base our analysis on that dataset, available from
+the quality of cognate codes is by \textcite{chang2015ancestryconstrained}. Their different data sets are explicitly compared by \textcite{rama2018three}, who finds that the
+‘\textsc{medium}’ data set fits the expected node ages best given a uniform tree prior. \Citeauthor{rama2018three} also argues qualitatively in favour of
+that data set over the alternatives considered, so we base our analysis on that data set, available from
 \url{https://github.com/PhyloStar/ie-phylo-exps/blob/a63c0b52f7772adc2341572932a74b23d92570df/medium1.nex}.
 
 \paragraph{Calibrations}
@@ -610,11 +610,11 @@ The Sino-Tibetan language family has been recently studied using computational p
 \parencite{sagart2019dated,zhang2019phylogenetic}.
 \paragraph{Lexical Data}
 The lexical data is available as supplementary material for each of these two
-articles. Both datasets are ultimately derived from the STEDT dataset
+articles. Both data sets are ultimately derived from the STEDT data set
 \parencite{stedt}. \Citeauthor{sagart2019dated} are very explicit concerning their
 data selection and cognate coding method and also make their BEAST2 file available from \url{https://github.com/lingpy/sino-tibetan-paper/blob/v1.0.3/BeastFiles/sinotibetan-beast-covarion-relaxed-fbd.xml}, while
 \Citeauthor{zhang2019phylogenetic} retain a larger language sample.
-While smaller, the \textcite{sagart2019dated} dataset seems thus much more carefully
+While smaller, the \textcite{sagart2019dated} data set seems thus much more carefully
 curated and re-usable, and is therefore preferable for our analysis.
 The data underlying that article is curated on \url{https://github.com/lexibank/sagartst}, the specific analyses have been published on \url{https://github.com/lingpy/sino-tibetan-paper}.
 
@@ -628,7 +628,7 @@ We therefore take tip dates to be the following.
     \item Tangut: $\mu=900, \sigma=25$.
 \end{itemize}
 In addition, their BEAST2 XML file contains a uniform node calibration between 2.0 to 2.2 kyBP for the MRCA of the Sinitic dialects (Beijing, Chaozhou, Guangzhou, Jieyang, Longgang, and Xingning). We implement normal version ($\mu=2100, \sigma=50$) of this MRCA calibration.
-The additional node calibrations from \textcite{zhang2019phylogenetic} are either approximately given by the tip calibrations already (Chinese, Tibetan, Burmese), or not applicable to the reduced dataset by \textcite{sagart2019dated} (Pumi, Yi).
+The additional node calibrations from \textcite{zhang2019phylogenetic} are either approximately given by the tip calibrations already (Chinese, Tibetan, Burmese), or not applicable to the reduced data set by \textcite{sagart2019dated} (Pumi, Yi).
 
 % sagart2019dated: We specified calibrations as follows: Old Chinese, [2,800 to 2,300] yBP, in a uniform prior; Old Burmese, 800 yBP; Old Tibetan, 1,200 yBP; and Tangut, 900 yBP (the date range for Old Chinese corresponds to the period of the great Classical Chinese texts; the other dates correspond to the date of the earliest text rounded to the nearest century; see also SI Appendix, section 4).
 % zhang2019: Supplementary table 2 (https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-019-1153-z/MediaObjects/41586_2019_1153_MOESM1_ESM.pdf):
@@ -830,7 +830,7 @@ rates of change of individual features.
 
 Another potential avenue of further investigation into the mechanisms
 concerns the use of phylogeographic models \parencite{neureiter2021can}, where
-migration ralanguagetes can differ between different branches of the tree.
+migration rates can differ between different branches of the tree.
 If schismogenesis is driven by an active process, its effects should be stronger
 where the distance between related languages is smaller. This might be tested
 using a variant of the burst clock where instead of branch clock rates $c$
@@ -847,7 +847,9 @@ bursts of change.
 In biology, the issue is not resolved. A recent observation by
 \textcite{janzen2021nucleotide} indicates the need for a quantitative model of
 punctuated evolution also for biological phylogenetics.
-The past has mostly seen models developed for biological evolution being applied to
+Our burst clock package has no technical hurdle to be applied to
+biological data, while
+the past has mostly seen models developed for biological evolution being applied to
 historical linguistics.
 It would thus contribute to the dialog between the disciplines and to the
 understanding of similarity
