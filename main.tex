@@ -87,7 +87,7 @@
 % Aim: 200 words or less
 \begin{abstract}
 Dated language phylogenies, with broad uses in historical and anthropological
-research, depend on good models of language evolution.
+research, depend on good models of linguistic evolution.
 When a language splits into different speaker communities, the speed of
 language change increases such that a
 significant proportion of lexical disparity can be attributed
@@ -99,7 +99,7 @@ into the clock models used in phylogenetic inference. Here, we develop an
 extension to existing phylogenetic clock models in BEAST2 to
 account for bursts at language splits. We use simulation studies and also fit
 the new model to four major language families of the world: Austronesian,
-Bantu, Indo-European, and Sino-Tibetan. We find that the Burst Clock fits the
+Bantu, Indo-European, and Sino-Tibetan. We find that the burst clock fits the
 data better than either a Strict Clock or an Uncorrelated Relaxed Clock, and that
 a binary split is associated with $10^{-4}$ to $10^{-3}$ lexical changes per item of basic
 vocabulary. This is equivalent to the amount of lexical change a language
@@ -128,20 +128,23 @@ an inference program such as BEAST2 \parencite{beast2} or MrBayes \parencite{mrb
 generates a sample of trees and parameter values that fit the data and the prior knowledge
 about the evolutionary process.
 
+The quality of the inference output depends on the quality of the prior
+distributions and of the model describing the evolutionary process. Because the
+methods were originally developed for biological applications, many models and
+priors used in cultural phylogenetics are biologically motivated, and have been
+empirically compared on linguistic data afterwards, if at all
+\parencite{kaiping2021systematic,rama2018three}.
 
-The quality of the inference output depends on the quality of the prior distributions
-and of the model describing the evolutionary process. Because the methods were originally
-developed for biological applications, many models and priors are biologically motivated,
-and have been empirically compared on linguistic data afterwards, if at all \parencite{kaiping2021systematic,rama2018three}.
-
-There is however qualitative and quantitative research in comparative linguistics
-which could motivate models based on the evolutionary processes in languages.
-For example, linguistic differences, in particular those apparent to speakers, are often
-exaggerated among different social groups to mark social boundaries. This
-process, dubbed schismogenesis by \textcite{bateson1935culture} and esoterogeny
-by \textcite{thurston1987processes}, is thought to be a major driver of language disparity in
-as wide a range of locations as Vanuatu \parencite{francois2011social}, South America \parencite{epps2020amazonian}
-and Australia and New Guinea \parencite{evans2019linguistic}. It is likely also a factor in other parts of the world.
+There is however qualitative and quantitative research in comparative
+linguistics which could motivate models based on the evolutionary processes in
+languages. For example, linguistic differences, in particular those apparent to
+speakers, are often exaggerated among different social groups to mark social
+boundaries. This process, dubbed schismogenesis by \textcite{bateson1935culture}
+and esoterogeny by \textcite{thurston1987processes}, is thought to be a major
+driver of language diversity in as wide a range of locations as Vanuatu
+\parencite{francois2011social}, South America \parencite{epps2020amazonian} and
+Australia and New Guinea \parencite{evans2019linguistic}. It is likely also a
+factor in other parts of the world.
 
 Languages function to identify in-groups, and as such they mark social
 boundaries \parencite{labov1963social,epps2020amazonian}.
@@ -153,13 +156,14 @@ diversification would thus be more different from a common ancestral language th
 
 Quantitative evidence for this effect was supplied by
 \textcite{atkinson2008languages}. Using lexical cognate data, they studied the
-signal of punctuated equilibrium \parencite{eldredge1972punctuated} in the Austronesian, Bantu, and Indo-European tree. 
-The lexicon is one of the domains of language most apparent to speakers and accessible to conscious manipulation \parencite[see][for an extensive discussion]{thomason2007language},
-and thus a likely target of schismogenesis --
-along with a language's phonology, which is however a domain
-with much less established quantitative and phylogenetic methodology.
-\Citeauthor{atkinson2008languages} found that between 9.5\% and 33\% of lexical
-differences are due to punctuated events.
+signal of punctuated equilibrium \parencite{eldredge1972punctuated} in the
+Austronesian, Bantu, and Indo-European tree. The lexicon is one of the domains
+of language most apparent to speakers and accessible to conscious manipulation
+\parencite[see][for an extensive discussion]{thomason2007language}, and thus a
+likely target of schismogenesis – along with a language's phonology, which is
+however a domain with much less established quantitative and phylogenetic
+methodology. \Citeauthor{atkinson2008languages} found that between 9.5\% and
+33\% of lexical differences are due to punctuated events.
 
 % Rama & Wichmann (2020) infer $t = 1843 × MTL^0.35$, regressing the *median
 % length* (not height) of the tree sample to the otherwise estimated age of the
@@ -173,24 +177,23 @@ more in vocabulary than in language structure, it might be predicted that the
 schismogenesis effect would be most pronounced in phonetics and least in
 structural features of language.” \parencite[p. 295]{gray2013three}
 
-In order to  test this prediction, an explicit model of punctuated
-evolution would be necessary. In addition to contributing to our understanding
-of schismogenesis in cross-cultural interaction, such a model would
-also benefit the field of language phylogeny in general.
-Phylogenic studies would benefit greatly from explicit modelling of
-the punctuated evolution, for a better estimation of branch rates and thus time
-depths.
+In order to test this prediction, an explicit model of punctuated evolution
+would be necessary. In addition to contributing to our understanding of
+schismogenesis in cross-cultural interaction, such a model would also benefit
+the field of language phylogeny in general. Phylogenic studies would benefit
+greatly from explicit modelling of the punctuated evolution, for a better
+estimation of branch rates and thus time depths.
 
-We present such an explicit “burst clock” model in this article, and
-test it both on simulation data, in order to see whether phylogenetic inference is able to
-distinguish between data generated with and without bursts at language splits, as
-well as on four well-studied language families.
+We present such an explicit “burst clock” model in this article, and test it
+both on simulation data, in order to see whether phylogenetic inference is able
+to distinguish between data generated with and without bursts at language
+splits, as well as on four well-studied language families.
 
 \paragraph{The structure of the paper} is as follows. In
-\cref{s:description}, we describe the Burst Clock model, a generalization of
+\cref{s:description}, we describe the burst clock model, a generalization of
 existing phylogenetic clock models. We provide and describe a BEAST2 \parencite{drummond2015bayesian} package
 implementing this clock. In \cref{s:simulation}, we show using a simulation
-study that the Burst Clock model can distinguish between data generated with
+study that the burst clock model can distinguish between data generated with
 evolutionary bursts at the languages' splits and those without, and that
 a clock model without bursts mis-estimates tree parameters when applied to data
 generated with bursts.
@@ -206,7 +209,7 @@ Data and methods used to produce the results and figures shown in this paper are
 available as online supplementary material and through
 \url{https://osf.io/??????????????????}.
 
-\section{Introducing the Burst Clock model}\label{s:description}
+\section{Introducing the burst clock model}\label{s:description}
 \begin{figure}
     \centering
       \begin{tikzpicture}
@@ -226,7 +229,7 @@ available as online supplementary material and through
     
      \node at (4, 0) {$e_i = c \cdot l_i + b$};
     \end{tikzpicture}
-    \caption{The Burst Clock model}
+    \caption{The burst clock model}
     \label{f:burstclock}
 \end{figure}
 In linguistic phylogenies,
@@ -266,7 +269,7 @@ fit the data better than a strict clock
 and has found its way into current general advice on linguistic phylogenies
 \parencite{maurits2017beastling,hoffmann2021bayesian}.
 
-The Burst Clock generalizes the strict clock in a different manner, which can be combined with relaxed clock models.
+The burst clock generalizes the strict clock in a different manner, which can be combined with relaxed clock models.
 The strict clock and the URC both assume that all change is accumulated gradually
 through time.
 For the burst clock, we instead assume that bursts of evolution at split events
@@ -292,7 +295,7 @@ For $b=0$, this model reduces to the strict clock without bursts.
 % 2012). https://academic.oup.com/sysbio/article/61/5/779/1735441
 % The focus of this article, however, is on the simple extension of clock models where $b$ is constant.
 
-If all languages of that family were attested, and thus all splits throughout
+If all languages of a family under study were attested, and thus all splits throughout
 the family's history were to show up in the evolutionary tree, this model would be sufficient.
 However, in no language family do we expect to know all languages, and in most
 language families even the contemporary languages are not completely known \parencite{}. 
@@ -307,18 +310,20 @@ One of the most frequently used tree priors in linguistic phylogenies
 is the (fossilized) birth-death tree prior \parencite{gernhard2008conditioned,stadler2010samplingthroughtime,heath2014fossilized}.
 Under this prior, the rate at which
 languages split (birth rate $\lambda$) is either included explicitly or in terms of net diversification rate and turnover.
-The expected number of splits along a branch is then $\lambda \cdot l_i$, and of these – the one where the branch begins – is observed, so $1 + u_i = \lambda \cdot l_i$.
+The expected number of splits along a branch is then $\lambda \cdot l_i$, and one of these – the one where the branch begins – is observed, so $1 + u_i = \lambda \cdot l_i$.
 
 For a sampling proportion $q$ and $t$ observed leaves, the total number of unobserved and observed leaves will be
 $\frac{t}{q}$, so there are $\frac{t}{q} - 1$ net splits,
 while the observed number of splits will be $t - 1$. This means that the proportion of unobserved splits is, on average,
 \begin{align}
-    \frac{u_i}{l_i \lambda} &= \frac{u_i}{E[u_i + 1]} \\
-    & \approx \frac{(\frac{l}{q} - 1) - (l - 1)}{\frac{l}{q} -1} \\
-    & = \frac{t - q - qt + q}{t - q} \\
-    & = \frac{t - qt}{t - q} \\
-    & \approx \frac{t - qt}{t} &\text{because } q \leq 1 \ll t \\
-    & = 1 - q
+  \frac{u_i}{l_i \lambda}
+  &= \frac{u_i}{E[u_i + 1]} \\
+  % This approximation could probably do with a better argument
+  & \approx \frac{(\frac{t}{q} - 1) - (t - 1)}{\frac{t}{q} -1} \\
+  & = \frac{t - q - qt + q}{t - q} \\
+  & = \frac{t - qt}{t - q} \\
+  & \approx \frac{t - qt}{t} &\text{because } q \leq 1 \ll t \\
+  & = 1 - q
 \end{align}
 giving rise to the expected number of changes
 \begin{align}
@@ -326,9 +331,11 @@ giving rise to the expected number of changes
   &= c \cdot l_i + b + \lambda l_i b \\
   &= (c + \lambda (1-q) b) \cdot l_i + b
   \label{eq:reparam-burst}
-  % \text{Just using u_i = \lambda l_i - 1 gives instead
+  % Just using $u_i = \lambda l_i - 1$ gives instead
   % e_i &= c \cdot l_i + b + (\lambda l_i - 1) \cdot b  \\
   % &= (c + \lambda b) \cdot l_i \\
+  % and thus a clock without bursts. This is not what we want. But a
+  % mathematically inclined reader might wonder.
 \end{align}
 This is formally the same model as in \cref{eq:simple-burst}: The expected amount of change is linear (with a non-zero intercept) in the branch length. It is, however, parameterized
 in a way that takes the underlying tree prior into account,
@@ -341,7 +348,7 @@ This model extends to non-strict clocks in a straightforward manner, where with 
 \end{align}
 to obtain a relaxed burst clock.
 The strict burst clock and the relaxed burst clock can both be generated using one common implementation, which wraps any internal clock model exposing branch lengths and clock rates.
-We implemented such a burst-clock wrapper as a BEAST 2 package (\texttt{burstclock}).
+We implemented such a burst clock wrapper as a BEAST 2 package (\texttt{burstclock}).
 The implementation is available from XXX.
 
 \section{Simulation Study}
@@ -357,7 +364,7 @@ clock and a relaxed clock can be distinguished.
 Inference with the burst clock model must be able to identify simulated bursts, and distinguish them from the relaxed clock rates, even when clock rates differ significantly across branches.
 
 In order to investigate this identifiability,
-we follow the procedure described by \textcite{cook2006validation} and perform a simulation study in four steps: (1) Sample ground truth parameters according to a prior distribution. (2) Simulate data according to the prior predictive distribution of the Burst Clock model. (3) Sample parameters from the posterior based on the simulated data, using a Burst Clock and for comparison a clock without bursts. (4) Evaluate the quantile of the ground truth parameters in the posterior sample.
+we follow the procedure described by \textcite{cook2006validation} and perform a simulation study in four steps: (1) Sample ground truth parameters according to a prior distribution. (2) Simulate data according to the prior predictive distribution of the burst clock model. (3) Sample parameters from the posterior based on the simulated data, using a burst clock and for comparison a clock without bursts. (4) Evaluate the quantile of the ground truth parameters in the posterior sample.
 We repeat this procedure $100$ times.
 
 If our burst clock model is well calibrated, the ground truth parameters should fall within the $p\%$ credible interval in $p\%$ of the simulation runs. In addition, the clock without bursts should mis-estimate ground truth parameters.
@@ -365,7 +372,7 @@ If our burst clock model is well calibrated, the ground truth parameters should 
 % Simulation configuration
 In each of the $100$ simulation runs we simulate ultrametric phylogenetic trees with $20$ taxa according to a Yule model with strong priors on the height of $4$ internal nodes. These $4$ calibration points are necessary to infer the clock rate from the data. We use a relaxed clock model with a fixed standard deviation of $0.5$ and a lognormal prior with mean $0.35$ and $\sigma = 0.5$ on the clock rate.
 
-At the same time, we simulate parameters for a burst-clock model from an independent prior. In order to simplify the model selection between clocks with and without bursts, we implement a prior that selects the URC without bursts with a prior probability of $0.5$ as follows. The parameter $b$ is drawn from a normal distribution with mean $0$ and standard deviation $0.05$. Negative values for $b$ are treated as a plain non-burst clock model. (Positive values result in a burst clock model with $b$ as burst parameter.) In inference, $b$ is similarly permitted to take on negative values to represent a clock without bursts.
+At the same time, we simulate parameters for a burst clock model from an independent prior. In order to simplify the model selection between clocks with and without bursts, we implement a prior that selects the URC without bursts with a prior probability of $0.5$ as follows. The parameter $b$ is drawn from a normal distribution with mean $0$ and standard deviation $0.05$. Negative values for $b$ are treated as a plain non-burst clock model. (Positive values result in a burst clock model with $b$ as burst parameter.) In inference, $b$ is similarly permitted to take on negative values to represent a clock without bursts.
 
 Based on the simulated tree and model parameters we further simulate data according to a binary CTMC model. We generated 5000 binary characters for each simulated language.
 %Finally, we test how well the simulated parameters can be reconstructed from the data when using two distinct models: a burst clock model and a non-burst clock model. 
@@ -746,7 +753,7 @@ Austronesian, Bantu, and Indo-European analyses have a positive value for bursts
 so the Bayes factor in favour of the burst clock is the effective sample size of
 the burst parameter in these models (between $\minessx$ for \minessn{} and
 $\maxessx$ for \maxessn{}). For Sino-Tibetan,
-the posterior probability of the Burst clock is at least $\worstburst$ as much as the clock
+the posterior probability of the burst clock is at least $\worstburst$ as much as the clock
 without bursts.
 
 The complete analysis (data, tools to generate the BEAST XML files, generated XML files,
@@ -835,7 +842,8 @@ per-branch migration rates.
 The effect we investigated in this paper
 is not specific to linguistics. In fact, referring to parts
 of an evolutionary history as “punctuated” goes back to the notion of
-punctuated equilibria by \textcite{eldredge1972punctuated} in the 1970s, the
+punctuated equilibria by \textcite{eldredge1972punctuated} in the 1970s, which
+is the
 assumption that biological evolution alternates between periods of “stasis” and
 bursts of change.
 In biology, the issue is not resolved. A recent observation by
@@ -846,8 +854,8 @@ historical linguistics.
 It would thus contribute to the dialog between the disciplines and to the
 understanding of similarity
 and differences between the two evolutionary processes
-\parencite{list2016alignment,levinson2012tools,SOMETHING-BETTER?}
-if our Burst Clock model went in the opposite direction and
+\parencite{list2016alignment,levinson2012tools}
+if our burst clock model went in the opposite direction and
 found use in bioinformatics.
 
 
