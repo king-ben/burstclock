@@ -216,7 +216,7 @@ lexical data of Austronesian \ref{s:austronesian}, Bantu \ref{s:bantu},
 Indo-European \ref{s:indoeuropean}, and Sino-Tibetan \ref{s:sinotibetan}. We
 present our results in \cref{s:results}, first for the simulation study, then
 for each case study. In \cref{s:discussion}, we discuss the results and
-formulate our conclusions in \cref{s:conclusions}.
+formulate our conclusions.
 
 Data and methods used to produce the results and figures shown in this paper are
 available as online supplementary material and through
@@ -228,20 +228,36 @@ available as online supplementary material and through
       \begin{tikzpicture}
         \tikzset{vertex/.style = {shape=rectangle,draw,minimum size=1.5em,align=center,text height=1.5ex,text depth=.25ex}}
         \tikzset{edge/.style = {-{to[length=3mm]}}}
-        \node[vertex] (root) at  (0,4) {$r$};
-        \node[vertex] (i) at  (1,0) {$i$};
+        \node[vertex] (root) at  (0.5,4) {$r$};
+        \node[vertex] (i) at  (3,0) {$i$};
+        \node[vertex,draw=none] (x) at  (1,0) {};
+        \node[vertex,dotted] (u) at  (2,2) {};
         \node[vertex] (l1) at  (-2,1) {};
         \node[vertex] (l2) at  (-1,0) {};
         \node[vertex] (l3) at  (-3,0) {};
         \node[vertex] (l4) at  (-1,3) {};
         \node[vertex] (l5) at  (0,0) {};
-        \draw[edge] (root) -|
+        \draw[draw=none] (root) -|
         node[midway,name=r,minimum size=1.5em] {}
+        (i);
+        \draw[edge] (root) -|
+        node[pos=0.1] {$\bullet$}
+        node[pos=0.2] {$\bullet$}
+        node[pos=0.3] {$\bullet$}
+        node[pos=0.4] {$\bullet$}
+        (u);
+        \draw[edge] (u) -|
         node[pos=0.1] {$\bullet$}
         node[pos=0.2] {$\bullet$}
         node[pos=0.3] {$\bullet$}
         node[pos=0.4] {$\bullet$}
         (i);
+        \draw[edge,gray!40] (u) -|
+        node[pos=0.1,text=gray!40] {$\bullet$}
+        node[pos=0.2,text=gray!40] {$\bullet$}
+        node[pos=0.3,text=gray!40] {$\bullet$}
+        node[pos=0.4,text=gray!40] {$\bullet$}
+        (x);
         \draw[edge] (root) -|
         node[pos=0.1] {$\bullet$}
         node[pos=0.2] {$\bullet$}
@@ -283,17 +299,19 @@ available as online supplementary material and through
         \node at  (0,1.5) {$\bullet$};
         \node at  (0,2.5) {$\bullet$};
         \node at  (-1,3.5) {$\bullet$};
-        \node at  (1,0.5) {$\bullet$};
-        \node at  (1,1.5) {$\bullet$};
-        \node at  (1,2.5) {$\bullet$};
-        \node at  (1,3.5) {$\bullet$};
+        \node[text=gray!40] at  (1,0.5) {$\bullet$};
+        \node[text=gray!40] at  (1,1.5) {$\bullet$};
+        \node at  (3,0.5) {$\bullet$};
+        \node at  (3,1.5) {$\bullet$};
+        \node at  (2,2.5) {$\bullet$};
+        \node at  (2,3.5) {$\bullet$};
     
-     \node at (3, 1) {$e_i = c \cdot l_i + b$};
+     \node at (3, -0.5) {$e_i = c \cdot l_i + b (1 + u_i)$};
     \end{tikzpicture}
-    \caption{The burst clock model: For $b>0$, the amount of change (symbolized
+    \caption{The burst clock model: For $b>0$, the amount of change $e_i$ (symbolized
       by $\bullet$s) that is
-      accumulated from the root $r$ to a node $i$ depends on the number of
-      ancestral nodes between $r$ and $i$}
+      accumulated from a parent $r$ to its descendant $i$ depends on the number of
+      ancestral nodes (observed and unobserved) between $r$ and $i$}
     \label{f:burstclock}
 \end{figure}
 A linguistic phylogenetic inference attempts to re-construct the evolutionary
