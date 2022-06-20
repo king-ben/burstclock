@@ -115,6 +115,7 @@ def read_logfile(vocabulary: Path, r: bool, b: bool, threshold: float = 200):
         print(
             vocabulary.relative_to(Path("/home/gereon/BigData/burstclock-runs/")).parent
         )
+        return {"n_samples_unconverged": [int(row["Sample"])]}
         raise Unconverged()
     if perSplit_ess:
         log["perSplit_ess"] = [perSplit_ess]
@@ -160,31 +161,35 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
                 file = path / f"{basename:}{r_string}{b_string}-{i}"
                 if not file.exists():
                     continue
+                runtime = get_runtime(file)
                 vocabulary = file / "vocabulary.log"
-                try:
-                    log_one_run = read_logfile(vocabulary, r, b, threshold)
-                except Unconverged:
-                    continue
+                log_one_run = read_logfile(vocabulary, r, b, threshold)
                 for key, value in log_one_run.items():
                     log[key].extend(value)
-                runtime = get_runtime(file)
                 # print(
                 #     runtime,
                 #     log["n_samples"][-1] / 1_000_000,
                 #     runtime * log["n_samples"][-1] / 1_000_000,
                 # )
-                summaries[
-                    "Runtime "
-                    + ("(relaxed" if r else "(strict")
-                    + (" with bursts)" if b else ", no bursts)")
-                ].append(runtime * log["n_samples"][-1] / 1_000_000)
+                try:
+                    summaries[
+                        "Runtime "
+                        + ("(relaxed" if r else "(strict")
+                        + (" with bursts)" if b else ", no bursts)")
+                    ].append(runtime * log["n_samples"][-1] / 1_000_000)
+                except IndexError:
+                    summaries[
+                        "Runtime, incomplete "
+                        + ("(relaxed" if r else "(strict")
+                        + (" with bursts)" if b else ", no bursts)")
+                    ].append(runtime * log["n_samples_unconverged"][-1] / 1_000_000)
                 summaries[
                     "Tree height "
                     + ("(relaxed" if r else "(strict")
                     + (" with bursts)" if b else ", no bursts)")
                 ] = log["TreeHeight"]
-            if not log:
-                raise Unconverged()
+            if not log["yearloss"]:
+                continue
             if b:
                 summaries[
                     "Years per split " + ("(relaxed)" if r else "(strict)")
@@ -206,7 +211,7 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
                     + ("(with bursts)" if b else "(no bursts)")
                 ] = log["RelaxedClockSigma"]
             summaries[
-                "Loss per 100 years "
+                "Loss per 1000 years "
                 + ("(relaxed" if r else "(strict")
                 + (" with bursts)" if b else ", no bursts)")
             ] = log["yearloss"]
@@ -229,7 +234,10 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
     plt.savefig(
         Path(__file__).parent / f"{basename}_years_per_split.png", bbox_inches="tight"
     )
-    plt.show()
+    if args.show:
+        plt.show()
+    else:
+        plt.close()
 
     plt.figure(figsize=(6, 4))
     plt.title("Tree height")
@@ -307,10 +315,10 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
     plt.figure(figsize=(6, 4))
     plt.boxplot(
         [
-            summaries["Loss per 100 years (strict, no bursts)"],
-            summaries["Loss per 100 years (relaxed, no bursts)"],
-            summaries["Loss per 100 years (strict with bursts)"],
-            summaries["Loss per 100 years (relaxed with bursts)"],
+            summaries["Loss per 1000 years (strict, no bursts)"],
+            summaries["Loss per 1000 years (relaxed, no bursts)"],
+            summaries["Loss per 1000 years (strict with bursts)"],
+            summaries["Loss per 1000 years (relaxed with bursts)"],
         ],
         showfliers=False,
         widths=0.7,
@@ -328,7 +336,10 @@ def extract_statistics(path: Path, threshold: float = 200) -> dict[str, list[flo
     plt.savefig(
         Path(__file__).parent / f"{basename}_replacement.png", bbox_inches="tight"
     )
-    plt.show()
+    if args.show:
+        plt.show()
+    else:
+        plt.close()
     return dict(summaries)
 
 
@@ -336,6 +347,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("ess_threshold", type=float, nargs="?", default=200)
 parser.add_argument("--burnin", type=float, default=0.1)
 parser.add_argument("--print-expected", default=False, action="store_true")
+parser.add_argument("--show", default=False, action="store_true")
 args = parser.parse_args()
 BURNIN = args.burnin
 
@@ -346,72 +358,99 @@ max_ess = 0
 p_bursts = []
 
 runtimes = []
+incomplete_runtimes = []
 for f, family in enumerate(FAMILIES):
     path = Path.home() / "BigData" / "burstclock-runs" / family_to_path(family)
     s = extract_statistics(path, threshold=args.ess_threshold)
 
-    if s["Changes per split (relaxed)"][0] < min_05:
-        min_05 = s["Changes per split (relaxed)"][0]
-        min_05_run = f"{family} (relaxed)"
-    if s["Changes per split (strict)"][0] < min_05:
-        min_05 = s["Changes per split (strict)"][0]
-        min_05_run = f"{family} (strict)"
-    if s["Changes per split (relaxed)"][2] > max_95:
-        max_95 = s["Changes per split (relaxed)"][2]
-        max_95_run = f"{family} (relaxed)"
-    if s["Changes per split (strict)"][2] > max_95:
-        max_95 = s["Changes per split (strict)"][2]
-        max_95_run = f"{family} (strict)"
-    if numpy.min(s["Bursts (relaxed)"]) == 1:
-        if s["ESS of burst parameter (relaxed)"] > max_ess:
-            max_ess = s["ESS of burst parameter (relaxed)"]
-            max_ess_run = f"{family} (relaxed)"
-        if s["ESS of burst parameter (relaxed)"] < min_ess:
-            min_ess = s["ESS of burst parameter (relaxed)"]
-            min_ess_run = f"{family} (relaxed)"
-    else:
-        for p in s["Bursts (relaxed)"]:
-            p_bursts.append(p / (1 - p))
-    if numpy.min(s["Bursts (strict)"]) == 1:
-        if s["ESS of burst parameter (strict)"] > max_ess:
-            max_ess = s["ESS of burst parameter (strict)"]
-            max_ess_run = f"{family} (strict)"
-        if s["ESS of burst parameter (strict)"] < min_ess:
-            min_ess = s["ESS of burst parameter (strict)"]
-            min_ess_run = f"{family} (strict)"
-    else:
-        for p in s["Bursts (strict)"]:
-            p_bursts.append(p / (1 - p))
-
     runtimes.extend(
         [
-            s["Runtime (strict, no bursts)"],
-            s["Runtime (relaxed, no bursts)"],
-            s["Runtime (strict with bursts)"],
-            s["Runtime (relaxed with bursts)"],
+            s.get("Runtime (strict, no bursts)", numpy.nan),
+            s.get("Runtime (relaxed, no bursts)", numpy.nan),
+            s.get("Runtime (strict with bursts)", numpy.nan),
+            s.get("Runtime (relaxed with bursts)", numpy.nan),
         ],
     )
+
+    incomplete_runtimes.extend(
+        [
+            s.get("Runtime, incomplete (strict, no bursts)", [numpy.nan]),
+            s.get("Runtime, incomplete (relaxed, no bursts)", [numpy.nan]),
+            s.get("Runtime, incomplete (strict with bursts)", [numpy.nan]),
+            s.get("Runtime, incomplete (relaxed with bursts)", [numpy.nan]),
+        ],
+    )
+
+    try:
+        if s["Changes per split (relaxed)"][0] < min_05:
+            min_05 = s["Changes per split (relaxed)"][0]
+            min_05_run = f"{family} (relaxed)"
+        if s["Changes per split (strict)"][0] < min_05:
+            min_05 = s["Changes per split (strict)"][0]
+            min_05_run = f"{family} (strict)"
+        if s["Changes per split (relaxed)"][2] > max_95:
+            max_95 = s["Changes per split (relaxed)"][2]
+            max_95_run = f"{family} (relaxed)"
+        if s["Changes per split (strict)"][2] > max_95:
+            max_95 = s["Changes per split (strict)"][2]
+            max_95_run = f"{family} (strict)"
+        if numpy.min(s["Bursts (relaxed)"]) == 1:
+            if s["ESS of burst parameter (relaxed)"] > max_ess:
+                max_ess = s["ESS of burst parameter (relaxed)"]
+                max_ess_run = f"{family} (relaxed)"
+            if s["ESS of burst parameter (relaxed)"] < min_ess:
+                min_ess = s["ESS of burst parameter (relaxed)"]
+                min_ess_run = f"{family} (relaxed)"
+        else:
+            for p in s["Bursts (relaxed)"]:
+                p_bursts.append(p / (1 - p))
+        if numpy.min(s["Bursts (strict)"]) == 1:
+            if s["ESS of burst parameter (strict)"] > max_ess:
+                max_ess = s["ESS of burst parameter (strict)"]
+                max_ess_run = f"{family} (strict)"
+            if s["ESS of burst parameter (strict)"] < min_ess:
+                min_ess = s["ESS of burst parameter (strict)"]
+                min_ess_run = f"{family} (strict)"
+        else:
+            for p in s["Bursts (strict)"]:
+                p_bursts.append(p / (1 - p))
+
+    except KeyError:
+        print(f"Error: Family {family} does not have converged data.")
 
 
 plt.figure(figsize=(8, 4))
 plt.scatter(
     [x for x, ys in enumerate(runtimes) for y in ys],
     [y for ys in runtimes for y in ys],
-    # widths=0.7,
+    edgecolors="k",
+    facecolors="k",
+)
+plt.scatter(
+    [x for x, ys in enumerate(incomplete_runtimes) for y in ys],
+    [y for ys in incomplete_runtimes for y in ys],
+    marker="o",
+    edgecolors="k",
+    facecolors="none",
 )
 plt.xticks(
     range(0, 4 * len(FAMILIES)),
     [
-        "strict,\nno bursts",
-        "relaxed,\nno bursts",
+        "strict\nno bursts",
+        "relaxed\nno bursts",
         "strict\nwith bursts",
         "relaxed\nwith bursts",
     ]
     * len(FAMILIES),
+    rotation=90,
+    fontdict={"multialignment": "right"},
 )
 plt.ylim(bottom=0)
 plt.savefig(Path(__file__).parent / "runtimes.png", bbox_inches="tight")
-plt.show()
+if args.show:
+    plt.show()
+else:
+    plt.close()
 
 with (Path(__file__).parent / "stats.tex").open("w") as stats:
     print(r"\newcommand{\minx}{%f}" % min_05, file=stats)
