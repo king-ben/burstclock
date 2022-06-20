@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy
 from arviz import ess
 from matplotlib import pyplot as plt
+import matplotlib.ticker as ticker
 
 FAMILIES = [
     "Austronesian",
@@ -445,6 +446,22 @@ plt.xticks(
     rotation=90,
     fontdict={"multialignment": "right"},
 )
+plt.xlim(-0.5, 4 * len(FAMILIES) - 0.5)
+
+ax2 = plt.gca().twiny()
+ax2.spines["bottom"].set_position(("axes", -0.35))
+ax2.tick_params("both", length=0, width=0, which="minor")
+ax2.tick_params("both", direction="in", which="major")
+ax2.xaxis.set_ticks_position("bottom")
+ax2.xaxis.set_label_position("bottom")
+
+ax2.set_xticks([-0.5, 3.5, 7.5, 11.5, 15.5])
+ax2.xaxis.set_major_formatter(ticker.NullFormatter())
+ax2.xaxis.set_minor_locator(ticker.FixedLocator([1.5, 5.5, 9.5, 13.5]))
+ax2.xaxis.set_minor_formatter(
+    ticker.FixedFormatter(["Austronesian", "Bantu", "Indo-European", "Sino-Tibetan"])
+)
+
 plt.ylim(bottom=0)
 plt.savefig(Path(__file__).parent / "runtimes.png", bbox_inches="tight")
 if args.show:
