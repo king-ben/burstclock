@@ -675,30 +675,38 @@ that data set over the alternatives considered, so we base our analysis on that 
 
 \paragraph{Calibrations}
 Following the evidence presented by \textcite[Tables 7 and 12]{chang2015ancestryconstrained}, we implement the following node and tip calibrations, which are minimum ages (capped at an upper bound of 20000~yBP using a uniform prior to obtain a proper prior distribution) or normal distributions as given by the reference. Because of the presence of several old languages, \cref{t:indoeuropean} lists all individual languages in each group.
-\begin{itemize}
-  \item Germanic (i.\,e.\ the MRCA of Gothic, Old West Norse, Icelandic, Faroese, Norwegian, Swedish, Danish, Old English, English, Frisian, Old High German, German, Luxembourgish, Swiss German, Dutch, Flemish and Afrikaans): Uniform between 2250~yBP and 20000~yBP;
-  \item Romance (i.\,e.\ the MRCA of Latin, Nuorese, Cagliari, Romanian, Catalan, Portuguese, Spanish, French, Provencal, Walloon, Ladin, Romansh, Friulian and Italian): Uniform between 1750~yBP and 20000~yBP;
-  \item Scandinavian (i.\,e.\ the MRCA of Old West Norse, Icelandic, Faroese, Norwegian, Swedish and Danish): Uniform between 1500~yBP and 20000~yBP;
-  \item Slavic (i.\,e.\ the MRCA of Czech, Slovak, Polish, Upper Sorbian, Ukrainian, Belarusian, Russian, Slovenian, Macedonian, Bulgarian, Serbian and Old Church Slavic): Uniform between 1500~yBP and 20000~yBP;
-  \item East Baltic (i.\,e.\ the MRCA of Lithuanian and Latvian): Uniform between 1300~yBP and 20000~yBP;
-  \item British Celtic (i.\,e.\ the MRCA of Welsh, Breton and Cornish): Uniform between 1250~yBP and 20000~yBP;
-  \item the MRCA of Irish and Scots Gaelic: Uniform between 1050~yBP and 20000~yBP;
-  \item the MRCA of Tajik and Persian: Uniform between 750~yBP and 20000~yBP;
-  \item Hittite: $\mu=3400, \sigma=100$;
-  \item Vedic Sanskrit: $\mu=3250, \sigma=250$;
-  \item Avestan: $\mu=2500, \sigma=50$;
-  \item Ancient Greek: $\mu=2450, \sigma=50$;
-  \item Latin: $\mu=2150, \sigma=50$;
-  \item Gothic: $\mu=1650, \sigma=25$;
-  \item Old High German: $\mu=1150, \sigma=50$;
-  \item Old English: $\mu=1000, \sigma=50$;
-  \item Old West Norse: $\mu=800, \sigma=50$;
-  \item Classical Armenian: $\mu=1550, \sigma=50$;
-  \item Tocharian B: $\mu=1350, \sigma=150$;
-  \item Old Irish: $\mu=1200, \sigma=100$;
-  \item Cornish: $\mu=300, \sigma=100$;
-  \item Old Church Slavic: $\mu=1000, \sigma=50$;
-\end{itemize}
+\begin{table}
+  \centering
+  \begin{tabular}{lrrcp{5cm}}
+    \textbf{Languages} & \textbf{$\mu$} & \textbf{$\sigma$} & \textbf{Source} \\
+    Gothic, Old West Norse, Icelandic, Faroese, Norwegian, Swedish, Danish, Old English, English, Frisian, Old High German, German, Luxembourgish, Swiss German, Dutch, Flemish and Afrikaans & Uniform between 2250~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & Germanic  \\
+    Latin, Nuorese, Cagliari, Romanian, Catalan, Portuguese, Spanish, French, Provencal, Walloon, Ladin, Romansh, Friulian and Italian & Uniform between 1750~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & Romance  \\
+    Old West Norse, Icelandic, Faroese, Norwegian, Swedish and Danish & Uniform between 1500~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & Scandinavian  \\
+    Czech, Slovak, Polish, Upper Sorbian, Ukrainian, Belarusian, Russian, Slovenian, Macedonian, Bulgarian, Serbian and Old Church Slavic & Uniform between 1500~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & Slavic  \\
+    Lithuanian and Latvian & Uniform between 1300~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & East Baltic  \\
+    Welsh, Breton and Cornish & Uniform between 1250~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & British Celtic  \\
+    Irish and Scots Gaelic & Uniform between 1050~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained}  \\
+    Tajik and Persian & Uniform between 750~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained}  \\
+    \textbf{Languages} & \textbf{$\mu$} & \textbf{$\sigma$} & \textbf{Source} \\
+    Hittite & 3400 & 100 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Vedic Sanskrit & 3250 & 250 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Avestan & 2500 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Ancient Greek & 2450 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Latin & 2150 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Gothic & 1650 & 25 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Old High German & 1150 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Old English & 1000 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Old West Norse & 800 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Classical Armenian & 1550 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Tocharian B & 1350 & 150 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Old Irish & 1200 & 100 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Cornish & 300 & 100 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Old Church Slavic & 1000 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration
+  \end{tabular}
+  \caption{Calibrations for Indo-European}
+  \label{t:indoeuropean}
+\end{table}
+
 
 \subsection{Sino-Tibetan}\label{s:sinotibetan}
 The Sino-Tibetan language family has been recently studied using computational phylogenetic methods by two independent groups
