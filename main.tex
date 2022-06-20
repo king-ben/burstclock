@@ -644,7 +644,7 @@ The supplementary data from the 2015 paper \parencite{grollemund2015bantu} is av
 We take the calibration ranges from \textcite{grollemund2015bantu}.
 To obtain a proper prior where only lower bounds are given, we specify those as uniform priors with an upper bound of 20,000. Ranges we interpret as $\pm 2\sigma$ intervals of a normal distribution, like for Austronesian:
 The dates appear to be rounded to a precision of 500 years, so it is dubious that eg. an age of 3499~yBP has 100\% prior probability for the Mbam-Bubi ancestor, while 3501~yBP has a prior probability of 0.
-Again we do not enforce monophyly, which is particularly important for this language family, where two of the calibrated language groups (Bantoid and Mbam-Bubi) are paraphyletic in Glottolog.
+Again we do not enforce monophyly, which is particularly important for this language family, where two of the calibrated language groups (Bantoid and Mbam-Bubi) are paraphyletic in Glottolog. The calibrations can be seen in \cref{t:bantu}.
 \begin{table}
     \centering
     \begin{tabular}{p{7cm}rrcl}
@@ -656,7 +656,7 @@ non-Bantu Bantoid languages (aghemgrassfields, njengrassfields, mbulajarawan, ba
 \glot{East Bantu}{east2731} & 2,500 & 50 & \parencite{grollemund2015bantu}
     \end{tabular}
     \caption{Calibrations for Bantu}
-    \label{t:austronesian}
+    \label{t:bantu}
 \end{table}
 
 \subsection{Indo-European}\label{s:indoeuropean}
@@ -674,7 +674,7 @@ that data set over the alternatives considered, so we base our analysis on that 
 \url{https://github.com/PhyloStar/ie-phylo-exps/blob/a63c0b52f7772adc2341572932a74b23d92570df/medium1.nex}.
 
 \paragraph{Calibrations}
-Following the evidence presented by \textcite[Tables 7 and 12]{chang2015ancestryconstrained}, we implement the following node and tip calibrations, which are minimum ages (capped at an upper bound of 20000~yBP using a uniform prior to obtain a proper prior distribution) or normal distributions as given by the reference.
+Following the evidence presented by \textcite[Tables 7 and 12]{chang2015ancestryconstrained}, we implement the following node and tip calibrations, which are minimum ages (capped at an upper bound of 20000~yBP using a uniform prior to obtain a proper prior distribution) or normal distributions as given by the reference. Because of the presence of several old languages, \cref{t:indoeuropean} lists all individual languages in each group.
 \begin{itemize}
   \item Germanic (i.\,e.\ the MRCA of Gothic, Old West Norse, Icelandic, Faroese, Norwegian, Swedish, Danish, Old English, English, Frisian, Old High German, German, Luxembourgish, Swiss German, Dutch, Flemish and Afrikaans): Uniform between 2250~yBP and 20000~yBP;
   \item Romance (i.\,e.\ the MRCA of Latin, Nuorese, Cagliari, Romanian, Catalan, Portuguese, Spanish, French, Provencal, Walloon, Ladin, Romansh, Friulian and Italian): Uniform between 1750~yBP and 20000~yBP;
