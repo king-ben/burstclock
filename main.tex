@@ -111,8 +111,8 @@ and our model may even be applicable to some cases of biological evolution.
 
 \begin{fmtext}
 \section{Introduction}
-Phylogenetic inference methods re-construct the evolu\-tionary tree of a group of
-relatives from their hierarchy of common ancestors.
+Phylogenetic inference methods reconstruct the e\-volu\-tion\-ary tree of a group of
+relatives, i.\,e. their hierarchy of common ancestors.
 These methods were originally developed for biological organisms, but have seen extensive
 use in the study of cultural evolution \parencite{evans2021uses}, in particular in
 linguistics.
@@ -124,7 +124,7 @@ histories based on a relatively small number of broad calibration points
 \parencite{borchsenius2017phylogenetics}.
 Modern phylogenetic inference methods assume that evolution is driven by
 stochastic processes. Using stochastic sampling methods and computational models,
-an inference program such as BEAST2 \parencite{drummond2015bayesian} or MrBayes \parencite{mrbayes}
+an inference program such as BEAST2 \parencite{drummond2015bayesian}
 generates a sample of trees and parameter values that fit the data and the prior knowledge
 about the evolutionary process.
 
@@ -150,10 +150,10 @@ world.
 Languages function to identify in-groups, and as such they mark social
 boundaries \parencite{labov1963social,epps2020amazonian}.
 % In some known cases, they thus serve to define potential marriage partners in exogamous societies, such that language differences are maintained even where peoples strongly mix \parencites[p. 17f]{aikhenvald2002language}, but linguistic exogamy is not the only factor that leads to language differences being maintained \parencite{epps2020amazonian}.
-While contact-induced divergence \textcite{evans2019linguistic} can continue
+While contact-induced divergence \parencite{evans2019linguistic} can continue
 throughout the evistence of a language, these linguistic processes presumably
 matter most at times when languages split, driving the schism (thus
-“schismogenesis”) and in turn being driven by the exaggerated observation of
+“schismogenesis”) and in turn being driven by the observation of exaggerated
 differences. A lineage with more language diversification would thus be more
 different from a common ancestral language than its individual sibling language
 which has not undergone any splits, despite the fact that the same amount of
@@ -164,7 +164,7 @@ Quantitative evidence for this effect was supplied by
 \textcite{atkinson2008languages}. Using lexical cognate data, they studied the
 signal of punctuated equilibrium \parencite{eldredge1972punctuated} in the
 Austronesian, Bantu, and Indo-European tree.
-Using lexical data is the standard approach in linguistic phylogenies,
+Lexical data is the standard data type in linguistic phylogenies,
 but significant in the contex of schismogenesis:
 The lexicon is one of the domains
 of language most apparent to speakers and accessible to conscious manipulation
@@ -299,11 +299,14 @@ available as online supplementary material and through
 A linguistic phylogenetic inference attempts to re-construct the evolutionary
 tree of a language family from linguistic data. The predominant approach uses
 lexical data to infer binary trees (where each internal node represents a split
-of a single ancestral language into two daughter languages). The compatibility
+of a single ancestral language into two daughter languages). The compatibility to the data
 of a particular model (a tree together with an evolutionary process, including
-all the parameters of th process) is given by the posterior probability of the
+all the parameters of the process) is given by the posterior probability of the
 model given the data, which according to Bayes' theorem can be computed from
 likelihood of the data under the model and the prior probability of the model.
+\begin{align}
+    P(\text{Model}\mid\text{Data}) \propto P(\text{Data}\mid\text{Model}) \cdot P(\text{Model})
+\end{align}
 Such a Bayesian inference needs to describe the evolutionary process in terms of
 the overall assumed shape of evolutionary trees (the tree prior), the process
 that drives the evolutionary divergence by changing the data along a branch (the
@@ -315,7 +318,7 @@ subgrouping may use tree priors and branch rate models that produce
 non-ultrametric trees, which do not permit ascribing times to nodes and
 branches. Otherwise, they tend to use one of two ‘clock models’. Clock models
 assume that each split happens at a particular point in time, so each branch
-represents a time span, and they describe the relationship between time and
+represents a time span. The clock model then describes the relationship between time and
 evolutionary divergence.
 
 In a strict clock,
@@ -327,7 +330,7 @@ the expected number of changes $e_i$ on the branch leading to node $i$ is the pr
 This mapping between time and expected number of evolutionary changes goes back
 to the “molecular clock” observation in the 1960s
 \parencite{zuckerkandl1965evolutionary,kumar2005molecular}. Since then, a variety of clock models
-has been developed and applied in biology (see \textcite{ho2014molecularclock} for an
+has been developed and applied in biology (see \parencite{ho2014molecularclock} for an
 overview).
 % https://onlinelibrary.wiley.com/doi/full/10.1111/mec.12953: This was
 % transformed by the development of the molecular clock in the 1960s
@@ -347,7 +350,7 @@ fit the data better than a strict clock
 and has found its way into current general advice on linguistic phylogenies
 \parencite{maurits2017beastling,hoffmann2021bayesian}.
 
-The burst clock generalizes the strict clock in a different manner, which can be combined with relaxed clock models.
+The burst clock, which we introduce here, generalizes the strict clock in a different manner, which can be combined with relaxed clock models.
 The strict clock and the URC both assume that all change is accumulated gradually
 through time.
 For the burst clock, we instead assume that bursts of evolution at split events
@@ -376,7 +379,7 @@ For $b=0$, this model reduces to the strict clock without bursts.
 If all languages of a family under study were attested, and thus all splits throughout
 the family's history were to show up in the evolutionary tree, this model would be sufficient.
 However, in no language family do we expect to know all languages, and in most
-language families even the contemporary languages are not completely known \parencite{}. 
+language families even the contemporary languages are not completely known \parencite{glottoscope}. 
 Unobserved splits, where a language splits in two, but one of
 the two descendant branches goes extinct before being observed or is not sampled,
 should contribute to language change in the same manner as observed splits.
@@ -385,10 +388,10 @@ For $u_i$ unobserved changes on the branch leading to $i$, we would thus expect 
 We therefore need to find an estimate for the unobserved splits.
 We do this here for a specific tree prior.
 One of the most frequently used tree priors in linguistic phylogenies
-is the (fossilized) birth-death tree prior \parencite{gernhard2008conditioned,stadler2010samplingthroughtime,heath2014fossilized}.
+is the (fossilized) birth-death tree prior \parencite{gernhard2008conditioned,stadler2010samplingthroughtime,heath2014fossilized,rama2018three}.
 Under this prior, the rate at which
 languages split (birth rate $\lambda$) is either included explicitly or in terms of net diversification rate and turnover.
-The expected number of splits along a branch is then $\lambda \cdot l_i$, and one of these – the one where the branch begins – is observed, so $1 + u_i = \lambda \cdot l_i$.
+The expected number of splits along a branch is then $\lambda \cdot l_i$, and one of these –~the one where the branch begins~– is observed, so $1 + u_i = \lambda \cdot l_i$.
 
 For a sampling proportion $q$ and $t$ observed leaves, the total number of unobserved and observed leaves will be
 $\frac{t}{q}$, so there are $\frac{t}{q} - 1$ net splits,
@@ -448,7 +451,7 @@ We repeat this procedure $100$ times.
 If our burst clock model is well calibrated, the ground truth parameters should fall within the $p\%$ credible interval in $p\%$ of the simulation runs. In addition, the clock without bursts should mis-estimate ground truth parameters.
 
 % Simulation configuration
-In each of the $100$ simulation runs we simulate ultrametric phylogenetic trees with $20$ taxa according to a Yule model with strong priors on the height of $4$ internal nodes. These $4$ calibration points are necessary to infer the clock rate from the data. We use a relaxed clock model with a fixed standard deviation of $0.5$ and a lognormal prior with mean $0.35$ and $\sigma = 0.5$ on the clock rate.
+In each of the $100$ simulation runs we simulate ultrametric phylogenetic trees with $20$ taxa according to a Yule model (a special case of the birth-death prior with no deaths) with strong priors on the height of $4$ internal nodes. These $4$ calibration points are necessary to infer the clock rate from the data. We use a relaxed clock model with a fixed standard deviation of $0.5$ and a lognormal prior with mean $0.35$ and $\sigma = 0.5$ on the clock rate.
 
 At the same time, we simulate parameters for a burst clock model from an independent prior. In order to simplify the model selection between clocks with and without bursts, we implement a prior that selects the URC without bursts with a prior probability of $0.5$ as follows. The parameter $b$ is drawn from a normal distribution with mean $0$ and standard deviation $0.05$. Negative values for $b$ are treated as a plain non-burst clock model. (Positive values result in a burst clock model with $b$ as burst parameter.) In inference, $b$ is similarly permitted to take on negative values to represent a clock without bursts.
 
@@ -480,7 +483,7 @@ in line with the results of \textcite{atkinson2008languages}.
 We infer dated language phylogenies using a state-of-the-art inference model for each of these data sets, using a strict burst clock and a relaxed burst clock.
 Both clock models are configured such that their priors produce a non-burst clock with a
 probability of $\frac{1}{2}$ and a burst clock with a probability also of
-$\frac{1}{2}$, allowing us to directly compare the models and compute Bayes factors based on the posterior
+$\frac{1}{2}$, allowing us to directly compare the burst and no-burst case and compute Bayes factors based on the posterior
 distribution.
 The model we use is the same for all four language families, as described below.
 The formal model description, in the shape of an XML template file in the
@@ -571,7 +574,7 @@ These are specific to the language families and will also be discussed in the fo
 
 \subsection{Austronesian}\label{s:austronesian}
 \input{supplement/austronesian/stats.tex}
-The Austronesian language family is …
+The Austronesian language family is the second-largest language family of the world, spread between most island groups of the pacific and Madagascar.
 Due to the wide spread, these languages have been regularly studied using phylogenetics, eg. by
 \textcite{gray2009language,greenhill2017evolutionary,greenhill2018population}.
 \paragraph{Lexical Data}
@@ -584,7 +587,7 @@ Hovever, in that case the data set is reduced to the overlap with a grammatical 
 All three papers use the Austronesian Basic Vocabulary Database for their lexical data, but the official version of that database
 (\url{https://abvd.shh.mpg.de/austronesian/}) is published without a persistent identifier, not freely usable, and not available in a re-usable format, so we instead make use of the ABVD
 data in the standardized CLDF format \parencite{cldf} curated on \url{https://github.com/lexibank/abvd}, which is published under a
-permissive Creative Commons (CC-BY-4.0) license. We use the most recent version, commit \texttt{17a4b30922f9d1010667ae8974f814c624e3e9a4}
+permissive Creative Commons (CC-BY-4.0) license. We use the most recent version before the start of our study, commit \texttt{17a4b30922f9d1010667ae8974f814c624e3e9a4}
 (2020-07-10). We filtered to the Austronesian doculects\footnote{The database contains several instances where different
 sources for the same variety (judging by name and Glottocode) give rise to different ‘language’ objects in the data set, so the term
 ‘doculect’ appears more appropriate than ‘language’ or ‘dialect’ in discussing the composition of the data set, even though some languages may be aggregated from more than one source.} that have a coverage
@@ -596,25 +599,33 @@ of at least 85\% of all concepts (189 or more concepts). This results in \countl
 % greenhill2018population: No calibrations
 % greenhill2017: To calibrate these clocks, we incorporated historical evidence of language divergence times as described by Gray et al. (50). We implemented five calibrations on the tree using normally distributed priors on the node heights. These calibrations were the following: (i) Proto-Oceanic (mean of 3,300 y, SD = 100 y), (ii) Proto-Central Pacific (mean of 3,000 y, SD = 100), (iii) Proto-Malayo-Polynesian (mean of 4,000 y, SD = 250), (iv) Proto-Micronesian (mean of 2,000 y, SD = 100), and (v) Proto-Austronesian (mean of 5,200 y, SD = 300).
 Following \textcite{greenhill2017evolutionary}, we calibrate five nodes using normally
-distributed priors. We supplement this with age constraints taken from \textcite[Table S3]{gray2009language}, where we interpret the ranges given as $\pm 2\sigma$ intervals of a normal distribution. This leads to the following node calibrations, sorted by their mean. We do not constrain the languages with these calibrations to be clades: a given calibrated MRCA node may be ancestral to more languages than explicitly listed.
-\begin{itemize}
-\item ‘Proto-Austronesian (mean of 5,200 y, SD = 300)’, i.\,e.\ on the root of our tree;
-\item ‘Proto-Malayo-Polynesian (mean of 4,000 y, SD = 250)’, i.\,e.\ on the most recent common ancestor (MRCA) of all languages inside the Glottolog family \glot{Malayo-Polynesian}{mala1545};
-\item ‘Proto-Oceanic (mean of 3,300 y, SD = 100 y)’, i.\,e.\ on the MRCA of \glot{Oceanic}{ocea1241};
-\item \glot{Central Pacific}{cent2060} $\mu=3000, \sigma=100$;
-\item \glot{Micronesian}{micr1243} $\mu=2000, \sigma=100$;
-\item \glot{Malayo-Chamic}{nort3170}: $\mu=1500, \sigma=250$.
-\item \glot{Tuvalu and Tokelau}{elli1239}: $\mu=1500, \sigma=250$;
-\item \glot{East Polynesian}{east2449}: $\mu=1475, \sigma=167.5$; 
-\item \glot{Malagasic}{mala1537}: $\mu=1200, \sigma=50$;
-\item \glot{Javanese}{java1253}: $\mu=1200, \sigma=50$;
-\item \glot{Chamic}{cham1330}: $\mu=1150, \sigma=175$;
-\end{itemize}
+distributed priors. We supplement this with age constraints taken from \textcite[Table S3]{gray2009language}, where we interpret the ranges given as $\pm 2\sigma$ intervals of a normal distribution. This leads to the node calibrations given in \cref{t:austronesian}. We do not constrain the languages with these calibrations to be clades: a given calibrated MRCA node may be ancestral to more languages than explicitly listed.
+\begin{table}
+    \centering
+    \begin{tabular}{lrrcp{5cm}}
+\textbf{Languages} & \textbf{$\mu$} & \textbf{$\sigma$} & \textbf{Source} \\
+all & 5,200 & 300 & \parencite{greenhill2017evolutionary} & i.\,e.\ on the root of our tree \\
+\glot{Malayo-Polynesian}{mala1545} & 4,000 & 250 & \parencite{greenhill2017evolutionary} \\
+\glot{Oceanic}{ocea1241} & 3,300 & 100 & \parencite{greenhill2017evolutionary} \\
+\glot{Central Pacific}{cent2060} & 3,000 & 100 & \parencite{greenhill2017evolutionary} \\
+\glot{Micronesian}{micr1243} & 2,000 & 100 & \parencite{greenhill2017evolutionary} \\
+\glot{Malayo-Chamic}{nort3170} & 1,500 & 250 & \parencite{gray2009language} \\
+\glot{Tuvalu and Tokelau}{elli1239} & 1,500 & 250 & \parencite{gray2009language} \\
+\glot{East Polynesian}{east2449} & 1,475 & 167.5 & \parencite{gray2009language} \\
+\glot{Malagasic}{mala1537} & 1,200 & 50 & \parencite{gray2009language} \\
+\glot{Javanese}{java1253} & 1,200 & 50 & \parencite{gray2009language} \\
+\glot{Chamic}{cham1330} & 1,150 & 175 & \parencite{gray2009language} \\
+\abvd{Old Javanese}{290} & 950 & 125 & \parencite{gray2009language,zoetmulder1982old} & Tip calibration
+    \end{tabular}
+    \caption{Calibrations for Austronesian}
+    \label{t:austronesian}
+\end{table}
+
 The only \glot{Reefs-Santa Cruz language}{reef1242} in our Austronesian lexical data set is \abvd{Äiwoo}{501}, so a calibration of the most recent ancestor of all Reefs-Santa Cruz languages is not possible.
 
-In terms of tip calibrations given by \textcite{gray2009language}, the table row on \abvd{Old Javanese}{290} cites \textcite{zoetmulder1982old} for a date between 700 and 1200 BP ($\mu=950, \sigma=125$).
-All their other tip calibrations either do not apply to our filtered data set or are dubious:
+In terms of tip calibrations given by \textcite{gray2009language}, the table row on \abvd{Old Javanese}{290} cites \textcite{zoetmulder1982old} for a date between 700 and 1200 BP.
 For \abvd{Favorlang}{831}, some of the data derives from Dutch sources from the mid-1600s, others from wordlists collected around 1900. Such a mix of data makes it unsuitable for dating, so we completely exclude \abvd{Favorlang}{831} from the lexical data.
+All their other tip calibrations do not apply to our filtered data set.
 
 \subsection{Bantu}\label{s:bantu}
 The Bantu languages are a part of the Atlantic-Congo language family. They
@@ -631,19 +642,25 @@ The supplementary data from the 2015 paper \parencite{grollemund2015bantu} is av
 % greenhill2018population: No calibrations
 % grollemund2015bantu: We used archaeological data to propose date ranges, and in one case a fixed date, for four nodes of our tree (labeled a–d in Fig. 1). The four calibrations are as follows: (a) 5,000 B.P. or older for Bantoid, non-Bantu (58); (b) 4,000–5,000 B.P. for Narrow Bantu (13, 14, 16, 44, 59, 60); (c) 3,000–3,500 B.P. for the Mbam-Bubi ancestor (61); and (d) 2,500 B.P. for Eastern Bantu (62). We used a uniform prior in our Bayesian tree inference for all calibration ranges.
 We take the calibration ranges from \textcite{grollemund2015bantu}.
+To obtain a proper prior where only lower bounds are given, we specify those as uniform priors with an upper bound of 20,000. Ranges we interpret as $\pm 2\sigma$ intervals of a normal distribution, like for Austronesian:
 The dates appear to be rounded to a precision of 500 years, so it is dubious that eg. an age of 3499~yBP has 100\% prior probability for the Mbam-Bubi ancestor, while 3501~yBP has a prior probability of 0.
-Like for Austronesian, we thus interpret the ranges given as $\pm 2\sigma$ intervals of a normal distribution.
-
-but generally use normal distributions instead of uniform distributions. Again we do not enforce monophyly, which is particularly important for this language family, where two of the calibrated language groups (Bantoid and Mbam-Bubi) are paraphyletic in Glottolog.
-\begin{itemize}
-\item A uniform prior above 5000~yBP (with upper limit 20000~yBP) for the MRCA of the non-Bantu Bantoid languages (aghemgrassfields, njengrassfields, mbulajarawan, bamungrassfields, fefegrassfields, okugrassfields, dugurijarawan, moghamograssfields, bwazzajarawan, komgrassfields, bilejarawan, kulungjarawan, mungakagrassfields, zaambojarawan, tivtivoid);
-\item For the languages in \glot{Narrow Bantu}{narr1281}, a normal distribution with $\mu=4500, \sigma=250$;
-\item For the MRCA of the \glot{Mbam languages}{mbam1252} and \glot{Bubi}{bubi1250}, $\mu=3250, \sigma=125$;
-\item For \glot{East Bantu}{east2731}, $\mu=2500, \sigma=50$.
-\end{itemize}
+Again we do not enforce monophyly, which is particularly important for this language family, where two of the calibrated language groups (Bantoid and Mbam-Bubi) are paraphyletic in Glottolog.
+\begin{table}
+    \centering
+    \begin{tabular}{p{7cm}rrcl}
+\textbf{Languages} & \textbf{min} & \textbf{max} & \textbf{Source}\\
+non-Bantu Bantoid languages (aghemgrassfields, njengrassfields, mbulajarawan, bamungrassfields, fefegrassfields, okugrassfields, dugurijarawan, moghamograssfields, bwazzajarawan, komgrassfields, bilejarawan, kulungjarawan, mungakagrassfields, zaambojarawan, tivtivoid)& 5,000 & 20,000 & \parencite{grollemund2015bantu} & from lower bound\\
+\textbf{Languages} & \textbf{$\mu$} & \textbf{$\sigma$} & \textbf{Source}\\
+\glot{Narrow Bantu}{narr1281} & 4,500 & 250 & \parencite{grollemund2015bantu} \\
+\glot{Mbam languages}{mbam1252} and \glot{Bubi}{bubi1250} & 3,250 & 125 & \parencite{grollemund2015bantu} \\
+\glot{East Bantu}{east2731} & 2,500 & 50 & \parencite{grollemund2015bantu}
+    \end{tabular}
+    \caption{Calibrations for Bantu}
+    \label{t:austronesian}
+\end{table}
 
 \subsection{Indo-European}\label{s:indoeuropean}
-For obvious reasons, Indo-European has been extensively studied using lexical Bayesian phylogenetics since the beginning
+Indo-European, the dominant language family of Europe, has been extensively studied using lexical Bayesian phylogenetics since the beginning
 of the field
 \parencite{bouckaert2012mapping,chang2015ancestryconstrained,gray2003language,holm2017steppe,rama2018three,willems2016using}
 
