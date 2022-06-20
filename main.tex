@@ -674,19 +674,19 @@ that data set over the alternatives considered, so we base our analysis on that 
 \url{https://github.com/PhyloStar/ie-phylo-exps/blob/a63c0b52f7772adc2341572932a74b23d92570df/medium1.nex}.
 
 \paragraph{Calibrations}
-Following the evidence presented by \textcite[Tables 7 and 12]{chang2015ancestryconstrained}, we implement the following node and tip calibrations, which are minimum ages (capped at an upper bound of 20000~yBP using a uniform prior to obtain a proper prior distribution) or normal distributions as given by the reference. Because of the presence of several old languages, \cref{t:indoeuropean} lists all individual languages in each group.
+Following the evidence presented by \textcite[Tables 7 and 12]{chang2015ancestryconstrained}, we implement the node and tip calibrations in \cref{t:indoeuropean}, which are minimum ages (capped at an upper bound of 20000~yBP using a uniform prior to obtain a proper prior distribution) or normal distributions as given by the reference. Because of the presence of several old languages, \cref{t:indoeuropean} lists all individual languages in each group to avoid confusion.
 \begin{table}
   \centering
-  \begin{tabular}{lrrcp{5cm}}
-    \textbf{Languages} & \textbf{$\mu$} & \textbf{$\sigma$} & \textbf{Source} \\
-    Gothic, Old West Norse, Icelandic, Faroese, Norwegian, Swedish, Danish, Old English, English, Frisian, Old High German, German, Luxembourgish, Swiss German, Dutch, Flemish and Afrikaans & Uniform between 2250~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & Germanic  \\
-    Latin, Nuorese, Cagliari, Romanian, Catalan, Portuguese, Spanish, French, Provencal, Walloon, Ladin, Romansh, Friulian and Italian & Uniform between 1750~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & Romance  \\
-    Old West Norse, Icelandic, Faroese, Norwegian, Swedish and Danish & Uniform between 1500~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & Scandinavian  \\
-    Czech, Slovak, Polish, Upper Sorbian, Ukrainian, Belarusian, Russian, Slovenian, Macedonian, Bulgarian, Serbian and Old Church Slavic & Uniform between 1500~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & Slavic  \\
-    Lithuanian and Latvian & Uniform between 1300~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & East Baltic  \\
-    Welsh, Breton and Cornish & Uniform between 1250~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained} & British Celtic  \\
-    Irish and Scots Gaelic & Uniform between 1050~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained}  \\
-    Tajik and Persian & Uniform between 750~yBP and 20000~yBP & \parencite{chang2015ancestryconstrained}  \\
+    \begin{tabular}{p{7cm}rrcl}
+    \textbf{Languages} & \textbf{min} & \textbf{max} & \textbf{Source} \\
+    Gothic, Old West Norse, Icelandic, Faroese, Norwegian, Swedish, Danish, Old English, English, Frisian, Old High German, German, Luxembourgish, Swiss German, Dutch, Flemish and Afrikaans & 2250 & 20000 & \parencite{chang2015ancestryconstrained} & Germanic  \\
+    Latin, Nuorese, Cagliari, Romanian, Catalan, Portuguese, Spanish, French, Provencal, Walloon, Ladin, Romansh, Friulian and Italian & 1750 & 20000 & \parencite{chang2015ancestryconstrained} & Romance  \\
+    Old West Norse, Icelandic, Faroese, Norwegian, Swedish and Danish & 1500 & 20000 & \parencite{chang2015ancestryconstrained} & Scandinavian  \\
+    Czech, Slovak, Polish, Upper Sorbian, Ukrainian, Belarusian, Russian, Slovenian, Macedonian, Bulgarian, Serbian and Old Church Slavic & 1500 & 20000 & \parencite{chang2015ancestryconstrained} & Slavic  \\
+    Lithuanian and Latvian & 1300 & 20000 & \parencite{chang2015ancestryconstrained} & East Baltic  \\
+    Welsh, Breton and Cornish & 1250 & 20000 & \parencite{chang2015ancestryconstrained} & British Celtic  \\
+    Irish and Scots Gaelic & 1050 & 20000 & \parencite{chang2015ancestryconstrained}  \\
+    Tajik and Persian & 750 & 20000 & \parencite{chang2015ancestryconstrained}  \\
     \textbf{Languages} & \textbf{$\mu$} & \textbf{$\sigma$} & \textbf{Source} \\
     Hittite & 3400 & 100 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
     Vedic Sanskrit & 3250 & 250 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
@@ -694,14 +694,14 @@ Following the evidence presented by \textcite[Tables 7 and 12]{chang2015ancestry
     Ancient Greek & 2450 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
     Latin & 2150 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
     Gothic & 1650 & 25 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
-    Old High German & 1150 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
-    Old English & 1000 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
-    Old West Norse & 800 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
     Classical Armenian & 1550 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
     Tocharian B & 1350 & 150 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
     Old Irish & 1200 & 100 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
-    Cornish & 300 & 100 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
-    Old Church Slavic & 1000 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration
+    Old High German & 1150 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Old English & 1000 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Old Church Slavic & 1000 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Old West Norse & 800 & 50 & \parencite{chang2015ancestryconstrained} & Tip calibration \\
+    Cornish & 300 & 100 & \parencite{chang2015ancestryconstrained} & Tip calibration
   \end{tabular}
   \caption{Calibrations for Indo-European}
   \label{t:indoeuropean}
@@ -709,28 +709,36 @@ Following the evidence presented by \textcite[Tables 7 and 12]{chang2015ancestry
 
 
 \subsection{Sino-Tibetan}\label{s:sinotibetan}
-The Sino-Tibetan language family has been recently studied using computational phylogenetic methods by two independent groups
+The Sino-Tibetan language family, the fourth-largest family worldwide, has been recently studied using computational phylogenetic methods by two independent groups
 \parencite{sagart2019dated,zhang2019phylogenetic}.
 \paragraph{Lexical Data}
 The lexical data is available as supplementary material for each of these two
 articles. Both data sets are ultimately derived from the STEDT data set
 \parencite{stedt}. \Citeauthor{sagart2019dated} are very explicit concerning their
-data selection and cognate coding method and also make their BEAST2 file available from \url{https://github.com/lingpy/sino-tibetan-paper/blob/v1.0.3/BeastFiles/sinotibetan-beast-covarion-relaxed-fbd.xml}, while
-\Citeauthor{zhang2019phylogenetic} retain a larger language sample.
+data selection and cognate coding method and also make their BEAST2 file available from \url{https://github.com/lingpy/sino-tibetan-paper/blob/v1.0.3/BeastFiles/sinotibetan-beast-covarion-relaxed-fbd.xml}.
+\Citeauthor{zhang2019phylogenetic} on the other hand retain a larger language sample.
 While smaller, the \textcite{sagart2019dated} data set seems thus much more carefully
 curated and re-usable, and is therefore preferable for our analysis.
 The data underlying that article is curated on \url{https://github.com/lexibank/sagartst}, the specific analyses have been published on \url{https://github.com/lingpy/sino-tibetan-paper}.
 
 \paragraph{Calibrations}
+Our calibrations for Sino-Tibetan can be seen in \cref{t:sinotibetan}. They are derived as follows.
 \Textcite{sagart2019dated} list a few fixed tip dates. Three of these tip dates are taken from the dating of earliest sources and rounded to the nearest century, so they actually come with an uncertainty of about $\sigma=25$. In their BEAST2 XML, these tip dates (even the Old Chinese tip date described with a uniform prior in the paper text, and which we take as a normal distribution in the same way as for Austronesian and Bantu) are assumed fixed.
-We therefore take tip dates to be the following.
-\begin{itemize}
-    \item Old Chinese: $\mu=2550, \sigma=125$;
-    \item Old Burmese: $\mu=800, \sigma=25$;
-    \item Old Tibetan: $\mu=1200, \sigma=25$;
-    \item Tangut: $\mu=900, \sigma=25$.
-\end{itemize}
-In addition, their BEAST2 XML file contains a uniform node calibration between 2.0 to 2.2 kyBP for the MRCA of the Sinitic dialects (Beijing, Chaozhou, Guangzhou, Jieyang, Longgang, and Xingning). We implement normal version ($\mu=2100, \sigma=50$) of this MRCA calibration.
+\begin{table}
+  \centering
+    \begin{tabular}{p{7cm}rrcl}
+    \textbf{Languages} & \textbf{$\mu$} & \textbf{$\sigma$} & \textbf{Source} \\
+Beijing, Chaozhou, Guangzhou, Jieyang, Longgang, Xingning & 2100 & 50 & \parencite{sagart2019dated} & Sinitic dialects \\
+     Old Chinese & 2550 & 125& \parencite{sagart2019dated} & Tip calibration \\
+     Old Tibetan & 1200 & 25& \parencite{sagart2019dated} & Tip calibration \\
+     Tangut & 900 & 25& \parencite{sagart2019dated} & Tip calibration \\
+     Old Burmese & 800 & 25& \parencite{sagart2019dated} & Tip calibration \\
+\end{tabular}
+  \caption{Calibrations for Sino-Tibetan}
+  \label{t:sinotibetan}
+\end{table}
+
+In addition, their BEAST2 XML file contains a uniform node calibration between 2000 and 2200 yBP for the MRCA of the Sinitic dialects (Beijing, Chaozhou, Guangzhou, Jieyang, Longgang, and Xingning). We like for the other language families, we replace the uniform range with a normal distribution for this MRCA calibration.
 The additional node calibrations from \textcite{zhang2019phylogenetic} are either approximately given by the tip calibrations already (Chinese, Tibetan, Burmese), or not applicable to the reduced data set by \textcite{sagart2019dated} (Pumi, Yi).
 
 % sagart2019dated: We specified calibrations as follows: Old Chinese, [2,800 to 2,300] yBP, in a uniform prior; Old Burmese, 800 yBP; Old Tibetan, 1,200 yBP; and Tangut, 900 yBP (the date range for Old Chinese corresponds to the period of the great Classical Chinese texts; the other dates correspond to the date of the earliest text rounded to the nearest century; see also SI Appendix, section 4).
@@ -753,7 +761,11 @@ The additional node calibrations from \textcite{zhang2019phylogenetic} are eithe
     \label{f:simulation}
 \end{figure}
 
-In the simulation study we simulated data with varying burst size $b$. \cref{f:simulation} shows the simulated and estimated root height, clock rate and burst size for reconstructions without bursts (left column; $b$ is fixed to $0$) and reconstructions with bursts (right column); For the reconstruction, the burst parameter $b$ was estimated, but it could be effectively set to $0$ both in the simulation and in the inference (represented using negative parameter values).
+In the simulation study we simulated data with varying burst size $b$. The results show that the burst parameter $b$ is identifiable even for a relaxed clock, while inference of burst-clock data with a non-burst clock leads to systematic errors in important model parameters.
+
+\Cref{f:simulation} shows the simulated and estimated root height, clock rate and burst size for reconstructions without bursts (left column; $b$ is fixed to $0$) and reconstructions with bursts (right column); For the reconstruction, the burst parameter $b$ was estimated, but it could be effectively set to $0$ both in the simulation and in the inference (represented using negative parameter values).
+When bursts are simulated but the inference model permits no bursts, the model systematically mis-estimates the root height (top left in \cref{f:simulation}) or overestimates the clock rate (mid left in \cref{f:simulation}) to account for the extra evolution due to bursts.
+
 Reconstructing the parameters with the burst clock model serves as a
 verification that the MCMC can faithfully infer parameters under model
 assumptions. We show that this is the case in the right column of \cref{f:simulation}. The $95\%$ coverage (numbers in the lower right corner) is between  $91$ to $99$ in for all parameters, as expected in a well calibrated model. For positive values, the model faithfully detected the burst size, even when it is very close to $0$.
@@ -761,28 +773,47 @@ For data simulated without bursts ($b\leq 0$), the inference faithfully recovers
 a clock without bursts.
 
 \subsection{Case studies}
+\input{supplement/analysis/stats.tex}
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{supplement/analysis/runtimes.png}
-  \caption{Runtimes of different analyses}\label{f:runtimes}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/austronesian_years_per_split.png}
+    \caption{Austronesian}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/bantu_years_per_split.png}
+    \caption{Bantu}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/indoeuropean_years_per_split.png}
+    \caption{Indoeuropean}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/sinotibetan_years_per_split.png}
+    \caption{Sino-Tibetan}
+  \end{subfigure}
+  \caption{Evolutionary contribution of each language split, in effective years}
+  \label{f:peryear}
 \end{figure}
-We find a vastly different time to apparent convergence for the different
-analyses, see \cref{f:runtimes}. While the strict clock for Sino-Tibetan converged within 50 hours,
-several runs for Austronesian and Bantu with relaxed clock did not meet our
-stopping criteria after more than 2500 hours. Despite using the optimized relaxed clock
-implementation by \textcite{orc}, the runs for Austronesian with relaxed clock
-(with or without bursts) regularly jumped between two regions in the parameter
-space, one containing trees with a mean height of ca. 4400 years and one with a
-mean tree height above 5000 years. Following \textcite{brown2018behavior}, we cannot
-assume that the posterior sample of these chains is informative about the
-model's relative posterior probability for these two different parameter regions.
-We can therefore not accurately describe the tree height and mean clock rate of
-the relaxed Austronesian runs. All other parameters of these runs however appear
-converged and uncorrelated with tree height, so they allow valid analysis.
-All other runs have a large effective sample size for all parameters
-and no apparent jumps between different parameter regions,
-indicating convergence; some Bantu relaxed clock runs achieve
-effective sample sizes of 200 for all parameters only for burnins $\gg 10\%$.
+
+In each burst clock run, the model was unconstrained and permitted to instead
+select a model without bursts. The prior probability mass was equally distributed
+between no bursts and bursts. This means that the Bayes factor can be directly estimated from the posterior sample.
+Despite this uninformative prior, all samples of the
+Austronesian, Bantu, and Indo-European analyses have a positive value for bursts,
+so the Bayes factor in favour of the burst clock is the effective sample size of
+the burst parameter in these models (between $\minessx$ for \minessn{} and
+$\maxessx$ for \maxessn{}). For Sino-Tibetan,
+the posterior probability of the burst clock is at least $\worstburst$ times as much as the clock
+without bursts.
+
+The average contribution of a language split varies between $\minx$ (5\%
+quantile of \minn, including the posterior sample cases where language splits are not associated with no expected changes at all) and $\maxx$ (95\% quantile of \maxn)
+expected changes per cognate class. Comparing this with the clock rate, we get
+that around the time of a split, languages change about as much as otherwise in
+about 100 to 150 years of independent evolution. The distributions of the
+evolutionary contributions of split events compared to time of independent
+evolution in shown in \cref{f:peryear}.
 
 \begin{figure}
   \centering
@@ -811,114 +842,60 @@ inferences is shown in \cref{f:clock}. These values are derived from the loss
 rate (transition rate from ‘presence’ to ‘absence’ of a cognate class in a
 concept) which governs the clock rate of the inference. While the median of our
 prior lies around 44\% lexical replacement over 1000 years, the data suggests
-much faster replacement, closer to the \textcite{swadesh1955greater}
+much slower replacement, closer to the \textcite{swadesh1955greater}
 rule-of-thumb of 20\% over 1000 years, but varying widely around it, with
-Austronesian showing much faster change and Sino-Tibetan much slower. With the
-exception of Sino-Tibetan, the relaxed clock with bursts infers the lowest
-lexical replacement rates and the strict clock without bursts the highest rates.
+Austronesian showing much faster change and Sino-Tibetan much slower.
 
+\paragraph{Convergence}
 \begin{figure}
   \centering
-  \begin{subfigure}{0.4\textwidth}
-    \includegraphics[width=\textwidth]{supplement/analysis/austronesian_years_per_split.png}
-    \caption{Austronesian}
-  \end{subfigure}
-  \begin{subfigure}{0.4\textwidth}
-    \includegraphics[width=\textwidth]{supplement/analysis/bantu_years_per_split.png}
-    \caption{Bantu}
-  \end{subfigure}
-  \begin{subfigure}{0.4\textwidth}
-    \includegraphics[width=\textwidth]{supplement/analysis/indoeuropean_years_per_split.png}
-    \caption{Indoeuropean}
-  \end{subfigure}
-  \begin{subfigure}{0.4\textwidth}
-    \includegraphics[width=\textwidth]{supplement/analysis/sinotibetan_years_per_split.png}
-    \caption{Sino-Tibetan}
-  \end{subfigure}
-  \caption{Evolutionary contribution of each language split, in effective years}
-  \label{f:peryear}
+  \includegraphics[width=0.7\textwidth]{supplement/analysis/runtimes.png}
+  \caption{Runtimes of different analyses. Filled circles correspond to runs that reached an effective sample size of $200$ with $20\%$ burnin for all parameters. Empty circles correspond to runs which had an ESS of less than $200$ for at least one model parameter, and which were thus considered unconverged and not included in the analysis.}\label{f:runtimes}
 \end{figure}
+We find a vastly different time to apparent convergence for the different
+analyses, see \cref{f:runtimes}. While the strict clock for Sino-Tibetan converged within 50 hours,
+several runs for Austronesian and Bantu with relaxed clock did not meet our
+stopping criteria after more than 2500 hours.
 
-\input{supplement/analysis/stats.tex}
-The average contribution of a language split varies between $\minx$ (5\%
-quantile of \minn) and $\maxx$ (95\% quantile of \maxn)
-expected changes per cognate class. Comparing this with the clock rate, we get
-that around the time of a split, languages change about as much as otherwise in
-about 100 to 150 years of independent evolution. The distributions of the
-evolutionary contributions of split events compared to time of independent
-evolution in shown in \cref{f:peryear}.
+Despite using the optimized relaxed clock
+implementation by \textcite{orc}, the runs for Austronesian with relaxed clock
+(with or without bursts) regularly jumped between two regions in the parameter
+space, one containing trees with a mean height of ca. 4400 years and one with a
+mean tree height above 5000 years. Following \textcite{brown2018behavior}, we cannot
+assume that the posterior sample of these chains is informative about the
+model's relative posterior probability for these two different parameter regions.
+We can therefore not accurately describe the tree height and mean clock rate of
+the relaxed Austronesian runs. All other parameters of these runs however appear
+converged and uncorrelated with tree height, so they allow valid analysis.
 
-In each burst clock run, the model was unconstrained and permitted to instead
-select a model without bursts. The prior probability mass was equally distributed
-between no bursts and bursts. This means that the Bayes factor can be directly estimated from the posterior sample.
-Despite this uninformative prior, all samples of the
-Austronesian, Bantu, and Indo-European analyses have a positive value for bursts,
-so the Bayes factor in favour of the burst clock is the effective sample size of
-the burst parameter in these models (between $\minessx$ for \minessn{} and
-$\maxessx$ for \maxessn{}). For Sino-Tibetan,
-the posterior probability of the burst clock is at least $\worstburst$ as much as the clock
-without bursts.
+All other runs have a large effective sample size for all parameters
+and no apparent jumps between different parameter regions,
+indicating convergence; some Bantu relaxed clock runs achieve
+effective sample sizes of 200 for all parameters only for burnins $\gg 10\%$.
+We therefore included in our statistics above those runs where all parameters had an effective sample size of 200 after a burn-in of $20\%$, instead of a burn-in of $10\%$.
+
 
 The complete analysis (data, tools to generate the BEAST XML files, generated XML files,
 run log files including tree posterior samples, and analysis procedure) is
 available in the supplementary material.
 
 \section{Discussion}\label{s:discussion}
-%Because the bursts are not contributing to this estimate, they compensate for
-%the lower rate of change; so it is surprising that this is not seen for
-%Sino-Tibetan. Which does have a different structure of calibrations.
+
+In this paper, we have introduced the burst clock, a generalization of existing clock models which includes punctuated evolution at splits in addition to gradual evolutionary change through time along a branch in the phylogenetic tree.
+
+The burst clock associates every split (observed, or unobserved) in the tree with a constant amount of expected change $b$. These bursts of evolution are motivated by the observation of schismogenesis -- a process where linguistic differences between different social groups are exaggerated, thus accelerating the divergence between sister languages.
 
 As our simulation study shows, phylogenetic inference is able to tease apart the
-contribution of schismogenesis and related processes from more general rate
-heterogeneity.
+contribution of this faster evolution near phylogenetic splits from more general rate heterogeneity permitted under relaxed clock models.
 
-Our phylogenetic analysis for well-studied language families shows that the
+Our phylogenetic analyses for well-studied language families show that the
 burst clock is clearly the preferred model in all four language families we
 studied. This holds irrespective of whether evolution across branches is assumed
-to follow a strict or relaxed clock. This indicates that processes at language
-splits play a major role in the evolution of languages.
+to follow a strict or relaxed clock.
+This indicates that the burst clock introduced in this paper has great potential for
+the dated inference of language phylogenies.
 
-In some, but not all of our analyses, adding the burst clock did not only
-improve the results, but also the mixing behaviour of the MCMC. However, this
-effect is not pronounced where it would matter most: We observe that for
-Austronesian and Bantu data, the relaxed clock mixes very badly, despite using
-recent improvements to the implementation which were supposed to improve mixing
-behaviour. This does not improve with a burst clock. Given the reported success
-of relaxed clocks in particular for Austronesian, we consider it vital for the
-field that phylogenetic articles give not only a high-level description of the
-models used for inference, but also make their configuration files and outputs
-available for inspection.
-Only then can studies be replicated and convergence issues be noticed, and
-new researchers can benefit from and build upon the existing templates that
-have been used successfully.
-
-As our contribution to this effort, we have presented our BEAST2 configuration
-file as a literate programming template. The BEAST2 configuration language is so
-flexible as to allow us to structure the file as a readable model description,
-while maintaining the functionality as a BEAST2 input file. We encourage other
-researchers to adapt, criticize, and modify our inference procedure, so that the
-field can get towards comparable studies.
-
-In quantitative diachronic typology, it is necessary to work with cross-family
-data, so unified approaches using the same setup for different families, or even
-hierarchical models connected by shared hyperpriors, have sometimes been
-employed \parencite{dunn2011evolved,jager2021phylogenetic}. However, for lexical
-data, individual language families are often studied by separate groups of
-researchers with different model details and there is little indication
-(we are not aware of any other studies) that
-models are re-used and compared between different language families.
-
-As a case in point, our analyses show that while Austronesian, Bantu, and
-Indo-European show somewhat similar evolutionary dynamics, Sino-Tibetan
-seems to evolve noticeably differently. Without comparable analyses, it would be
-unclear whether such observations stem from (potentially subtle)
-differences in the models, or from different data coding
-methods, or from particularities of the language family.
-
-\section{Conclusions and Outlook}\label{s:conclusions}
-
-It appears that the burst clock introduced in this paper has great potential for
-the dated inference of language phylogenies. Three
+Three
 explanations have been suggested for the phenomenon that lineages with more
 splits show more (lexical) disparity: deliberate/conscious schismogenesis,
 founder effects \parencite{atkinson2008languages,greenhill2017evolutionary},
@@ -930,7 +907,7 @@ underlying clocks, for phonetic, lexical, and structural features of languages.
 If speakers' awareness plays a role in schismogenesis, we would expect with
 \citeauthor{gray2013three} a higher amount of bursts for phonetics than for
 lexicon, and for lexicon than for structural features, even when controlling for
-rates of change of individual features.
+the different rates of gradual change in these separate domains.
 
 Another potential avenue of further investigation into the mechanisms
 concerns the use of phylogeographic models \parencite{neureiter2021can}, where
@@ -938,8 +915,52 @@ migration rates can differ between different branches of the tree.
 If schismogenesis is driven by an active process, its effects should be stronger
 where the distance between related languages is smaller. This might be tested
 using a variant of the burst clock where instead of branch clock rates $c$
-burst amounts $b_i$ depend on the branch $i$ and comparing those bursts with the
-per-branch migration rates.
+burst amounts $b_i$ depend on the branch $i$ and comparing those bursts with
+migration along each branch.
+
+Independent of the precise mechanisms that lead to an acceleration of language divergence when languages split: the possibility of such effects has been conclusively shown before. With the package presented here it becomes finally possible to include it while inferring language family histories. This could have a major impact on dating: Tree heights might change drastically when switching from a clock without bursts to a clock with bursts, in particular where calibrations are shallow (cf. \cref{f:simulation}, see also Fig. S.1 in the supplementary material).
+
+In this paper, we applied phylogenetic inference with burst clocks to subsets of the four largest language families of the world. The evolutionary dynamics of an expansive language family may differ greatly from the dynamics in smaller language families.
+Phylogenetic studies for smaller language families do exist or are under way:
+The field of linguistic phylogenetics is taking off rapidly at the moment.
+As such, there is a great need to make phylogenetic studies in linguistics
+extensible, replicable, and comparable. This need can also be seen in the context of
+our present study.
+
+Firstly, we observe that for
+Austronesian and Bantu data, the relaxed clock mixes very badly, despite using
+recent improvements to the implementation which were supposed to improve mixing
+behaviour. In contrast with some of our other analyses, this does not improve when adding the burst clock, either. Given the reported success
+of relaxed clocks in particular for Austronesian, we consider it vital for the
+field that phylogenetic articles give not only a high-level description of the
+models used for inference, but also make their configuration files and outputs
+available for inspection.
+Only then can studies be replicated and convergence issues be noticed, and
+new researchers can benefit from and build upon the existing templates that
+have been used successfully.
+
+Secondly, while Austronesian, Bantu, and
+Indo-European have somewhat similar evolutionary dynamics in our analyses, Sino-Tibetan
+seems to evolve noticeably differently. Without deeper analyses using comparable methodology, it would remain
+unclear whether such observations stem from (potentially subtle)
+differences in the models, or from different data coding
+methods, or from particularities of the language family.
+
+Thirdly, in quantitative diachronic typology, it is necessary to work with cross-family
+data, so unified approaches using the same setup for different families, or even
+hierarchical models connected by shared hyperpriors, have sometimes been
+employed \parencite{dunn2011evolved,jager2021phylogenetic}. However, for lexical
+data, individual language families are often studied by separate groups of
+researchers with different model details and there is little indication that
+models are re-used and compared between different language families; this article seems to be the first such study.
+
+As a contribution to replicability and re-use of phylogenetic inference methods,
+we have implemented our BEAST2 configuration
+files as a template system using literate programming \parencite{knuth1984literate}. The BEAST2 configuration language is so
+flexible as to allow us to structure the file as a readable model description,
+while maintaining the functionality as a BEAST2 input file. We encourage other
+researchers to adapt, criticize, and modify our inference procedure, so that we can get towards comparable studies in
+linguistic phylogenetics.
 
 The effect we investigated in this paper
 is not specific to linguistics. In fact, referring to parts
@@ -951,20 +972,43 @@ bursts of change.
 In biology, the issue is not resolved. A recent observation by
 \textcite{janzen2021nucleotide} indicates the need for a quantitative model of
 punctuated evolution also for biological phylogenetics.
-Our burst clock package has no technical hurdle to be applied to
-biological data, while
+While
 the past has mostly seen models developed for biological evolution being applied to
-historical linguistics.
-It would thus contribute to the dialog between the disciplines and to the
-understanding of similarity
-and differences between the two evolutionary processes
-\parencite{list2016alignments,levinson2012tools}
-if our burst clock model went in the opposite direction and
-found use in bioinformatics.
+historical linguistics, 
+it would be both feasible and meaningful to apply our burst clock to
+phylogenetic inferences with biological data.
+In addition to providing an immediate way to study biological evolution with punctuated equilibria, 
+this would also contribute to the ongoing dialog about the similarities
+and differences of cultural and biological evolutionary processes \parencite{list2016alignments,levinson2012tools}.
 
+\paragraph{Acknowledgements}
+We thank  Natalia Chousou-Polydouri, Peter Ranacher, Robert Weibel, Rik van Gijn, and Remco Bouckaert
+for valuable discussions and feedback. We are very grateful in particular to Natalia Chousou-Polydouri and Peter Ranacher for extensive discussions concerning the methodology and the structure of the article.
+We thank Robert Weibel, Paul Widmer and Balthasar Bickel for supervision and funding acquisition.
+Funding supporting this work was provided by the
+URPP “Language and Space”, University of Zurich; the NCCR “Evolving Language” with Swiss
+NSF Agreement Nr. 51NF40\_180888; and the Swiss NSF Sinergia Project “Out of Asia”, Nr. CRSII5\_183578.
+
+\paragraph{Author contributions}
+GAK conceived of the idea, implemented the model and carried out the case studies. NN contributed to the idea, implementation and case study design, and implemented the simulation study. GAK and NN jointly interpreted the results and wrote and reviewed the manuscript.
+
+%% In case CRediT is needed, it might be phrased as following:
+% Conceptualization -- GAK (lead), NN
+% Methodology -- GAK, NN, NCP (supporting)
+% Software -- GAK, NN
+% Validation -- NN
+% Formal analysis -- GAK, NN
+% Investigation -- GAK (lead), NN
+% Resources -- PW, NN
+% Data Curation -- GAK, NN
+% Writing - Original Draft -- GAK, NN
+% Writing - Review & Editing -- GAK, NN, NCP, PR, RW (supporting), RvG (supporting)
+% Visualization -- NN (lead), GAK
+% Supervision -- GAK, PR, RW
+% Project administration -- GAK, RW
+% Funding acquisition -- RW, PW, BB
 
 \printbibliography{}
-
 
 \end{document}
 
