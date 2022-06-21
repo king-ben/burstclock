@@ -470,6 +470,8 @@ else:
     plt.close()
 
 with (Path(__file__).parent / "stats.tex").open("w") as stats:
+    print(r"\newcommand{\ess}{%d}" % args.ess_threshold, file=stats)
+    print(r"\newcommand{\burnin}{%d\\%%}" % int(args.burnin * 100 + 0.5), file=stats)
     print(r"\newcommand{\minx}{%f}" % min_05, file=stats)
     print(r"\newcommand{\minn}{%s}" % min_05_run, file=stats)
     print(r"\newcommand{\maxx}{%f}" % max_95, file=stats)
