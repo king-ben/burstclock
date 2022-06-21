@@ -877,26 +877,43 @@ Austronesian showing much faster change and Sino-Tibetan much slower.
 \end{figure}
 We find a vastly different time to apparent convergence for the different
 analyses, see \cref{f:runtimes}. While the strict clock for Sino-Tibetan converged within 50 hours,
-several runs for Austronesian and Bantu with relaxed clock did not meet our
-stopping criteria after more than 2500 hours.
+several runs for Austronesian and Bantu with relaxed clocks did not meet our
+stopping criteria even after more than 2500 hours.
 
+For Bantu, two relaxed clock runs with burst and two relaxed clock runs without
+bursts show jumps in the likelihood after the end of a 10\% burnin. All but one
+of these runs have generated more than 200 effective samples for every parameter
+if the burnin is increased to include the last jump in the likelihood.
+
+Similarly, two of the Austronesian relaxed burst clock runs and three of the
+relaxed clok runs without bursts jump to the higher likelihood range
+shared by the other runs only very late.
+However, for Austronesian, there is an additional issue.
 Despite using the optimized relaxed clock
 implementation by \textcite{orc}, the runs for Austronesian with relaxed clock
-(with or without bursts) regularly jumped between two regions in the parameter
+(with or without bursts) regularly jump between two regions in the parameter
 space, one containing trees with a mean height of ca. 4400 years and one with a
-mean tree height above 5000 years. Following \textcite{brown2018behavior}, we cannot
+mean tree height above 5000 years. As such, the ESS of the tree height for
+Austronesian with relaxed clocks tends to
+be between 100 and 200. Following \textcite{brown2018behavior}, we cannot
 assume that the posterior sample of these chains is informative about the
 model's relative posterior probability for these two different parameter regions.
-We can therefore not accurately describe the tree height and mean clock rate of
+We can therefore not accurately describe the tree height, tree topology and mean clock rate of
 the relaxed Austronesian runs. All other parameters of these runs however appear
 converged and uncorrelated with tree height, so they allow valid analysis.
 
-All other runs have a large effective sample size for all parameters
-and no apparent jumps between different parameter regions,
-indicating convergence; some Bantu relaxed clock runs achieve
-ESS of 200 for all parameters only for burnin values $\gg 10\%$.
-We therefore included in our statistics above those runs where all parameters had an effective sample size of \ess after a burn-in of $\burnin$, instead of ESS 200 with a burn-in of $10\%$.
-
+All other runs have a large effective sample size for all parameters and no
+apparent jumps between different parameter regions, indicating convergence. To
+account for the higher necessary burnin of some of runs, but avoiding individual
+case decisions, we have included in our statistics in this section those runs
+where all parameters had an ESS of \ess after a burn-in of $\burnin$ (instead of
+ESS 200 after a burn-in of $10\%$). This excludes three Austronesian relaxed
+clock runs\footnote{We ended up running a total of 7 Austronesian relaxed clock
+  runs, because the convergence issues were apparent very early on. This means
+  that the data presented here reflects 4 different Austronesian relaxed clock
+  runs, instead of only 2.}, three Austronesian relaxed burst clock runs, one
+Bantu relaxed clock run, and one Bantu relaxed burst clock run (cf. the empty
+circles in \cref{f:runtimes}).
 
 The complete analysis (data, tools to generate the BEAST XML files, generated XML files,
 run log files including tree posterior samples, and analysis procedure) is
