@@ -219,7 +219,7 @@ for each case study. In \cref{s:discussion}, we discuss the results and
 formulate our conclusions.
 
 Data and methods used to produce the results and figures shown in this paper are
-available as online supplementary material and through
+available as online Supplementary Material and through
 \url{https://osf.io/??????????????????}.
 
 \section{Introducing the burst clock model}\label{s:description}
@@ -325,10 +325,13 @@ likelihood of the data under the model and the prior probability of the model.
 \begin{align}
     P(\text{Model}\mid\text{Data}) \propto P(\text{Data}\mid\text{Model}) \cdot P(\text{Model})
 \end{align}
+Using Markov chain Monte Carlo sampling (MCMC), the inference software generates
+a sample from this posterior distribution.
+
 Such a Bayesian inference needs to describe the evolutionary process in terms of
 the overall assumed shape of evolutionary trees (the tree prior), the process
 that drives the evolutionary divergence by changing the data along a branch (the
-substitution model), and the mapping between the lenght of a branch in the
+substitution model), and the mapping between the length of a branch in the
 phylogeny to the amount of change along that branch (the branch rate model).
 
 In linguistic phylogenies, analyses that are concerned only with linguistic
@@ -447,7 +450,7 @@ This model extends to non-strict clocks in a straightforward manner, where with 
 \end{align}
 to obtain a relaxed burst clock.
 The strict burst clock and the relaxed burst clock can both be generated using one common implementation, which wraps any internal clock model exposing branch lengths and clock rates.
-We implemented such a burst clock wrapper as a BEAST 2 package (\texttt{burstclock}).
+We implemented such a burst clock wrapper as a BEAST2 package (\texttt{burstclock}).
 The implementation is available from XXX.
 
 \section{Simulation Study}
@@ -473,7 +476,7 @@ In each of the $100$ simulation runs we simulate ultrametric phylogenetic trees 
 
 At the same time, we simulate parameters for a burst clock model from an independent prior. In order to simplify the model selection between clocks with and without bursts, we implement a prior that selects the URC without bursts with a prior probability of $0.5$ as follows. The parameter $b$ is drawn from a normal distribution with mean $0$ and standard deviation $0.05$. Negative values for $b$ are treated as a plain non-burst clock model. (Positive values result in a burst clock model with $b$ as burst parameter.) In inference, $b$ is similarly permitted to take on negative values to represent a clock without bursts.
 
-Based on the simulated tree and model parameters we further simulate data according to a binary CTMC model. We generated 5000 binary characters for each simulated language.
+Based on the simulated tree and model parameters we further simulate data according to a continuous time Markov chain (CTMC) model with two states. We generated 5000 binary characters for each simulated language.
 %Finally, we test how well the simulated parameters can be reconstructed from the data when using two distinct models: a burst clock model and a non-burst clock model. 
 
 % Reconstruction configuration
@@ -571,9 +574,9 @@ We run 5 replications of each of the chains, running them in bouts of 24 hours o
 computing cluster and sampling every 10'000th step, until each parameter has reached an effective sampling size of 
 200 or more.
 
-The Python source code to generate the BEAST2 configuration files, as well as
+The Python source code to generate the XML configuration files for BEAST2, as well as
 the XML files themselves and the raw log file outputs of the BEAST runs are
-available in the supplementary material.
+available in the Supplementary Material.
 
 
 \paragraph{Data}
@@ -587,13 +590,15 @@ only includes cognate sets that are attested in any contemporary language.
 We will discuss the sources of the lexical data for each of the language families in separate subsections below.
 
 Dated trees with meaningful branch lengths and clock data also require calibration points.
-These are specific to the language families and will also be discussed in the following subsections.
+We find three types of calibrations in the literature: Calibrations constraining the age of the most recent common ancestor (MRCA) of a group of languages to a particular range, calibrations describing a minimum age of a MRCA, and calibrations describing the age of non-contemporary tip language data.
+The individual calibration points are specific to the language families and will also be discussed in the following subsections.
+
 
 
 \subsection{Austronesian}\label{s:austronesian}
 \input{supplement/austronesian/stats.tex}
-The Austronesian language family is the second-largest language family of the world, spread between most island groups of the pacific and Madagascar.
-Due to the wide spread, these languages have been regularly studied using phylogenetics, eg. by
+The Austronesian language family is the second-largest language family of the world, found on many Pacific island groups of the pacific, in South East Asia, and on Madagascar.
+Due to this wide spread, these languages have been regularly studied using phylogenetics, eg. by
 \textcite{gray2009language,greenhill2017evolutionary,greenhill2018population}.
 \paragraph{Lexical Data}
 Among the articles using lexical data to infer Austronesian language phylogenies, only the second one
@@ -601,7 +606,7 @@ Among the articles using lexical data to infer Austronesian language phylogenies
 % greenhill20818population: “For the Austronesian languages we used the Austronesian Basic Vocabulary Database (ABVD, Greenhill et al., 2008) which contains wordlists for 210 semantic categories from 1,278 languages.”, not even mentioning data coding, no supplement
 % greenhill2017evolutionary: “We used the ABVD (17) to find lexical data for the languages in the PIMdb. We identified 81 languages in both the PIMdb and the ABVD. [...] All lexical and cognate information is available online at https://abvd.shh.mpg.de/austronesian, and the cognate file is available in SI Materials and Methods and Data Set S4. are published with the acutal data in supplement.
 \parencite{greenhill2018population} makes the associated lexical data available, instead of only describing the data gathering procedure.
-Hovever, in that case the data set is reduced to the overlap with a grammatical data set.
+Hovever, in that case the data set is reduced to the overlap with a data set on grammatical features.
 All three papers use the Austronesian Basic Vocabulary Database for their lexical data, but the official version of that database
 (\url{https://abvd.shh.mpg.de/austronesian/}) is published without a persistent identifier, not freely usable, and not available in a re-usable format, so we instead make use of the ABVD
 data in the standardized CLDF format \parencite{cldf} curated on \url{https://github.com/lexibank/abvd}, which is published under a
@@ -652,7 +657,7 @@ have been studied in lexical phylogenetics by
 \paragraph{Lexical Data}
 % grollemund2015bantu: For each of the n=100 lexical items (meanings), we have used the comparative method wherever possible to identify cognate sets(words with the same meaning that derive from a common ancestor). Where it was not possible to establish strict correspondences for every word, we based our cognacy judgment on the principle of resemblance. This work was conducted by R.G. as part of her PhD and postdoctoral work on the Bantu languages (66). We identified 3,859 cognate sets across then=100 meanings.These were coded as binary characters for purposes of phylogenetic analysis. In practice, expert opinion on cognate classifications can differ (this difference also occurs in the alignment of gene sequence data where it is necessary to identify homologous genes), so we have conducted a series of analyses to check that our principal results are robust to variation in the data. We created subsampled data sets, with each one consisting of 50meanings randomly sampled without replacement from the data. These data sets were then converted to a binary matrix from which we inferred the tree. We repeated this procedure 100 times. We found that in 98% of these random samples based on just half the data, the tree we inferred showed the ladderized or pectinate backbone that we reported for the full-data set tree in Fig. 1. This result ensured that the signal for the tree we use to infer the Bantu migration route was robust to variation in the data
 % greenhill2018population: “Basic vocabulary for 100 words from 409 Bantu languages were provided by Grollemund et al. (2015) in a phylogenetic data set that records a single variant per semantic category for each language.
-% currie2013cultural: “Here, we use linguistic data from 542 spoken varieties of Bantu [16]. The names and alpha-numeric codes of all these languages are listed in the electronic supplementary material, table S1. Linguistic data in the form of different lexical items (‘words’) were taken from Bastin et al. [16]. These data code whether these basic vocabulary words from different languages can be considered cognate (i.e. they share a common origin). To facilitate phylogenetic analyses, these data were recoded into binary cognate sets reflecting the presence or the absence of each cognate in each language.
+% currie2013cultural: “Here, we use linguistic data from 542 spoken varieties of Bantu [16]. The names and alpha-numeric codes of all these languages are listed in the electronic Supplementary Material, table S1. Linguistic data in the form of different lexical items (‘words’) were taken from Bastin et al. [16]. These data code whether these basic vocabulary words from different languages can be considered cognate (i.e. they share a common origin). To facilitate phylogenetic analyses, these data were recoded into binary cognate sets reflecting the presence or the absence of each cognate in each language.
 The supplementary data from the 2015 paper \parencite{grollemund2015bantu} is available from
 \url{http://www.evolution.reading.ac.uk/DataSets.html}. A CLDF version of this data set by Robert Forkel, Tiago Tresoldi, Mark Pagel, and Rebecca Grollemund, published under the CC-BY-NC 4.0 license, can be found on \url{https://github.com/lexibank/grollemundbantu}. We use version v1.0rc6 of the data set.
 
@@ -730,7 +735,7 @@ Following the evidence presented by \textcite[Tables 7 and 12]{chang2015ancestry
 The Sino-Tibetan language family, the fourth-largest family worldwide, has been recently studied using computational phylogenetic methods by two independent groups
 \parencite{sagart2019dated,zhang2019phylogenetic}.
 \paragraph{Lexical Data}
-The lexical data is available as supplementary material for each of these two
+The lexical data is available as Supplementary Material for each of these two
 articles. Both data sets are ultimately derived from the STEDT data set
 \parencite{stedt}. \Citeauthor{sagart2019dated} are very explicit concerning their
 data selection and cognate coding method and also make their BEAST2 file available from \url{https://github.com/lingpy/sino-tibetan-paper/blob/v1.0.3/BeastFiles/sinotibetan-beast-covarion-relaxed-fbd.xml}.
@@ -820,14 +825,14 @@ between no bursts and bursts. This means that the Bayes factor can be directly e
 Despite this uninformative prior, all samples of the
 Austronesian, Bantu, and Indo-European analyses have a positive value for bursts,
 so the Bayes factor in favour of the burst clock is the effective sample size of
-the burst parameter in these models (between $\minessx$ for \minessn{} and
-$\maxessx$ for \maxessn{}). For Sino-Tibetan,
+the burst parameter in these models, which is between $\minessx$ for \minessn{} and
+$\maxessx$ for \maxessn{}. For Sino-Tibetan,
 the posterior probability of the burst clock is at least $\worstburst$ times as much as the clock
 without bursts.
 
 The average contribution of a language split varies between $\minx$ (5\%
 quantile of \minn, including the posterior sample cases where language splits are not associated with no expected changes at all) and $\maxx$ (95\% quantile of \maxn)
-expected changes per cognate class. Comparing this with the clock rate, we get
+expected changes per cognate class. Comparing this with the clock rate, we obtain
 that around the time of a split, languages change about as much as otherwise in
 about 100 to 150 years of independent evolution. The distributions of the
 evolutionary contributions of split events compared to time of independent
@@ -895,7 +900,7 @@ We therefore included in our statistics above those runs where all parameters ha
 
 The complete analysis (data, tools to generate the BEAST XML files, generated XML files,
 run log files including tree posterior samples, and analysis procedure) is
-available in the supplementary material.
+available in the Supplementary Material.
 
 \section{Discussion}\label{s:discussion}
 
@@ -936,7 +941,7 @@ using a variant of the burst clock where instead of branch clock rates $c$
 burst amounts $b_i$ depend on the branch $i$ and comparing those bursts with
 migration along each branch.
 
-Independent of the precise mechanisms that lead to an acceleration of language divergence when languages split: the possibility of such effects has been conclusively shown before. With the package presented here it becomes finally possible to include it while inferring language family histories. This could have a major impact on dating: Tree heights might change drastically when switching from a clock without bursts to a clock with bursts, in particular where calibrations are shallow (cf. \cref{f:simulation}, see also Fig. S.1 in the supplementary material).
+Independent of the precise mechanisms that lead to an acceleration of language divergence when languages split: the possibility of such effects has been conclusively shown before. With the package presented here it becomes finally possible to include it while inferring language family histories. This could have a major impact on dating: Tree heights might change drastically when switching from a clock without bursts to a clock with bursts, in particular where calibrations are shallow (cf. \cref{f:simulation}, see also Fig. S.1 in the Supplementary Material).
 
 In this paper, we applied phylogenetic inference with burst clocks to subsets of the four largest language families of the world. The evolutionary dynamics of an expansive language family may differ greatly from the dynamics in smaller language families.
 Phylogenetic studies for smaller language families do exist or are under way:
@@ -948,8 +953,9 @@ our present study.
 Firstly, we observe that for
 Austronesian and Bantu data, the relaxed clock mixes very badly, despite using
 recent improvements to the implementation which were supposed to improve mixing
-behaviour. In contrast with some of our other analyses, this does not improve when adding the burst clock, either. Given the reported success
-of relaxed clocks in particular for Austronesian, we consider it vital for the
+behaviour \parencite{orc}. In contrast with some of our other analyses, this does not improve when adding the burst clock, either. Given the reported success
+of relaxed clocks in particular for Austronesian \parencite{gray2009language},
+we consider it vital for the
 field that phylogenetic articles give not only a high-level description of the
 models used for inference, but also make their configuration files and outputs
 available for inspection.
@@ -977,7 +983,8 @@ we have implemented our BEAST2 configuration
 files as a template system using literate programming \parencite{knuth1984literate}. The BEAST2 configuration language is so
 flexible as to allow us to structure the file as a readable model description,
 while maintaining the functionality as a BEAST2 input file. We encourage other
-researchers to adapt, criticize, and modify our inference procedure, so that we can get towards comparable studies in
+researchers to adapt, criticize, and modify our inference procedure, so that 
+the field can evolve towards comparable studies in
 linguistic phylogenetics.
 
 The effect we investigated in this paper
