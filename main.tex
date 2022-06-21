@@ -571,8 +571,8 @@ software tool BEAST2 \parencite{drummond2015bayesian}. The time until convergenc
 between the different data sets (with different numbers of languages, concepts, and
 cognate sets each).
 We run 5 replications of each of the chains, running them in bouts of 24 hours on a high-performance
-computing cluster and sampling every 10'000th step, until each parameter has reached an effective sampling size of 
-200 or more.
+computing cluster and sampling every 10'000th step, until each parameter has reached an effective sample size (ESS) of 
+200 or more given a burnin of $10\%$.
 
 The Python source code to generate the XML configuration files for BEAST2, as well as
 the XML files themselves and the raw log file outputs of the BEAST runs are
@@ -824,7 +824,7 @@ select a model without bursts. The prior probability mass was equally distribute
 between no bursts and bursts. This means that the Bayes factor can be directly estimated from the posterior sample.
 Despite this uninformative prior, all samples of the
 Austronesian, Bantu, and Indo-European analyses have a positive value for bursts,
-so the Bayes factor in favour of the burst clock is the effective sample size of
+so the Bayes factor in favour of the burst clock is the ESS of
 the burst parameter in these models, which is between $\minessx$ for \minessn{} and
 $\maxessx$ for \maxessn{}. For Sino-Tibetan,
 the posterior probability of the burst clock is at least $\worstburst$ times as much as the clock
@@ -872,8 +872,8 @@ Austronesian showing much faster change and Sino-Tibetan much slower.
 \paragraph{Convergence}
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{supplement/analysis/runtimes.png}
-  \caption{Runtimes of different analyses. Filled circles correspond to runs that reached an effective sample size of $200$ with $20\%$ burnin for all parameters. Empty circles correspond to runs which had an ESS of less than $200$ for at least one model parameter, and which were thus considered unconverged and not included in the analysis.}\label{f:runtimes}
+  \includegraphics[width=0.8\textwidth]{supplement/analysis/runtimes.png}
+  \caption{Runtimes of different analyses, in hours. Filled circles correspond to runs that reached an effective sample size of $\ess$ with $\burnin$ burnin for all parameters. Empty circles correspond to runs which had an ESS of less than $\ess$ for at least one model parameter, and which were thus considered unconverged and not included in the analysis.}\label{f:runtimes}
 \end{figure}
 We find a vastly different time to apparent convergence for the different
 analyses, see \cref{f:runtimes}. While the strict clock for Sino-Tibetan converged within 50 hours,
@@ -894,8 +894,8 @@ converged and uncorrelated with tree height, so they allow valid analysis.
 All other runs have a large effective sample size for all parameters
 and no apparent jumps between different parameter regions,
 indicating convergence; some Bantu relaxed clock runs achieve
-effective sample sizes of 200 for all parameters only for burnins $\gg 10\%$.
-We therefore included in our statistics above those runs where all parameters had an effective sample size of 200 after a burn-in of $20\%$, instead of a burn-in of $10\%$.
+ESS of 200 for all parameters only for burnin values $\gg 10\%$.
+We therefore included in our statistics above those runs where all parameters had an effective sample size of \ess after a burn-in of $\burnin$, instead of ESS 200 with a burn-in of $10\%$.
 
 
 The complete analysis (data, tools to generate the BEAST XML files, generated XML files,
