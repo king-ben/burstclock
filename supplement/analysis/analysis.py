@@ -430,7 +430,7 @@ plt.scatter(
     facecolors=[grouped_colors[x%4] for x, ys in enumerate(runtimes) for y in ys]
 )
 plt.scatter(
-    [x for x, ys in enumerate(incomplete_runtimes) for y in ys],
+    [x + x // 4 for x, ys in enumerate(incomplete_runtimes) for y in ys],
     [y for ys in incomplete_runtimes for y in ys],
     marker="o",
     edgecolors=[grouped_colors[x%4] for x, ys in enumerate(incomplete_runtimes) for y in ys],
