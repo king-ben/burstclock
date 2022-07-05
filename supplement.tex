@@ -1,5 +1,7 @@
 \documentclass[a4paper]{article}
 
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=1.5cm]{geometry}
+
 % General style
 \usepackage{newunicodechar}
 \newunicodechar{→}{\fontspec{Gentium Plus}→}
@@ -76,64 +78,65 @@
 \renewcommand{\figurename}{Figure} 
 
 \section{Tree heights}
+We have reconstructed phylogenetic trees for the Austronesian, Bantu, Indo-European and Sino-Tibetan language families using different clock models. Figure~\ref{fig:tree_height} shows the reconstructed tree height for each of these families according to strict and relaxed clock with and without bursts.
 
-\begin{figure}
-    \centering
-    \includegraphics{supplement/analysis/austronesian_treeheight.png}
-    \caption{The tree height/age of the Austronesian language family according to different clock models.}
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/austronesian_treeheight.png}
+    \caption{Austronesian}
     \label{fig:tree_height:austronesian}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics{supplement/analysis/bantu_treeheight.png}
-    \caption{The tree height/age of the Bantu language family according to different clock models.}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/bantu_treeheight.png}
+    \caption{Bantu language}
     \label{fig:tree_height:bantu}
-\end{figure}
+  \end{subfigure}
 
-\begin{figure}
-    \centering
-    \includegraphics{supplement/analysis/indoeuropean_treeheight.png}
-    \caption{The tree height/age of the Indo-European language family according to different clock models.}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/indoeuropean_treeheight.png}
+    \caption{Indo-European}
     \label{fig:tree_height:indoeuropean}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics{supplement/analysis/sinotibetan_treeheight.png}
-    \caption{The tree height/age of the Sino-Tibetan language family according to different clock models.}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/sinotibetan_treeheight.png}
+    \caption{Sino-Tibetan}
     \label{fig:tree_height:sinotibetan}
+  \end{subfigure}
+  
+  \caption{The tree height, i.\,e. the age of the most recent common ancestor of all leaves, for the Austronesian, Bantu, Indo-European and Sino-Tibetan language families according to different clock models.}
+  \label{fig:tree_height}
 \end{figure}
 
 
+\newpage
 \section{Branch rate variation}
 
-\begin{figure}
-    \centering
-    \includegraphics{supplement/analysis/austronesian_clockrates.png}
-    \caption{The branch rate variation in the Austronesian language family with and without the burst clock.}
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/austronesian_clockrates.png}
+    \caption{Austronesian}
     \label{fig:rate_variation:austronesian}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics{supplement/analysis/bantu_clockrates.png}
-    \caption{The branch rate variation in the Bantu language family with and without the burst clock.}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/bantu_clockrates.png}
+    \caption{Bantu}
     \label{fig:rate_variation:bantu}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics{supplement/analysis/indoeuropean_clockrates.png}
-    \caption{The branch rate variation in the Indo-European language family with and without the burst clock.}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/indoeuropean_clockrates.png}
+    \caption{Indo-European}
     \label{fig:rate_variation:indoeuropean}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics{supplement/analysis/sinotibetan_clockrates.png}
-    \caption{The branch rate variation in the Sino-Tibetan language family with and without the burst clock.}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{supplement/analysis/sinotibetan_clockrates.png}
+    \caption{Sino-Tibetan}
     \label{fig:rate_variation:sinotibetan}
+  \end{subfigure}
+  
+  \caption{The branch rate variation in the four language families for the relaxed clock with and without bursts.}
+  \label{fig:rate_variation}
 \end{figure}
 
 \end{document}
