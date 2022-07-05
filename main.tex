@@ -86,24 +86,20 @@
 
 % Aim: 200 words or less
 \begin{abstract}
-Dated language phylogenies, with broad uses in historical and anthropological
-research, depend on good models of linguistic evolution.
+Dated language phylogenies have wide applications in historical and anthropological
+research. However, the quality of such applications depends on adequate models of language evolution.
 When a language splits into different speaker communities, the speed of
 language change increases such that a
 significant proportion of lexical disparity can be attributed
-to the splitting events, potentially arising from linguistic founder effects or from
-“schis\-mo\-gen\-e\-sis”, i.\,e.
+to the splitting events. This could be explained by “schis\-mo\-gen\-e\-sis”, i.\,e.
 the exaggeration of language differences to mark social boundaries.
 Surprisingly, this result has not found its way back
 into the clock models used in phylogenetic inference. Here, we develop an
 extension to existing phylogenetic clock models in BEAST2 to
-account for bursts at language splits. We use simulation studies and also fit
-the new model to four major language families of the world: Austronesian,
-Bantu, Indo-European, and Sino-Tibetan. We find that the burst clock fits the
-data better than either a Strict Clock or an Uncorrelated Relaxed Clock, and that
-a binary split is associated with $10^{-4}$ to $10^{-3}$ lexical changes per item of basic
-vocabulary. This is equivalent to the amount of lexical change a language
-accumulates in about 100 years of independent evolution without splits.
+account for bursts at language splits. We validate the mode in a simulation studies and fit it to four major language families of the world: Austronesian,
+Bantu, Indo-European, and Sino-Tibetan.
+% Changed from: We find that the burst clock fits the data better than either a Strict Clock or an Uncorrelated Relaxed Clock, and that a binary split is associated with $10^{-4}$ to $10^{-3}$ lexical changes per item of basic vocabulary. This is equivalent to the amount of lexical change a language accumulates in about 100 years of independent evolution without splits.
+In each of the four families the burst clock model fits the data significantly better than a strict or relaxed clock without bursts. Astonishingly, the estimated bursts lead to changes equivalent to about 100 years of independent evolution. 
 This makes bursts at splits a major contribution to language evolution,
 and our model may even be applicable to some cases of biological evolution.
 \end{abstract}
@@ -111,7 +107,7 @@ and our model may even be applicable to some cases of biological evolution.
 
 \begin{fmtext}
 \section{Introduction}
-Phylogenetic inference methods reconstruct the e\-volu\-tion\-ary tree of a group of
+\setlength{\emergencystretch}{1em}Phylogenetic inference methods reconstruct the e\-volu\-tion\-ary tree of a group of
 relatives, i.\,e. their hierarchy of common ancestors.
 These methods were originally developed for biological organisms, but have seen extensive
 use in the study of cultural evolution \parencite{evans2021uses}, in particular in
@@ -151,51 +147,39 @@ Languages function to identify in-groups, and as such they mark social
 boundaries \parencite{labov1963social,epps2020amazonian}.
 % In some known cases, they thus serve to define potential marriage partners in exogamous societies, such that language differences are maintained even where peoples strongly mix \parencites[p. 17f]{aikhenvald2002language}, but linguistic exogamy is not the only factor that leads to language differences being maintained \parencite{epps2020amazonian}.
 While contact-induced divergence \parencite{evans2019linguistic} can continue
-throughout the evistence of a language, these linguistic processes presumably
+throughout the existence of a language, these linguistic processes presumably
 matter most at times when languages split, driving the schism (thus
 “schismogenesis”) and in turn being driven by the observation of exaggerated
-differences. A lineage with more language diversification would thus be more
-different from a common ancestral language than its individual sibling language
-which has not undergone any splits, despite the fact that the same amount of
-time has passed from the ancestral language to the modern languages in each
-case.
+differences. A lineage with more language diversification would thus exhibit 
+more change over the same time compared to a lineage with less diversification.
 
-Quantitative evidence for this effect was supplied by
-\textcite{atkinson2008languages}. Using lexical cognate data, they studied the
-signal of punctuated equilibrium \parencite{eldredge1972punctuated} in the
-Austronesian, Bantu, and Indo-European tree.
-Lexical data is the standard data type in linguistic phylogenies,
-but significant in the contex of schismogenesis:
+From a phylogenetic perspective we should ask two questions:
+(1) Can we see effects of schismogenesis in phylogenetic analysis?
+(2) If yes, can we incorporate schismogenesis in phylogenetic clock models?
+\textcite{atkinson2008languages} have studied question (1) in a correlation study and found strong signs of schismogenesis in Austronesian, Bantu and Indo-European languages. They attributed between 9.5\% and 33\% of lexical differences to punctuated events at language splits.
+This makes the second question even more pressing. If indeed up to 33\% of linguistic changes are not explained by gradual change, but by punctuated events, the currently used clock models drastically mis-characterize the evolutionary process. Phylogenetic studies will benefit
+greatly from explicit modelling of the punctuated evolution, for a better
+estimation of branch rates and thus time depths.
+
+The fact that \textcite{atkinson2008languages} find such a pronounced effect in the lexicon specifically may not be a coincidence:
 The lexicon is one of the domains
 of language most apparent to speakers and accessible to conscious manipulation
 \parencite[see][for an extensive discussion]{thomason2007language}, and thus a
-likely target of schismogenesis – along with a language's phonology, which is
-however a domain with much less established quantitative and phylogenetic
-methodology. \Citeauthor{atkinson2008languages} found that between 9.5\% and
-33\% of lexical differences are due to punctuated events.
-
-% Rama & Wichmann (2020) infer $t = 1843 × MTL^0.35$, regressing the *median
-% length* (not height) of the tree sample to the otherwise estimated age of the
-% language family. This might have an interpretation in our context? I don't
-% know what, though.
-
+likely target of schismogenesis.
 \Textcite{gray2013three} raise the question whether this would be different for
 other linguistic domains. They argue that “[t]o the extent that closely related
 speech communities differ more in accent than they do in vocabulary, and more in
 vocabulary than in language structure, it might be predicted that the
 schismogenesis effect would be most pronounced in phonetics and least in
-structural features of language.” \parencite[p. 295]{gray2013three} However,
-there are other potential explanations for the phenomenon of increased
+structural features of language.” \parencite[p. 295]{gray2013three}.
+According to this, punctuated evolution seems particularly relevant for phonological and lexical data. However, while the lexicon is a standard data source for phylogenetic analysis, the methodology for phonological evolution is much less established.
+
+There are other potential explanations for the phenomenon of increased
 linguistic disparity in lineages with more splits. There might instead be
 founder effects \parencite{atkinson2008languages,greenhill2017evolutionary},
 or correlations between split rates and evolutionary divergence.
-
-In order to test this, first an explicit model of punctuated evolution
-is necessary. In addition to contributing to our understanding of
-schismogenesis in cross-cultural interaction, such a model will also benefit
-the field of language phylogeny in general. Phylogenic studies will benefit
-greatly from explicit modelling of the punctuated evolution, for a better
-estimation of branch rates and thus time depths.
+An explicit phylogenetic model of punctuated evolution would enable
+researchers to test this, in addition to minimizing model mis-specification.
 
 We present such an explicit “burst clock” model in this article, and test it
 both on simulation data, in order to see whether phylogenetic inference is able
@@ -316,8 +300,8 @@ available as online Supplementary Material and through
 \end{figure}
 A linguistic phylogenetic inference attempts to re-construct the evolutionary
 tree of a language family from linguistic data. The predominant approach uses
-lexical data to infer binary trees (where each internal node represents a split
-of a single ancestral language into two daughter languages). The compatibility to the data
+lexical data to infer binary trees where each internal node represents a split
+of a single ancestral language into two daughter languages. The compatibility to the data
 of a particular model (a tree together with an evolutionary process, including
 all the parameters of the process) is given by the posterior probability of the
 model given the data, which according to Bayes' theorem can be computed from
@@ -336,7 +320,7 @@ phylogeny to the amount of change along that branch (the branch rate model).
 
 In linguistic phylogenies, analyses that are concerned only with linguistic
 subgrouping may use tree priors and branch rate models that produce
-non-ultrametric trees, which do not permit ascribing times to nodes and
+trees which do not permit ascribing times to nodes and
 branches. Otherwise, they tend to use one of two ‘clock models’. Clock models
 assume that each split happens at a particular point in time, so each branch
 represents a time span. The clock model then describes the relationship between time and
@@ -404,7 +388,7 @@ language families even the contemporary languages are not completely known \pare
 Unobserved splits, where a language splits in two, but one of
 the two descendant branches goes extinct before being observed or is not sampled,
 should contribute to language change in the same manner as observed splits.
-For $u_i$ unobserved changes on the branch leading to $i$, we would thus expect $e_i = c \cdot l_i + b + u_i \cdot b$ changes.
+For $u_i$ unobserved splits on the branch leading to $i$, we would thus expect $e_i = c \cdot l_i + b + u_i \cdot b$ changes.
 
 We therefore need to find an estimate for the unobserved splits.
 We do this here for a specific tree prior.
@@ -412,22 +396,26 @@ One of the most frequently used tree priors in linguistic phylogenies
 is the (fossilized) birth-death tree prior \parencite{gernhard2008conditioned,stadler2010samplingthroughtime,heath2014fossilized,rama2018three}.
 Under this prior, the rate at which
 languages split (birth rate $\lambda$) is either included explicitly or in terms of net diversification rate and turnover.
-The expected number of splits along a branch is then $\lambda \cdot l_i$, and one of these –~the one where the branch begins~– is observed, so $1 + u_i = \lambda \cdot l_i$.
-
-For a sampling proportion $q$ and $t$ observed leaves, the total number of unobserved and observed leaves will be
-$\frac{t}{q}$, so there are $\frac{t}{q} - 1$ net splits,
-while the observed number of splits will be $t - 1$. This means that the proportion of unobserved splits is, on average,
+ This means that the we can estimate the proportion of unobserved splits in two ways:
+The expected number of splits along a branch is $\lambda \cdot l_i$, and one of these –~the one where the branch begins~– is observed, so $1 + u_i = \lambda \cdot l_i$.
 \begin{align}
-  \frac{u_i}{l_i \lambda}
-  &= \frac{u_i}{E[u_i + 1]} \\
+  \frac{u_i}{u_i + 1} & \approx \frac{u_i}{l_i \lambda}
+\end{align}
+
+On the other hand, for a sampling proportion $q$ and $t$ observed leaves, the total number of unobserved and observed leaves will be
+$\frac{t}{q}$, so there are $\frac{t}{q} - 1$ net splits,
+while the observed number of splits will be $t - 1$.
+Estimating the unobserved nodes as equally distributed throughout the tree we get
+\begin{align}
   % This approximation could probably do with a better argument
-  & \approx \frac{(\frac{t}{q} - 1) - (t - 1)}{\frac{t}{q} -1} \\
+  \frac{\sum_i u_i}{\sum_i u_i + 1} & = \frac{(\frac{t}{q} - 1) - (t - 1)}{\frac{t}{q} -1} \\
   & = \frac{t - q - qt + q}{t - q} \\
   & = \frac{t - qt}{t - q} \\
   & \approx \frac{t - qt}{t} &\text{because } q \leq 1 \ll t \\
   & = 1 - q
 \end{align}
-giving rise to the expected number of changes
+So we assume $\frac{u_i}{u_i + 1} \approx 1-q$.
+Equating these two estimates gives rise to the expected number of changes as
 \begin{align}
   e_i &= c \cdot l_i + b + u_i \cdot b  \\
   &= c \cdot l_i + b + \lambda l_i b \\
@@ -856,7 +844,7 @@ evolution in shown in \cref{f:peryear}.
     \includegraphics[width=\textwidth]{supplement/analysis/sinotibetan_replacement.png}
     \caption{Sino-Tibetan}
   \end{subfigure}
-  \caption{Expected lexical replacement in 1000~years for the different models
+  \caption{Expected lexical replacement (\%) in 1000~years for the different models
     in the different language families}\label{f:clock}
 \end{figure}
 
@@ -921,12 +909,12 @@ available in the Supplementary Material.
 
 \section{Discussion}\label{s:discussion}
 
-In this paper, we have introduced the burst clock, a generalization of existing clock models which includes punctuated evolution at splits in addition to gradual evolutionary change through time along a branch in the phylogenetic tree.
+In this paper, we have introduced the burst clock, a generalization of existing clock models which includes punctuated evolution at splits in addition to gradual evolutionary change through time along a branch in the phylogenetic tree. The model is motivated by previous findings on strong signals of punctuated evolution of the \parencite{atkinson2008languages}, further substantiated by our case study. 
 
 The burst clock associates every split (observed, or unobserved) in the tree with a constant amount of expected change $b$. These bursts of evolution are motivated by the observation of schismogenesis -- a process where linguistic differences between different social groups are exaggerated, thus accelerating the divergence between sister languages.
 
 As our simulation study shows, phylogenetic inference is able to tease apart the
-contribution of this faster evolution near phylogenetic splits from more general rate heterogeneity permitted under relaxed clock models.
+contribution of this faster evolution near phylogenetic splits from more general rate heterogeneity permitted under relaxed clock models. Furthermore, the results of the simulation study show potential dating errors arising from a model that ignores punctuated evolution.
 
 Our phylogenetic analyses for well-studied language families show that the
 burst clock is clearly the preferred model in all four language families we
@@ -939,30 +927,23 @@ Three
 explanations have been suggested for the phenomenon that lineages with more
 splits show more (lexical) disparity: deliberate/conscious schismogenesis,
 founder effects \parencite{atkinson2008languages,greenhill2017evolutionary},
-or a correlation of split rate with evolutionary divergence.
+or a positive effect of the rate of change on the split rate.
 As a first step, it should be easy to investigate the question by
-\textcite{gray2013three} whether schismogenesis affects more salient features
-stronger by using different clocks with different burst values, but the same
-underlying clocks, for phonetic, lexical, and structural features of languages.
+\textcite{gray2013three}. We can test whether the effects of schismogenesis are stronger in more salient features by using a burst clock with the same underlying clock, but varying burst values for phonetic, lexical, and structural features.
 If speakers' awareness plays a role in schismogenesis, we would expect with
 \citeauthor{gray2013three} a higher amount of bursts for phonetics than for
 lexicon, and for lexicon than for structural features, even when controlling for
 the different rates of gradual change in these separate domains.
 
-Another potential avenue of further investigation into the mechanisms
-concerns the use of phylogeographic models \parencite{neureiter2021can}, where
-migration rates can differ between different branches of the tree.
-If schismogenesis is driven by an active process, its effects should be stronger
-where the distance between related languages is smaller. This might be tested
-using a variant of the burst clock where instead of branch clock rates $c$
-burst amounts $b_i$ depend on the branch $i$ and comparing those bursts with
-migration along each branch.
+To further test whether schismogenesis is a plausible driver of punctuated evolution we could investigate the phylogeography of the languages \parencite{neureiter2021can}.
+Since schismogenesis is an active process that involves contact between the speaker communities, its effects should be stronger
+where the distance between related languages is smaller. Hence, if the branches involved in a split exhibit higher migration rates, allowing the languages to move away from each other, the effects of schismogenesis are expected to be smaller. Such an effect could be modelled by a variation of the burst clock, where the burst amount varies and depends on the migration rate of the child branches.
 
-Independent of the precise mechanisms that lead to an acceleration of language divergence when languages split: the possibility of such effects has been conclusively shown before. With the package presented here it becomes finally possible to include it while inferring language family histories. This could have a major impact on dating: Tree heights might change drastically when switching from a clock without bursts to a clock with bursts, in particular where calibrations are shallow (cf. \cref{f:simulation}, see also Fig. S.1 in the Supplementary Material).
+Independent of the precise mechanisms that lead to an acceleration of language divergence when languages split: the possibility of such effects has been conclusively shown before. With the package presented here it becomes finally possible to include it while inferring language family histories. This could have a major impact on dating: Tree heights might change drastically when switching from a clock without bursts to a clock with bursts, in particular where calibrations are shallow (cf.\ \cref{f:simulation}, see also Fig.\ S1--S4 in the Supplementary Material). Furthermore, the burst clock can have an impact on the mean rate and rate variation of the underlying clock.
+For example, adding bursts to a relaxed clock reduces the stochastic differences that have to be attributed to the relaxed clock, leading to a lower branch rate variation (see Fig.\ S5--S8 in the Supplementary Material).
 
-In this paper, we applied phylogenetic inference with burst clocks to subsets of the four largest language families of the world. The evolutionary dynamics of an expansive language family may differ greatly from the dynamics in smaller language families.
-Phylogenetic studies for smaller language families do exist or are under way:
-The field of linguistic phylogenetics is taking off rapidly at the moment.
+In this paper, we applied phylogenetic inference with burst clocks to subsets of the four largest language families of the world. This is not conclusive concerning language evolution in general, because the evolutionary dynamics of an expansive language family may differ greatly from the dynamics in smaller language families, so burst clock analyses of a wider range of families will need to be executed.
+In general, the field of linguistic phylogenetics is taking off rapidly at the moment, so phylogenetic studies for smaller language families do exist or are under way.
 As such, there is a great need to make phylogenetic studies in linguistics
 extensible, replicable, and comparable. This need can also be seen in the context of
 our present study.
@@ -970,7 +951,9 @@ our present study.
 Firstly, we observe that for
 Austronesian and Bantu data, the relaxed clock mixes very badly, despite using
 recent improvements to the implementation which were supposed to improve mixing
-behaviour \parencite{orc}. In contrast with some of our other analyses, this does not improve when adding the burst clock, either. Given the reported success
+behaviour \parencite{orc}. 
+%In some of our analyses adding the burst clock improved mixing, but unfortunately this did not help in the case of Bantu and Austronesian. 
+In contrast to some of our other analyses, this does not improve when adding the burst clock, either. Given the reported success
 of relaxed clocks in particular for Austronesian \parencite{gray2009language},
 we consider it vital for the
 field that phylogenetic articles give not only a high-level description of the
@@ -988,12 +971,10 @@ differences in the models, or from different data coding
 methods, or from particularities of the language family.
 
 Thirdly, in quantitative diachronic typology, it is necessary to work with cross-family
-data, so unified approaches using the same setup for different families, or even
-hierarchical models connected by shared hyperpriors, have sometimes been
-employed \parencite{dunn2011evolved,jager2021phylogenetic}. However, for lexical
+data. Hence, typologists have employed unified approaches using the same setup for different families, or even hierarchical models connected by shared hyperpriors \parencite{dunn2011evolved,jager2021phylogenetic}. However, for lexical
 data, individual language families are often studied by separate groups of
 researchers with different model details and there is little indication that
-models are re-used and compared between different language families; this article seems to be the first such study.
+models are re-used and compared between different language families; this article seems to be the first such study. With the goal of large cross-family studies in mind, the need for openly available data in each family becomes even more apparent.
 
 As a contribution to replicability and re-use of phylogenetic inference methods,
 we have implemented our BEAST2 configuration
