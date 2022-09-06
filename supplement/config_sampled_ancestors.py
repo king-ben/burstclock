@@ -1,6 +1,5 @@
+import logging
 import lxml.etree as ET
-import pyglottolog
-from cldfcatalog import Catalog
 
 
 def set_tips(root, tips):
@@ -74,10 +73,21 @@ if __name__ == "__main__":
         xmlparser.feed(line)
     root = xmlparser.close()
 
+    all_languages = {e.attrib.get("taxon") for e in root.findall(".//sequence")}
+    if set(args.jumping) - all_languages:
+        logging.warning(
+            "“Jumping” languages %s were not in the XML file", set(args.jumping) - all_languages
+        )
     if args.jumping:
-        root = into_jump_operator(root, args.jumping)
+        root = into_jump_operator(root, set(args.jumping) & all_languages)
+
+    if set(args.sampled_ancestor) - all_languages:
+        logging.warning(
+            "Sampled ancestor languages %s were not in the XML file",
+            set(args.sampled_ancestor) - all_languages,
+        )
     if args.sampled_ancestor:
-        root = set_tips(root, args.sampled_ancestor)
+        root = into_jump_operator(root, set(args.sampled_ancestor) & all_languages)
 
     et = root.getroottree()
     if args.output:
