@@ -1,4 +1,4 @@
-LANGUAGE_SAMPLES = all half quarter biggest
+LANGUAGE_SAMPLES = all half 3quarter biggest
 
 indoeuropean.nex:
 	curl https://raw.githubusercontent.com/PhyloStar/ie-phylo-exps/a63c0b52f7772adc2341572932a74b23d92570df/medium1.nex -o indoeuropean.nex
@@ -53,10 +53,10 @@ indoeuropean-%-undated.xml: % indoeuropean-template.xml raw_cldf/ielex-130421-ag
 	cp indoeuropean-template.xml $@
 	python -m lexedata.exporter.phylogenetics --stats stats-$<.tex --metadata raw_cldf/cldf-metadata.json -b -o $@ --languages $<
 
-indoeuropean-%.xml: % indoeuropean-%-undated.xml add_calibrations.py
+indoeuropean-%.xml: % indoeuropean-%-undated.xml add_%_calibrations.py
 	python ../no_nested_sampling.py indoeuropean-$<-undated.xml -o $@
 	echo "Language" > actually_included_$<_languages
-	PYTHONPATH=../ python add_calibrations.py -w 4000. -s -o $@ --subset $< | sort >> actually_included_$<_languages
+	PYTHONPATH=../ python add_$<_calibrations.py -w 4000. -s -o $@ --subset $< | sort >> actually_included_$<_languages
 	python ../config_sampled_ancestors.py $@ Latin Vedic_Sanskrit Avestan Ancient_Greek Old_Church_Slavonic -s Old_Irish -s Old_Norse -s Old_English -s Old_High_German -s Classical_Armenian -o $@
 	python ../set_rho.py $@ indo1319 -o $@
 	diff $< actually_included_$<_languages
@@ -78,6 +78,6 @@ half: all
 	echo "Language" > half
 	tail -n +1 $< | shuf --random-source=$< | tail -n 41 | sort >> half
 
-quarter: all
-	echo "Language" > quarter
-	tail -n +1 $< | shuf --random-source=$< | tail -n 21 | sort >> quarter
+3quarter: all
+	echo "Language" > 3quarter
+	tail -n +1 $< | shuf --random-source=$< | tail -n 61 | sort >> 3quarter

@@ -1,36 +1,36 @@
-from calibrations import main, normal, until
+from calibrations import main, normal, until  # noqa: 401
 
 r = main(
     [
         {"languages": {"Hittite"}, "d": normal(3400, 100)},
         {"languages": {"Vedic_Sanskrit"}, "d": normal(3250, 250)},
-        {"languages": {"Avestan"}, "d": normal(2500, 50)},
-        {"languages": {"Ancient_Greek"}, "d": normal(2450, 50)},
+        # {"languages": {"Avestan"}, "d": normal(2500, 50)},
+        # {"languages": {"Ancient_Greek"}, "d": normal(2450, 50)},
         {"languages": {"Latin"}, "d": normal(2150, 50)},
         {"languages": {"Gothic"}, "d": normal(1650, 25)},
-        {"languages": {"Old_High_German"}, "d": normal(1150, 50)},
+        # {"languages": {"Old_High_German"}, "d": normal(1150, 50)},
         {"languages": {"Old_English"}, "d": normal(1000, 50)},
         {"languages": {"Old_Norse"}, "d": normal(800, 50)},
-        {"languages": {"Classical_Armenian"}, "d": normal(1550, 50)},
+        # {"languages": {"Classical_Armenian"}, "d": normal(1550, 50)},
         {"languages": {"Tocharian_B"}, "d": normal(1350, 150)},
-        {"languages": {"Old_Irish"}, "d": normal(1200, 100)},
+        # {"languages": {"Old_Irish"}, "d": normal(1200, 100)},
         {"languages": {"Cornish"}, "d": normal(300, 100)},
         {"languages": {"Old_Church_Slavonic"}, "d": normal(1000, 50)},
         {
             "languages": {
                 "Gothic",
                 "Old_Norse",
-                "Icelandic_ST",
+                # "Icelandic_ST",
                 "Faroese",
                 "Norwegian",
                 "Swedish",
-                "Danish",
+                # "Danish",
                 "Old_English",
                 "English",
                 "Frisian",
-                "Old_High_German",
+                # "Old_High_German",
                 "German",
-                "Luxembourgish",
+                # "Luxembourgish",
                 "Schwyzerdutsch",
                 "Dutch_List",
                 "Flemish",
@@ -46,7 +46,7 @@ r = main(
                 "Sardinian_N",
                 "Sardinian_C",
                 "Rumanian_List",
-                "Catalan",
+                # "Catalan",
                 "Portuguese_ST",
                 "Spanish",
                 "French",
@@ -60,29 +60,34 @@ r = main(
             "name": "Romance",
             "d": {"tag": "Uniform", "name": "distr", "lower": "1750", "upper": "20000"},
         },
+        # {
+        #     # One branch of Scandinavian is missing
+        #     "languages": {
+        #         "Old_Norse",
+        #         # "Icelandic_ST",
+        #         # "Faroese",
+        #         "Norwegian",
+        #         # "Swedish",
+        #         # "Danish",
+        #     },
+        #     "name": "Scandinavian",
+        #     "monophyletic": True,
+        #     "d": {"tag": "Uniform", "name": "distr", "lower": "1500", "upper": "20000"},
+        # },
         {
+            # No West Slavic language. Presumably, the split between West and
+            # South Slavic is secondary, after the split of East Slavic from
+            # the rest, so this would be fine; but we don't want to rely on it,
+            # and we do have OCS as calibration tip.
             "languages": {
-                "Old_Norse",
-                "Icelandic_ST",
-                "Faroese",
-                "Norwegian",
-                "Swedish",
-                "Danish",
-            },
-            "name": "Scandinavian",
-            "monophyletic": True,
-            "d": {"tag": "Uniform", "name": "distr", "lower": "1500", "upper": "20000"},
-        },
-        {
-            "languages": {
-                "Czech",
-                "Slovak",
-                "Polish",
+                # "Czech",
+                # "Slovak",
+                # "Polish",
                 "Upper_Sorbian",
-                "Ukrainian",
+                # "Ukrainian",
                 "Byelorussian",
                 "Russian",
-                "Slovenian",
+                # "Slovenian",
                 "Macedonian",
                 "Bulgarian",
                 "Serbian",
@@ -91,14 +96,14 @@ r = main(
             "name": "Slavic",
             "d": {"tag": "Uniform", "name": "distr", "lower": "1500", "upper": "20000"},
         },
-        {
-            "languages": {
-                "Lithuanian_ST",
-                "Latvian",
-            },
-            "name": "East_Baltic",
-            "d": {"tag": "Uniform", "name": "distr", "lower": "1300", "upper": "20000"},
-        },
+        # {
+        #     "languages": {
+        #         "Lithuanian_ST",
+        #         "Latvian",
+        #     },
+        #     "name": "East_Baltic",
+        #     "d": {"tag": "Uniform", "name": "distr", "lower": "1300", "upper": "20000"},
+        # },
         {
             "languages": {
                 "Welsh_N",
@@ -121,7 +126,7 @@ r = main(
                 "Welsh_N",
                 "Breton_ST",
                 "Cornish",
-                "Old_Irish",
+                # "Old_Irish",
                 "Irish_B",
                 "Scots_Gaelic",
             },
@@ -129,19 +134,19 @@ r = main(
             "monophyletic": True,
             "d": {"tag": "Uniform", "name": "distr", "lower": "1050", "upper": "20000"},
         },
-        {
-            "languages": {"Classical_Armenian", "Armenian_Mod", "Armenian_List"},
-            "name": "Armenian_Clade",
-            "monophyletic": True,
-            "d": {"tag": "Uniform", "name": "distr", "lower": "0", "upper": "20000"},
-        },
-        {
-            "languages": {
-                "Tadzik",
-                "Persian",
-            },
-            "name": "Persian-Tajik",
-            "d": {"tag": "Uniform", "name": "distr", "lower": "750", "upper": "20000"},
-        },
+        # {
+        #     "languages": {"Classical_Armenian", "Armenian_Mod", "Armenian_List"},
+        #     "name": "Armenian_Clade",
+        #     "monophyletic": True,
+        #     "d": {"tag": "Uniform", "name": "distr", "lower": "0", "upper": "20000"},
+        # },
+        # {
+        #     "languages": {
+        #         "Tadzik",
+        #         "Persian",
+        #     },
+        #     "name": "Persian-Tajik",
+        #     "d": {"tag": "Uniform", "name": "distr", "lower": "750", "upper": "20000"},
+        # },
     ]
 )
