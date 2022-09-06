@@ -134,3 +134,10 @@ dmypy.json
 
 # Simulation study data folders
 *.data
+
+# Beast runs
+*.xml.state
+
+# Makefile helpers
+actually_included*languages
+check-zip
