@@ -3,6 +3,6 @@
              version="0.2.0"
              description="Phylogenetic clock model with bursts of change at each split."
              projectURL="https://github.com/Anaphory/burstclock" 
-             url="https://raw.githubusercontent.com/Anaphory/burstclock/blob/master/beast/dist/burstclock.v0.2.0.zip">
+             url="https://raw.githubusercontent.com/Anaphory/burstclock/master/beast/dist/burstclock.v0.2.0.zip">
     </package>
 </packages>
