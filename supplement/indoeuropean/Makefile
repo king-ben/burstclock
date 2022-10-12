@@ -1,3 +1,5 @@
+LANGUAGE_SAMPLES = all half 3quarter biggest
+
 indoeuropean.nex:
 	curl https://raw.githubusercontent.com/PhyloStar/ie-phylo-exps/a63c0b52f7772adc2341572932a74b23d92570df/medium1.nex -o indoeuropean.nex
 
@@ -18,8 +20,9 @@ raw_cldf/ielex-130421-ag-cc-with-concept.tsv: raw_cldf/ielex-130421-ag-cc.txt
 indoeuropean-template.xml: ../template.md
 	python ../without_markdown.py indoeuropean-template.xml
 
-included_languages: indoeuropean.nex
+all: indoeuropean.nex
 	echo "Mapping according to Chang et al. (2015), Table 8"
+	echo "Language" > all
 	grep 01 indoeuropean.nex | cut -d ' ' -f 1 \
 	  | sed -e 's/^Adapazar$$/Armenian_List/' \
 	  | sed -e 's/^Arvanitika$$/Albanian_K/' \
@@ -44,29 +47,37 @@ included_languages: indoeuropean.nex
 	  | sed -e 's/^Tajik$$/Tadzik/' \
 	  | sed -e 's/^Tosk$$/Albanian_Top/' \
 	  | sed -e 's/^Welsh$$/Welsh_N/' \
-	| sort > included_languages
+	| sort >> all
 
-indoeuropean-undated.xml: included_languages indoeuropean-template.xml raw_cldf/ielex-130421-ag-cc-with-concept.tsv raw_cldf/cldf-metadata.json
-	cp indoeuropean-template.xml indoeuropean-undated.xml
-	python -m lexedata.exporter.phylogenetics --stats stats.tex --metadata raw_cldf/cldf-metadata.json -b -o indoeuropean-undated.xml --language-list included_languages
+indoeuropean-%-undated.xml: % indoeuropean-template.xml raw_cldf/ielex-130421-ag-cc-with-concept.tsv raw_cldf/cldf-metadata.json
+	cp indoeuropean-template.xml $@
+	python -m lexedata.exporter.phylogenetics --stats stats-$<.tex --metadata raw_cldf/cldf-metadata.json -b -o $@ --languages $<
 
-indoeuropean.xml: indoeuropean-undated.xml add_calibrations.py
-	python ../no_nested_sampling.py indoeuropean-undated.xml -o indoeuropean.xml
-	PYTHONPATH=../ python add_calibrations.py -w 4000. -s -o indoeuropean.xml --subset included_languages | sort > actually_included_languages
-	python ../config_sampled_ancestors.py indoeuropean.xml Latin Vedic_Sanskrit Avestan Ancient_Greek Old_Church_Slavonic -s Old_Irish -s Old_Norse -s Old_English -s Old_High_German -s Classical_Armenian -o indoeuropean.xml
-	python ../set_rho.py indoeuropean.xml indo1319 -o indoeuropean.xml
-	diff included_languages actually_included_languages
+indoeuropean-%.xml: % indoeuropean-%-undated.xml add_%_calibrations.py
+	python ../no_nested_sampling.py indoeuropean-$<-undated.xml -o $@
+	echo "Language" > actually_included_$<_languages
+	PYTHONPATH=../ python add_$<_calibrations.py -w 4000. -s -o $@ --subset $< | sort >> actually_included_$<_languages
+	python ../config_sampled_ancestors.py $@ Latin Vedic_Sanskrit Avestan Ancient_Greek Old_Church_Slavonic -s Old_Irish -s Old_Norse -s Old_English -s Old_High_German -s Classical_Armenian -o $@
+	python ../set_rho.py $@ indo1319 -o $@
+	diff $< actually_included_$<_languages
 
-indoeuropean-burstclock.xml: indoeuropean.xml ../add_burstclock.py
-	python ../add_burstclock.py indoeuropean.xml -o indoeuropean-burstclock.xml
+indoeuropean-%-burstclock.xml: indoeuropean-%.xml ../add_burstclock.py
+	python ../add_burstclock.py $< -o $@
 
-indoeuropean-relaxed.xml: indoeuropean.xml ../relax_clock.py
-	python ../relax_clock.py indoeuropean.xml -o indoeuropean-relaxed.xml
+indoeuropean-%-relaxed.xml: indoeuropean-%.xml ../relax_clock.py
+	python ../relax_clock.py $< -o $@
 
-indoeuropean-relaxed-burstclock.xml: indoeuropean-burstclock.xml ../relax_clock.py
-	python ../relax_clock.py indoeuropean-burstclock.xml -o indoeuropean-relaxed-burstclock.xml
+indoeuropean-%-relaxed-burstclock.xml: indoeuropean-%-burstclock.xml ../relax_clock.py
+	python ../relax_clock.py $< -o $@
 
-run/vocabulary.log: indoeuropean.xml
+run/vocabulary.log: indoeuropean-all.xml
 	mkdir -p run
-	cd run && beast ../indoeuropean.xml
+	cd run && beast ../indoeuropean-all.xml
 
+half: all
+	echo "Language" > half
+	tail -n +1 $< | shuf --random-source=$< | tail -n 41 | sort >> half
+
+3quarter: all
+	echo "Language" > 3quarter
+	tail -n +1 $< | shuf --random-source=$< | tail -n 61 | sort >> 3quarter

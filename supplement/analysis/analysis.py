@@ -420,22 +420,24 @@ for f, family in enumerate(FAMILIES):
         print(f"Error: Family {family} does not have converged data.")
 
 
+grouped_colors = ["#ad2c1a", "#ff8161", "#006989", "#54b3d6"]
+
 plt.figure(figsize=(8, 4))
 plt.scatter(
-    [x for x, ys in enumerate(runtimes) for y in ys],
+    [x + x // 4 for x, ys in enumerate(runtimes) for y in ys],
     [y for ys in runtimes for y in ys],
-    edgecolors="k",
-    facecolors="k",
+    edgecolors=[grouped_colors[x%4] for x, ys in enumerate(runtimes) for y in ys],
+    facecolors=[grouped_colors[x%4] for x, ys in enumerate(runtimes) for y in ys]
 )
 plt.scatter(
-    [x for x, ys in enumerate(incomplete_runtimes) for y in ys],
+    [x + x // 4 for x, ys in enumerate(incomplete_runtimes) for y in ys],
     [y for ys in incomplete_runtimes for y in ys],
     marker="o",
-    edgecolors="k",
+    edgecolors=[grouped_colors[x%4] for x, ys in enumerate(incomplete_runtimes) for y in ys],
     facecolors="none",
 )
 plt.xticks(
-    range(0, 4 * len(FAMILIES)),
+    [0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 15, 16, 17, 18],
     [
         "strict\nno bursts",
         "relaxed\nno bursts",
@@ -446,7 +448,7 @@ plt.xticks(
     rotation=90,
     fontdict={"multialignment": "right"},
 )
-plt.xlim(-0.5, 4 * len(FAMILIES) - 0.5)
+plt.xlim(-1, 5 * len(FAMILIES) - 1)
 
 ax2 = plt.gca().twiny()
 ax2.spines["bottom"].set_position(("axes", -0.35))
@@ -455,9 +457,9 @@ ax2.tick_params("both", direction="in", which="major")
 ax2.xaxis.set_ticks_position("bottom")
 ax2.xaxis.set_label_position("bottom")
 
-ax2.set_xticks([-0.5, 3.5, 7.5, 11.5, 15.5])
+ax2.set_xticks([-1, 4, 9, 14, 19])
 ax2.xaxis.set_major_formatter(ticker.NullFormatter())
-ax2.xaxis.set_minor_locator(ticker.FixedLocator([1.5, 5.5, 9.5, 13.5]))
+ax2.xaxis.set_minor_locator(ticker.FixedLocator([1.5, 6.5, 11.5, 16.5]))
 ax2.xaxis.set_minor_formatter(
     ticker.FixedFormatter(["Austronesian", "Bantu", "Indo-European", "Sino-Tibetan"])
 )
