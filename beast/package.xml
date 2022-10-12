@@ -1,0 +1,8 @@
+<packages>
+    <package name="burstclock" 
+             version="0.2.0"
+             description="Phylogenetic clock model with bursts of change at each split."
+             projectURL="https://github.com/Anaphory/burstclock" 
+             url="https://raw.githubusercontent.com/Anaphory/burstclock/tree/master/beast/dist/burstclock.v0.2.0.zip">
+    </package>
+</packages>
