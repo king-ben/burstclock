@@ -1,12 +1,12 @@
 package ch.uzh.beast.evolution.branchratemodel;
 
-import beast.core.Description;
-import beast.core.Input;
-import beast.core.parameter.RealParameter;
-import beast.core.util.Log;
-import beast.evolution.branchratemodel.BranchRateModel;
-import beast.evolution.branchratemodel.StrictClockModel;
-import beast.evolution.tree.Node;
+import beast.base.core.Description;
+import beast.base.core.Input;
+import beast.base.inference.parameter.RealParameter;
+import beast.base.core.Log;
+import beast.base.evolution.branchratemodel.BranchRateModel;
+import beast.base.evolution.branchratemodel.StrictClockModel;
+import beast.base.evolution.tree.Node;
 
 @Description("Clock model with a constant contribution from each split in the tree, on top of the specified ´branchonlyClock´ branch rate model")
 public class BurstClock extends BranchRateModel.Base {
@@ -32,8 +32,8 @@ public class BurstClock extends BranchRateModel.Base {
 			branchonlyClock = new StrictClockModel();
 			branchonlyClock.initByName("clock.rate", meanRateInput.get());
 		} else if (meanRateInput.get() != null) {
-			Log.err.println("WARNING: Explicit branchonly clock was specified for BurstClock " + getID()
-					+ " so mean rate input will be ignored.");
+			 Log.err.println("WARNING: Explicit branchonly clock was specified for BurstClock " + getID()
+			 		+ " so mean rate input will be ignored.");
 		}
 	}
 

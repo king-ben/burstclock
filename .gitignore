@@ -141,3 +141,6 @@ dmypy.json
 # Makefile helpers
 actually_included*languages
 check-zip
+
+.DS_Store
+beast/build-lib
